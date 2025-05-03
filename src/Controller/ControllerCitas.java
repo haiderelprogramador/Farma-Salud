@@ -4,13 +4,18 @@
  */
 package Controller;
 
+import com.toedter.calendar.JDateChooser;
 import dao.CitasDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
+import java.awt.Color;
+import java.awt.Component;
 import model.Paciente;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Cita;
 import model.Cita.EstadoCita;
@@ -38,10 +44,11 @@ public class ControllerCitas {
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
     private Paciente pacienteSeleccionado;
-    private JComboBox<String> cboMedicoCita; 
+    private Medico medicoSeleccionado;
+    private DefaultTableModel tableModelMedico;
     private JTable tablaCitas;
     private JTextField txtIdCita;
-    private JTextField txtFechaCita;
+    private JDateChooser JDateFechaCita;
     private JComboBox<String> cboHoraCita;
     private JComboBox<String> cboEstadoCita;
     private JComboBox<String> cboTipoCita;
@@ -50,24 +57,36 @@ public class ControllerCitas {
     private DefaultTableModel tableModelPaciente;
     private JTable tablePaciente;
     private JTextField txtIdCita2;
-    private JTextField txtFechaCita2;
+    private JDateChooser JDateFechaCita2;
      private JComboBox<String> cboHoraCita2;
     private JComboBox<String> cboEstadoCita2;
     private JComboBox<String> cboTipoCita2;
     private JComboBox<String> cboMotivoCita2;
     private JComboBox<String> cboConsultorio2;
-    private JComboBox<String> cboMedicoCita2;
+    private JLabel lblMedico;
     private JLabel lblTotalCitas;
     private JLabel lblCitasProgramadas;
     private JLabel lblCitasCanceladas;
     private JLabel lblCitasCompletadas;
+    private JTable tableMedico;
+    private JLabel lblEspecialidadMedico;
+    private JLabel lblNombreMedico;
+    private JLabel lblApellidoMedico;
     
+  
 
    
   
-    public void setCboMedicoCita(JComboBox<String> cboMedicoCita) {
-    this.cboMedicoCita = cboMedicoCita;
-}
+   
+    public void setTablaMedico(JTable tableMedico) {
+        if (tableMedico == null) {
+        throw new IllegalArgumentException("La tabla de medico no puede ser nula");
+       }
+        this.tableMedico = tableMedico;
+        this.tableModelMedico = (DefaultTableModel) tableMedico.getModel();
+        
+    }
+    
     public void setTablaCitas(JTable tablaCitas) {
         this.tablaCitas = tablaCitas;
         this.tableModelCita = (DefaultTableModel) tablaCitas.getModel();
@@ -88,22 +107,20 @@ public class ControllerCitas {
     public void setCboConsultorio(JComboBox<String> cboConsultorio) {
         this.cboConsultorio = cboConsultorio;
     }
-    public void setTxtFechaCita(JTextField txtFechaCita) {
-        this.txtFechaCita = txtFechaCita;
+    public void setJDateFechaCita(JDateChooser JDateFechaCita) {
+        this.JDateFechaCita = JDateFechaCita;
     }
     
     public void setTxtIdCita(JTextField txtIdCita) {
         this.txtIdCita = txtIdCita;
     }
     
-    public void setCboMotivoCita(JComboBox<String> cboMotivoCita) {
-        this.cboMotivoCita = cboMotivoCita;
-    } 
+   
      public void setTxtIdCita2(JTextField txtIdCita2) {
         this.txtIdCita2 = txtIdCita2;
     } 
-     public void setTxtFechaCita2(JTextField txtFechaCita2) {
-        this.txtFechaCita2 = txtFechaCita2;
+     public void setJDateFechaCita2(JDateChooser JDateFechaCita2) {
+        this.JDateFechaCita2 = JDateFechaCita2;
     }  
      public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
         this.cboHoraCita2 = cboHoraCita2;
@@ -123,9 +140,7 @@ public class ControllerCitas {
      public void setCboMotivoCita2(JComboBox<String> cboMotivoCita2) {
         this.cboMotivoCita2 = cboMotivoCita2;
     } 
-     public void setCboMedicoCita2(JComboBox<String> cboMedicoCita2) {
-    this.cboMedicoCita2 = cboMedicoCita2;
-    }
+    
        public void setLblTotalCitas(JLabel lblTotalCitas) {
         this.lblTotalCitas = lblTotalCitas;
     }
@@ -141,6 +156,23 @@ public class ControllerCitas {
     public void setLblCitasCompletadas(JLabel lblCitasCompletadas) {
         this.lblCitasCompletadas = lblCitasCompletadas;
     }
+
+    public void setLblEspecialidadMedico(JLabel lblEspecialidadMedico) {
+        this.lblEspecialidadMedico = lblEspecialidadMedico;
+    }
+
+    public void setLblNombreMedico(JLabel lblNombreMedico) {
+        this.lblNombreMedico = lblNombreMedico;
+    }
+
+    public void setLblApellidoMedico(JLabel lblApellidoMedico) {
+        this.lblApellidoMedico = lblApellidoMedico;
+    }
+
+    public void setCboMotivoCita(JComboBox<String> cboMotivoCita) {
+        this.cboMotivoCita = cboMotivoCita;
+    }
+    
     
 
     
@@ -149,34 +181,43 @@ public class ControllerCitas {
               if (pacienteSeleccionado == null) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un paciente primero", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }   if (medicoSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un medico primero", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
             String IdCita = txtIdCita.getText().trim();
-            String fechaStr = txtFechaCita.getText().trim();
+            String fechaStr = JDateFechaCita.getDate().toString();
             String horaCita = cboHoraCita.getSelectedItem().toString();
             String motivo = cboMotivoCita.getSelectedItem().toString();
             String tipo = cboTipoCita.getSelectedItem().toString();
             String consultorio = cboConsultorio.getSelectedItem().toString();
             EstadoCita estado = EstadoCita.valueOf(cboEstadoCita.getSelectedItem().toString());   
-            String especialidad = cboMedicoCita.getSelectedItem().toString();
            
             
-            if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
-                tipo.isEmpty() || consultorio.isEmpty() || especialidad.equals("<Seleccione>")) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+             if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
+            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
             
-            LocalDate fechaCita;
-            try {
-                fechaCita = LocalDate.parse(fechaStr);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(null,
-                    "Formato de fecha inválido. Usa YYYY-MM-DD",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
+                    
+       Date fechaDate = JDateFechaCita.getDate();
+     if (fechaDate == null) {
+      JOptionPane.showMessageDialog(null, "La fecha de la cita es obligatoria", 
+        "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+     LocalDate fechaCita = fechaDate.toInstant()
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate();
+       if (existeCitaEnMismaHora(fechaCita, horaCita)) {
+            JOptionPane.showMessageDialog(null,
+                "Ya existe una cita programada para esta hora. Por favor seleccione otra hora.",
+                "Hora no disponible",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         boolean existe = citasDAO.cargarTodos().stream()
     .anyMatch(p -> p.getIdCita() != null && p.getIdCita().equals(IdCita));
             if (existe) {
@@ -195,9 +236,12 @@ public class ControllerCitas {
                 tipo, 
                 consultorio,
                 estado, 
-                especialidad
+                pacienteSeleccionado,
+                medicoSeleccionado
+                
             );
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
+              nuevaCita.setDocumentoMedico(medicoSeleccionado.getNumeroDocumento());
             citasDAO.guardarCita(nuevaCita);
             actualizarEstadisticasCitas(); 
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -237,17 +281,16 @@ public void cargarPacienteEnTabla() {
         };
         tableModelPaciente.addRow(row);
     }
-}public void seleccionarPaciente() {
+}
+public void seleccionarPaciente() {
     int filaSeleccionada = tablePaciente.getSelectedRow();
     
     if (filaSeleccionada == -1) {
-        return; // No hay fila seleccionada
+        return;
     }
     
-    // Obtener el documento del paciente seleccionado
     String documento = tablePaciente.getValueAt(filaSeleccionada, 0).toString();
     
-    // Buscar el paciente en la base de datos
     pacienteSeleccionado = pacienteDAO.buscarPorDocumento(documento);
     
     if (pacienteSeleccionado != null) {
@@ -257,14 +300,52 @@ public void cargarPacienteEnTabla() {
             JOptionPane.INFORMATION_MESSAGE);
     }
 }
+public void cargarMedicoEnTabla() {
+    if (tableMedico == null || tableModelMedico == null) {
+        throw new IllegalStateException("La tabla de medicos no ha sido inicializada.");
+    }
+    
+    tableModelMedico.setRowCount(0); 
+
+    List<Medico> medicos = medicoDAO.cargarTodos();
+
+    for (Medico medico : medicos) {
+        Object[] row = {
+            medico.getNumeroDocumento(),
+            medico.getNombres(),
+            medico.getApellidos(),
+            medico.getEspecialidad(),
+          
+        };
+        tableModelMedico.addRow(row);
+    }
+}
+   
+public void seleccionarMedico() {
+    int filaSeleccionada = tableMedico.getSelectedRow();
+    
+    if (filaSeleccionada == -1) {
+        return; 
+    }
+    
+    String documento = tableMedico.getValueAt(filaSeleccionada, 0).toString(); 
+    medicoSeleccionado = medicoDAO.buscarPorDocumentoMedico(documento);
+    
+    if (medicoSeleccionado != null) {
+        JOptionPane.showMessageDialog(null,
+            "medico seleccionado: " + medicoSeleccionado.getNombres(),
+            "medico Asignado",
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+}
      public  void initTableModelCita() {
     if (tablaCitas == null) {
         throw new IllegalStateException("La tabla de citas no ha sido inicializada");
     }
     
     tableModelCita = new DefaultTableModel(
-        new Object[]{ "Documento", "Nombre", "Apellido", "Eps", "Email","Id Cita", "Hora Cita", 
-                     "Motivo", "Fecha Cita", "Tipo Cita", "Consultorio", "Estado", "Especialidad"}, 0) {
+        new Object[]{ "Documento", "Nombre", "Apellido", "Eps", "Telefono","Id Cita", "Hora Cita", 
+                     "Motivo", "Fecha Cita", "Tipo Cita", "Consultorio", "Estado","id Medico","NombreMedico","ApellidoMedico,","Especialidad"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
@@ -282,10 +363,10 @@ public void cargarPacienteEnTabla() {
     
     List<Cita> citas = citasDAO.cargarTodos();
     for (Cita cita : citas) {
-        // Buscar paciente por su documento usando el campo documentoPaciente de Cita
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+        Medico medico=medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
         
-        if (paciente != null) {
+        if (paciente != null && medico !=null) {
             Object[] row = {
                 paciente.getNumeroDocumento(),
                 paciente.getNombres(),
@@ -299,13 +380,16 @@ public void cargarPacienteEnTabla() {
                 cita.getTipoCita(),
                 cita.getConsultorio(),
                 cita.getEstado().toString(),
-                cita.getMedico()
+                medico.getNumeroDocumento(),
+                medico.getNombres(),
+                medico.getApellidos(),
+                medico.getEspecialidad()
             };
             tableModelCita.addRow(row);
         }
     }
 }
-    public void actualizarCita() {
+   public void actualizarCita() {
     try {
         int filaSeleccionada = tablaCitas.getSelectedRow();
         if (filaSeleccionada == -1) {
@@ -316,53 +400,63 @@ public void cargarPacienteEnTabla() {
             return;
         }
 
-        // Obtener el ID original de la cita seleccionada
         String idCitaOriginal = tablaCitas.getValueAt(filaSeleccionada, 5).toString();
-
         String idCita = txtIdCita2.getText().trim();
-        String fechaStr = txtFechaCita2.getText().trim();
         String horaCita = cboHoraCita2.getSelectedItem().toString();
         String motivo = cboMotivoCita2.getSelectedItem().toString();
         String tipo = cboTipoCita2.getSelectedItem().toString();
         String consultorio = cboConsultorio2.getSelectedItem().toString();
         EstadoCita estado = EstadoCita.valueOf(cboEstadoCita2.getSelectedItem().toString());   
-        String especialidad = cboMedicoCita2.getSelectedItem().toString();
+        String documentoMedico = tablaCitas.getValueAt(filaSeleccionada, 12).toString();
 
-        if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
-            tipo.isEmpty() || consultorio.isEmpty() || especialidad.equals("<Seleccione>")) {
+        if (horaCita.isEmpty() || motivo.isEmpty() || 
+            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        LocalDate fechaCita;
-        try {
-            fechaCita = LocalDate.parse(fechaStr);
-        } catch (DateTimeParseException e) {
+        Date fechaC = JDateFechaCita2.getDate();
+        if (fechaC == null) {
+            JOptionPane.showMessageDialog(null, 
+                "La fecha de la cita es obligatoria", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        LocalDate fechaCita2 = fechaC.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+            
+        // Validar si ya existe otra cita para este médico a la misma hora
+        if (existeOtraCitaEnMismaHora(fechaCita2, horaCita, documentoMedico, idCitaOriginal)) {
             JOptionPane.showMessageDialog(null,
-                "Formato de fecha inválido. Usa YYYY-MM-DD",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                "El médico ya tiene otra cita programada para esta hora. Por favor seleccione otra hora u otro médico.",
+                "Hora no disponible",
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
+        String documentoPaciente = tablaCitas.getValueAt(filaSeleccionada, 0).toString();
+
         Cita citaActualizada = new Cita(
             idCita, 
-            fechaCita, 
+            fechaCita2, 
             horaCita, 
             motivo, 
             tipo, 
             consultorio,
             estado, 
-            especialidad
+            pacienteSeleccionado,
+            medicoSeleccionado
         );
         
-        // Mantener el mismo paciente asociado
-        String documentoPaciente = tablaCitas.getValueAt(filaSeleccionada, 0).toString();
         citaActualizada.setDocumentoPaciente(documentoPaciente);
-
+        citaActualizada.setDocumentoMedico(documentoMedico);
+        
         boolean actualizado = citasDAO.actualizarCita(idCitaOriginal, citaActualizada);
         actualizarEstadisticasCitas(); 
-       limpiarCita2() ;
+        limpiarCita2();
+        
         if (actualizado) {
             JOptionPane.showMessageDialog(null,
                 "Cita actualizada exitosamente",
@@ -382,38 +476,49 @@ public void cargarPacienteEnTabla() {
             JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
-   }
+}
     public void limpiarCita() {
         txtIdCita.setText("");
-        txtFechaCita.setText("");
+        JDateFechaCita.setDate(null);
         cboHoraCita.setSelectedIndex(0);
-        cboMedicoCita.setSelectedIndex(0);
         cboMotivoCita.setSelectedIndex(0);
         cboConsultorio.setSelectedIndex(0);
         cboTipoCita.setSelectedIndex(0);
+        cboEstadoCita.setSelectedItem("<Seleccione>");
+       
+
     }
     public void limpiarCita2() {
         txtIdCita2.setText("");
-        txtFechaCita2.setText("");
+        JDateFechaCita2.setDate(null);
         cboHoraCita2.setSelectedIndex(0);
-        cboMedicoCita2.setSelectedIndex(0);
         cboMotivoCita2.setSelectedIndex(0);
         cboConsultorio2.setSelectedIndex(0);
         cboTipoCita2.setSelectedIndex(0);
+        cboEstadoCita2.setSelectedItem("<Seleccione>");
+        lblNombreMedico.setText("");
+        lblApellidoMedico.setText("");
+        lblNombreMedico.setText("");
+        lblEspecialidadMedico.setText("");
+        lblNombreMedico.setText("");
+       
+      
     }
   
-public void buscarCitaPorId(String idCita) {
+public void buscarCitaPorDocumento(String documentoPaciente) {
     try {
         tableModelCita.setRowCount(0);
 
         List<Cita> citas = citasDAO.cargarTodos();
 
         for (Cita cita : citas) {
-            if (cita.getIdCita().toLowerCase().contains(idCita.toLowerCase())) {
-                Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+            if (cita.getDocumentoPaciente() != null && 
+                cita.getDocumentoPaciente().toLowerCase().contains(documentoPaciente.toLowerCase())) {
                 
-                if (paciente != null) {
-                    // Añadir fila a la tabla
+                Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+                Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+                
+                if (paciente != null && medico != null) {
                     Object[] row = {
                         paciente.getNumeroDocumento(),
                         paciente.getNombres(),
@@ -427,7 +532,10 @@ public void buscarCitaPorId(String idCita) {
                         cita.getTipoCita(),
                         cita.getConsultorio(),
                         cita.getEstado().toString(),
-                        cita.getMedico()
+                        medico.getNumeroDocumento(),
+                        medico.getNombres(),
+                        medico.getApellidos(),
+                        medico.getEspecialidad()
                     };
                     tableModelCita.addRow(row);
                 }
@@ -436,7 +544,7 @@ public void buscarCitaPorId(String idCita) {
 
         if (tableModelCita.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, 
-                "No se encontraron citas con el ID: " + idCita, 
+                "No se encontraron citas para el paciente con documento: " + documentoPaciente, 
                 "Búsqueda sin resultados", 
                 JOptionPane.INFORMATION_MESSAGE);
         }
@@ -474,6 +582,61 @@ public void buscarCitaPorId(String idCita) {
              if (lblCitasCanceladas != null) lblCitasCanceladas.setText(String.valueOf(canceladas));
              if (lblCitasCompletadas != null) lblCitasCompletadas.setText(String.valueOf(completadas));
     }
+   public boolean existeCitaEnMismaHora(LocalDate fecha, String hora) {
+    List<Cita> citas = citasDAO.cargarTodos();
+    
+    for (Cita cita : citas) {
+        if (cita.getFechaCita().equals(fecha) && 
+            cita.getHora().equals(hora) && 
+            cita.getEstado() != EstadoCita.CANCELADA) {
+            return true;
+        }
+    }
+    return false;
+}
+ public boolean existeOtraCitaEnMismaHora(LocalDate fecha, String hora, String documentoMedico, String idCitaExcluir) {
+    List<Cita> citas = citasDAO.cargarTodos();
+    
+    for (Cita cita : citas) {
+        if (!cita.getIdCita().equals(idCitaExcluir)) { 
+            if (cita.getFechaCita().equals(fecha) && 
+                cita.getHora().equals(hora) && 
+                cita.getDocumentoMedico().equals(documentoMedico) &&
+                cita.getEstado() != EstadoCita.CANCELADA) {
+                return true;
+            }
+        }
+    }
+    return false;
+  }
+public void configurarColoresTablaCitas() {
+    DefaultTableCellRenderer rendererEstado = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            Component c = super.getTableCellRendererComponent(table, value, 
+                    isSelected, hasFocus, row, column);
+            
+            String estado = value != null ? value.toString() : "";
+            
+            if (isSelected) {
+                c.setBackground(new Color(57, 105, 138)); // Color para selección
+                c.setForeground(Color.WHITE);
+            } else if ("CANCELADA".equalsIgnoreCase(estado)) {
+                c.setBackground(Color.RED);
+                c.setForeground(Color.WHITE);
+            } else {
+                c.setBackground(table.getBackground());
+                c.setForeground(table.getForeground());
+            }
+            
+            return c;
+        }
+    };
+    
+    tablaCitas.getColumnModel().getColumn(11).setCellRenderer(rendererEstado);
+   }
 }
      
 

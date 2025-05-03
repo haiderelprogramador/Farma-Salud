@@ -4,9 +4,12 @@
  */
 package Controller;
 
+import com.toedter.calendar.JDateChooser;
 import dao.PacienteDAO;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
@@ -32,7 +35,7 @@ public class ControllerPaciente {
     private JTextField txtPriApellidoR;
     private JTextField txtDocumentoR;
     private JTextField txtEmailR;
-    private JTextField txtFechaNacimiento;
+    private JDateChooser JDateFechaNacimiento;
     private JTextField txtCelularR;
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbEps;
@@ -61,8 +64,8 @@ public class ControllerPaciente {
         this.txtEmailR = txtEmailR;
     }
     
-    public void setTxtFechaNacimiento(JTextField txtFechaNacimiento) {
-        this.txtFechaNacimiento = txtFechaNacimiento;
+    public void setJDateFechaNacimiento(JDateChooser JDateFechaNacimiento) {
+        this.JDateFechaNacimiento = JDateFechaNacimiento;
     }
     
     public void setTxtTelefono(JTextField txtCelularR) {
@@ -102,7 +105,7 @@ public class ControllerPaciente {
             String apellidos = txtPriApellidoR.getText().trim();
             String documento = txtDocumentoR.getText().trim();
             String email = txtEmailR.getText().trim();
-            String fechaStr = txtFechaNacimiento.getText().trim();
+            String fechaStr = JDateFechaNacimiento.getDate().toString();
             String telefono = txtCelularR.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String eps = cbEps.getSelectedItem().toString();
@@ -116,17 +119,17 @@ public class ControllerPaciente {
                 return;
             }
             
-            LocalDate fechaNacimiento;
-            try {
-                fechaNacimiento = LocalDate.parse(fechaStr);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(null,
-                    "Formato de fecha inválido. Usa YYYY-MM-DD",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
+       Date fechaDate = JDateFechaNacimiento.getDate();
+     if (fechaDate == null) {
+      JOptionPane.showMessageDialog(null, "La fecha de nacimiento es obligatoria", 
+        "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+     LocalDate fechaNacimiento = fechaDate.toInstant()
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate();
+        
         boolean existe = pacienteDAO.cargarTodos().stream()
     .anyMatch(p -> p.getNumeroDocumento() != null && p.getNumeroDocumento().equals(documento));
             if (existe) {
@@ -167,7 +170,7 @@ public class ControllerPaciente {
         txtPriApellidoR.setText("");
         txtEmailR.setText("");
         txtDocumentoR.setText("");
-        txtFechaNacimiento.setText("");
+        JDateFechaNacimiento.setDate(null);
         txtCelularR.setText("");
         cbTipoDocumento.setSelectedIndex(0);
         cboTipoSangre.setSelectedIndex(0);
@@ -262,7 +265,7 @@ public class ControllerPaciente {
             String apellidos = txtPriApellidoR.getText().trim();
             String documento = txtDocumentoR.getText().trim();
             String email = txtEmailR.getText().trim();
-            String fechaStr = txtFechaNacimiento.getText().trim();
+            String fechaStr = JDateFechaNacimiento.getDate().toString();
             String telefono = txtCelularR.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String eps = cbEps.getSelectedItem().toString();
@@ -279,17 +282,17 @@ public class ControllerPaciente {
                 return;
             }
 
-            LocalDate fechaNacimiento;
-            try {
-                fechaNacimiento = LocalDate.parse(fechaStr);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(null,
-                    "Formato de fecha inválido. Usa YYYY-MM-DD",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
+             Date fechaNac = JDateFechaNacimiento.getDate();
+        if (fechaNac == null) {
+            JOptionPane.showMessageDialog(null, 
+                "La fecha de nacimiento es obligatoria", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        LocalDate fechaNacimiento = fechaNac.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
  
 
             Paciente pacienteActualizado = new Paciente(
@@ -337,7 +340,22 @@ public class ControllerPaciente {
             txtDocumentoR.setText(tableModelPaciente.getValueAt(filaSeleccionada, 0).toString());
             txtPriNombreR.setText(tableModelPaciente.getValueAt(filaSeleccionada, 1).toString());
             txtPriApellidoR.setText(tableModelPaciente.getValueAt(filaSeleccionada, 2).toString());
-            txtFechaNacimiento.setText(tableModelPaciente.getValueAt(filaSeleccionada, 3).toString());
+   Object fechaValue = tableModelPaciente.getValueAt(filaSeleccionada, 3);
+        if (fechaValue != null) {
+            try {
+                LocalDate fecha = (fechaValue instanceof LocalDate) 
+                    ? (LocalDate) fechaValue 
+                    : LocalDate.parse(fechaValue.toString());
+                
+                // Convertir LocalDate a Date (forma simplificada)
+                Date fechaDate = java.sql.Date.valueOf(fecha);
+                JDateFechaNacimiento.setDate(fechaDate);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, 
+                    "Error al cargar la fecha: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
             cbSexo.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 4).toString());
             cbEps.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 5).toString());
             txtEmailR.setText(tableModelPaciente.getValueAt(filaSeleccionada, 6).toString());
