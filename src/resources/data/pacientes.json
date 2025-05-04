@@ -85,5 +85,44 @@
     "eps": "Comfamiliar",
     "email": "hvd@gmail.com",
     "celular": "234567890"
+  },
+  {
+    "tipoSangre": "0+",
+    "tipoDocumento": "CC",
+    "Antecendentes": "sufre de dolores de cabeza",
+    "numeroDocumento": "1234574848",
+    "nombres": "sharlok",
+    "apellidos": "alcazar",
+    "fechaNacimiento": "2007-05-15",
+    "sexo": "F",
+    "eps": "Comfamiliar",
+    "email": "sharlok@gmail.com",
+    "celular": "1234567890"
+  },
+  {
+    "tipoSangre": "0+",
+    "tipoDocumento": "RC",
+    "Antecendentes": "se lesiono en la pierna cuando era pequeño",
+    "numeroDocumento": "2349876543",
+    "nombres": "roque",
+    "apellidos": "ahumada",
+    "fechaNacimiento": "1980-08-03",
+    "sexo": "M",
+    "eps": "Sanistas",
+    "email": "roque@gmail.com",
+    "celular": "1234567890"
+  },
+  {
+    "tipoSangre": "B+",
+    "tipoDocumento": "RC",
+    "Antecendentes": "tiene alergia al fluor",
+    "numeroDocumento": "1102229465",
+    "nombres": "yuliney",
+    "apellidos": "payares",
+    "fechaNacimiento": "1991-05-14",
+    "sexo": "M",
+    "eps": "Coosalud",
+    "email": "yuli@gmail.com",
+    "celular": "3234321126"
   }
 ]
