@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controller;
 
+import com.toedter.calendar.JDateChooser;
 import dao.RecepcionistaDAO;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -26,10 +24,10 @@ public class ControllerRecepcionista {
     private JTextField txtApellidos;
     private JTextField txtDocumento;
     private JTextField txtEmail;
-    private JTextField txtFechaNacimiento;
+    private JDateChooser dateFechaNacimiento;
     private JTextField txtTelefono;
     private JTextField txtCodigoEmpleado;
-    private JTextField txtFechaContratacion;
+    private JDateChooser dateFechaContratacion;
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbEps;
     private JComboBox<String> cbTurno;
@@ -55,8 +53,8 @@ public class ControllerRecepcionista {
         this.txtEmail = txtEmail;
     }
     
-    public void setTxtFechaNacimiento(JTextField txtFechaNacimiento) {
-        this.txtFechaNacimiento = txtFechaNacimiento;
+    public void setTxtFechaNacimiento(JDateChooser dateFechaNacimiento) {
+        this.dateFechaNacimiento = dateFechaNacimiento;
     }
     
     public void setTxtTelefono(JTextField txtTelefono) {
@@ -67,8 +65,8 @@ public class ControllerRecepcionista {
         this.txtCodigoEmpleado = txtCodigoEmpleado;
     }
     
-    public void setTxtFechaContratacion(JTextField txtFechaContratacion) {
-        this.txtFechaContratacion = txtFechaContratacion;
+    public void setTxtFechaContratacion(JDateChooser dateFechaContratacion) {
+        this.dateFechaContratacion = dateFechaContratacion;
     }
     
     public void setCbSexo(JComboBox<String> cbSexo) {
@@ -116,41 +114,40 @@ public class ControllerRecepcionista {
         }
     }
     
-   public void guardarRecepcionistaDesdeFormulario() {
-    try {
-        
-        String nombres = txtNombre.getText().trim();
-        String apellidos = txtApellidos.getText().trim();
-        String documento = txtDocumento.getText().trim();
-        String email = txtEmail.getText().trim();
-        String fechaNacStr = txtFechaNacimiento.getText().trim();
-        String telefono = txtTelefono.getText().trim();
-        String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-        String fechaContratacionStr = txtFechaContratacion.getText().trim();
-        String sexo = cbSexo.getSelectedItem() != null ? cbSexo.getSelectedItem().toString() : "";
-        String eps = cbEps.getSelectedItem() != null ? cbEps.getSelectedItem().toString() : "";
-        String turno = cbTurno.getSelectedItem() != null ? cbTurno.getSelectedItem().toString() : "";
-
-        
-        if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-            email.isEmpty() || telefono.isEmpty() || fechaNacStr.isEmpty() ||
-            codigoEmpleado.isEmpty() || fechaContratacionStr.isEmpty() ||
-            sexo.isEmpty() || eps.isEmpty() || turno.isEmpty()) {
-            JOptionPane.showMessageDialog(null, 
-                "Todos los campos son obligatorios", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        
-        LocalDate fechaNacimiento;
-        LocalDate fechaContratacion;
+    public void guardarRecepcionistaDesdeFormulario() {
         try {
-            fechaNacimiento = LocalDate.parse(fechaNacStr);
-            fechaContratacion = LocalDate.parse(fechaContratacionStr);
+            // Obtener datos del formulario
+            String nombres = txtNombre.getText().trim();
+            String apellidos = txtApellidos.getText().trim();
+            String documento = txtDocumento.getText().trim();
+            String email = txtEmail.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
+            String sexo = cbSexo.getSelectedItem() != null ? cbSexo.getSelectedItem().toString() : "";
+            String eps = cbEps.getSelectedItem() != null ? cbEps.getSelectedItem().toString() : "";
+            String turno = cbTurno.getSelectedItem() != null ? cbTurno.getSelectedItem().toString() : "";
             
             
+            
+            // Validar campos obligatorios
+            if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
+                email.isEmpty() || telefono.isEmpty() || codigoEmpleado.isEmpty() ||
+                sexo.isEmpty() || eps.isEmpty() || turno.isEmpty() ||
+                dateFechaNacimiento.getDate() == null || dateFechaContratacion.getDate() == null) {
+                JOptionPane.showMessageDialog(null, 
+                    "Todos los campos son obligatorios", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Obtener fechas de los JDateChooser
+            LocalDate fechaNacimiento = dateFechaNacimiento.getDate().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaContratacion = dateFechaContratacion.getDate().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+            
+            // Validar que fecha contratación no sea anterior a fecha nacimiento
             if (fechaContratacion.isBefore(fechaNacimiento)) {
                 JOptionPane.showMessageDialog(null,
                     "La fecha de contratación no puede ser anterior a la fecha de nacimiento",
@@ -158,79 +155,73 @@ public class ControllerRecepcionista {
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null,
-                "Formato de fecha inválido. Usa YYYY-MM-DD",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        
-        boolean existe = recepcionistaDAO.cargarTodos().stream()
-            .filter(r -> r.getNumeroDocumento() != null) 
-            .anyMatch(r -> r.getNumeroDocumento().equals(documento));
             
-        if (existe) {
-            JOptionPane.showMessageDialog(null,
-                "Ya existe un recepcionista con este documento",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        
-        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            JOptionPane.showMessageDialog(null,
-                "El formato del email no es válido",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        
-        Recepcionista nuevoRecepcionista = new Recepcionista(
-            documento,
-            nombres,
-            apellidos,
-            fechaNacimiento,
-            sexo,
-            eps,
-            email,
-            telefono,
-            codigoEmpleado,
-            fechaContratacion,
-            turno
-        );
-
-        recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista);
-        JOptionPane.showMessageDialog(null, 
-            "Recepcionista guardado exitosamente", 
-            "Éxito", 
-            JOptionPane.INFORMATION_MESSAGE);
+            // Validar que no exista ya un recepcionista con este documento
+            boolean existe = recepcionistaDAO.cargarTodos().stream()
+                .filter(r -> r.getNumeroDocumento() != null) 
+                .anyMatch(r -> r.getNumeroDocumento().equals(documento));
+                
+            if (existe) {
+                JOptionPane.showMessageDialog(null,
+                    "Ya existe un recepcionista con este documento",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             
-        
-        cargarDatosEnTablaRecepcionista();
-        limpiarRecepcionista();
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, 
-            "Error al guardar Recepcionista: " + e.getMessage(),
-            "ERROR", 
-            JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }    
-}
+            // Validar formato de email
+            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                JOptionPane.showMessageDialog(null,
+                    "El formato del email no es válido",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Crear nuevo recepcionista
+            Recepcionista nuevoRecepcionista = new Recepcionista(
+                documento,
+                nombres,
+                apellidos,
+                fechaNacimiento,
+                sexo,
+                eps,
+                email,
+                telefono,
+                codigoEmpleado,
+                fechaContratacion,
+                turno
+            );
+            
+            // Guardar en la base de datos
+            recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista);
+            JOptionPane.showMessageDialog(null, 
+                "Recepcionista guardado exitosamente", 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE);
+                
+            // Actualizar tabla y limpiar formulario
+            cargarDatosEnTablaRecepcionista();
+            limpiarRecepcionista();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, 
+                "Error al guardar Recepcionista: " + e.getMessage(),
+                "ERROR", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }    
+    }
     
     public void limpiarRecepcionista() {
         txtNombre.setText("");
         txtApellidos.setText("");
         txtDocumento.setText("");
         txtEmail.setText("");
-        txtFechaNacimiento.setText("");
+        dateFechaNacimiento.setDate(null);
         txtTelefono.setText("");
         txtCodigoEmpleado.setText("");
-        txtFechaContratacion.setText("");
+        dateFechaContratacion.setDate(null);
         cbSexo.setSelectedIndex(0);
         cbEps.setSelectedIndex(0);
         cbTurno.setSelectedIndex(0);
@@ -285,41 +276,44 @@ public class ControllerRecepcionista {
 
             String documentoOriginal = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
 
+            // Obtener datos del formulario
             String nombres = txtNombre.getText().trim();
             String apellidos = txtApellidos.getText().trim();
             String documento = txtDocumento.getText().trim();
             String email = txtEmail.getText().trim();
-            String fechaNacStr = txtFechaNacimiento.getText().trim();
             String telefono = txtTelefono.getText().trim();
             String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-            String fechaContratacionStr = txtFechaContratacion.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String eps = cbEps.getSelectedItem().toString();
             String turno = cbTurno.getSelectedItem().toString();
-
+            
+            // Validar campos obligatorios
             if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-                email.isEmpty() || telefono.isEmpty() || fechaNacStr.isEmpty() ||
-                codigoEmpleado.isEmpty() || fechaContratacionStr.isEmpty()) {
+                email.isEmpty() || telefono.isEmpty() || codigoEmpleado.isEmpty() ||
+                dateFechaNacimiento.getDate() == null || dateFechaContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            LocalDate fechaNacimiento;
-            LocalDate fechaContratacion;
-            try {
-                fechaNacimiento = LocalDate.parse(fechaNacStr);
-                fechaContratacion = LocalDate.parse(fechaContratacionStr);
-            } catch (DateTimeParseException e) {
+            
+            // Obtener fechas de los JDateChooser
+            LocalDate fechaNacimiento = dateFechaNacimiento.getDate().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaContratacion = dateFechaContratacion.getDate().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+            
+            // Validar que fecha contratación no sea anterior a fecha nacimiento
+            if (fechaContratacion.isBefore(fechaNacimiento)) {
                 JOptionPane.showMessageDialog(null,
-                    "Formato de fecha inválido. Usa YYYY-MM-DD",
+                    "La fecha de contratación no puede ser anterior a la fecha de nacimiento",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Validar si cambió el documento y si ya existe
             if (!documentoOriginal.equals(documento)) {
                 boolean existe = recepcionistaDAO.cargarTodos().stream()
                     .anyMatch(r -> r.getNumeroDocumento().equals(documento));
@@ -332,6 +326,7 @@ public class ControllerRecepcionista {
                 }
             }
 
+            // Crear objeto recepcionista actualizado
             Recepcionista recepcionistaActualizado = new Recepcionista(
                 documento,
                 nombres,
@@ -346,6 +341,7 @@ public class ControllerRecepcionista {
                 turno
             );
 
+            // Actualizar en la base de datos
             boolean actualizado = recepcionistaDAO.actualizarRecepcionista(documentoOriginal, recepcionistaActualizado);
             if (actualizado) {
                 JOptionPane.showMessageDialog(null,
@@ -375,13 +371,20 @@ public class ControllerRecepcionista {
             txtDocumento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString());
             txtNombre.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 1).toString());
             txtApellidos.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
-            txtFechaNacimiento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 3).toString());
+            
+            // Establecer fechas en los JDateChooser
+            LocalDate fechaNac = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 3);
+            dateFechaNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            
             cbSexo.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 4).toString());
             cbEps.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 5).toString());
             txtEmail.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 6).toString());
             txtTelefono.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
             txtCodigoEmpleado.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 8).toString());
-            txtFechaContratacion.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 9).toString());
+            
+            LocalDate fechaCont = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 9);
+            dateFechaContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            
             cbTurno.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
             
             documentoOriginal = txtDocumento.getText();

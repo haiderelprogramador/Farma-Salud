@@ -77,10 +77,10 @@ public class admin extends javax.swing.JFrame {
         controllerRecepcionista.setTxtApellidos(jtextfieldApellido_recep);
         controllerRecepcionista.setTxtDocumento(jtextfielID_recep);
         controllerRecepcionista.setTxtEmail(Jtextfield_correo_recep);
-        controllerRecepcionista.setTxtFechaNacimiento(Jtexfieldfechanacimiento_recep);
+        controllerRecepcionista.setTxtFechaNacimiento(Fecha_Nacimiento_Recep);
         controllerRecepcionista.setTxtTelefono(jtextfieldTelefono_recep);
         controllerRecepcionista.setTxtCodigoEmpleado(JtexfieldCodigo_recep);
-        controllerRecepcionista.setTxtFechaContratacion(Jtexfieldfechacontratacion_recep_);
+        controllerRecepcionista.setTxtFechaContratacion(Fecha_Contratacion_Recepcionista);
         controllerRecepcionista.setCbSexo(JcomboSexo);
         controllerRecepcionista.setCbEps(JcomboSexo1);
         controllerRecepcionista.setCbTurno(JComboTurno);
@@ -307,17 +307,12 @@ public class admin extends javax.swing.JFrame {
         JtexfieldCodigo_recep = new javax.swing.JTextField();
         jSeparator14 = new javax.swing.JSeparator();
         jLabel44 = new javax.swing.JLabel();
-        Jtexfieldfechacontratacion_recep_ = new javax.swing.JTextField();
-        jSeparator15 = new javax.swing.JSeparator();
         JcomboSexo = new javax.swing.JComboBox<>();
-        jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
-        Jtexfieldfechanacimiento_recep = new javax.swing.JTextField();
-        jSeparator16 = new javax.swing.JSeparator();
         JcomboSexo1 = new javax.swing.JComboBox<>();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
         JComboTurno = new javax.swing.JComboBox<>();
+        Fecha_Contratacion_Recepcionista = new com.toedter.calendar.JDateChooser();
+        Fecha_Nacimiento_Recep = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         TabladeRecepcionistas = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
@@ -384,11 +379,9 @@ public class admin extends javax.swing.JFrame {
         Jtexfieldfechacontratacion_farmaceutica = new javax.swing.JTextField();
         jSeparator23 = new javax.swing.JSeparator();
         Jcombobox_sexoFarmaceutica = new javax.swing.JComboBox<>();
-        jLabel63 = new javax.swing.JLabel();
         jLabel64 = new javax.swing.JLabel();
         Jtexfieldfechanacimiento_farmeceutica = new javax.swing.JTextField();
         jSeparator24 = new javax.swing.JSeparator();
-        jLabel66 = new javax.swing.JLabel();
         Jcombobox_TurnoFarmaceutica = new javax.swing.JComboBox<>();
         jScrollPane5 = new javax.swing.JScrollPane();
         TabladeFarmaceuticas = new javax.swing.JTable();
@@ -1065,52 +1058,25 @@ public class admin extends javax.swing.JFrame {
         jLabel44.setText("FECHA CONTRATACION:");
         jPanel13.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 140, 30));
 
-        Jtexfieldfechacontratacion_recep_.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Jtexfieldfechacontratacion_recep_.setBorder(null);
-        Jtexfieldfechacontratacion_recep_.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Jtexfieldfechacontratacion_recep_KeyTyped(evt);
-            }
-        });
-        jPanel13.add(Jtexfieldfechacontratacion_recep_, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 200, 20));
-
-        jSeparator15.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator15.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel13.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 200, 10));
-
-        JcomboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE SU SEXO >", "MASCULINO", "FEMENINO", "GENERO NO BINARIO", " ", " " }));
-        jPanel13.add(JcomboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 70, -1));
-
-        jLabel45.setText("SEXO :");
-        jPanel13.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 40, 20));
+        JcomboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE SU SEXO >", "MASCULINO", "FEMENINO", "GENERO NO BINARIO", " " }));
+        JcomboSexo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "SEXO:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        JcomboSexo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel13.add(JcomboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 140, 40));
 
         jLabel46.setText("FECHA NACIMIENTO:");
         jPanel13.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 120, 30));
 
-        Jtexfieldfechanacimiento_recep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Jtexfieldfechanacimiento_recep.setBorder(null);
-        Jtexfieldfechanacimiento_recep.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Jtexfieldfechanacimiento_recepKeyTyped(evt);
-            }
-        });
-        jPanel13.add(Jtexfieldfechanacimiento_recep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, 20));
+        JcomboSexo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<TU EPS>", "EPS SANITAS", "EPS SURA", "FAMISANAR", "SALUD TOTAL", "COOMEVA EPS" }));
+        JcomboSexo1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "EPS:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        JcomboSexo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel13.add(JcomboSexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 120, 40));
 
-        jSeparator16.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator16.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel13.add(jSeparator16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 200, 10));
-
-        JcomboSexo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel13.add(JcomboSexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 70, -1));
-
-        jLabel47.setText("EPS  :");
-        jPanel13.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 40, 20));
-
-        jLabel48.setText("TURNO :");
-        jPanel13.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 50, 20));
-
-        JComboTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE EL TURNO >", "MAÑANA", "TARDE", "NOCHE", " ", " ", " " }));
-        jPanel13.add(JComboTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, 80, -1));
+        JComboTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE EL TURNO >", "MAÑANA", "TARDE", "NOCHE", " " }));
+        JComboTurno.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "TURNO:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        JComboTurno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel13.add(JComboTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 110, 40));
+        jPanel13.add(Fecha_Contratacion_Recepcionista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 200, -1));
+        jPanel13.add(Fecha_Nacimiento_Recep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, -1));
 
         jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 590));
 
@@ -1477,13 +1443,12 @@ public class admin extends javax.swing.JFrame {
         jPanel30.add(jSeparator23, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 200, 10));
 
         Jcombobox_sexoFarmaceutica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE SU SEXO >", "MASCULINO", "FEMENINO", "GENERO NO BINARIO", " ", " " }));
-        jPanel30.add(Jcombobox_sexoFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 140, -1));
-
-        jLabel63.setText("SEXO :");
-        jPanel30.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 40, 20));
+        Jcombobox_sexoFarmaceutica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "SEXO:"));
+        Jcombobox_sexoFarmaceutica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel30.add(Jcombobox_sexoFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 180, -1));
 
         jLabel64.setText("FECHA NACIMIENTO:");
-        jPanel30.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 120, 30));
+        jPanel30.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 120, 30));
 
         Jtexfieldfechanacimiento_farmeceutica.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Jtexfieldfechanacimiento_farmeceutica.setBorder(null);
@@ -1492,17 +1457,15 @@ public class admin extends javax.swing.JFrame {
                 Jtexfieldfechanacimiento_farmeceuticaKeyTyped(evt);
             }
         });
-        jPanel30.add(Jtexfieldfechanacimiento_farmeceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, 20));
+        jPanel30.add(Jtexfieldfechanacimiento_farmeceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 200, 20));
 
         jSeparator24.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator24.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel30.add(jSeparator24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 200, 10));
-
-        jLabel66.setText("TURNO :");
-        jPanel30.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 50, 20));
+        jPanel30.add(jSeparator24, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 200, 10));
 
         Jcombobox_TurnoFarmaceutica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< SELECCIONE EL TURNO >", "MAÑANA", "TARDE", "NOCHE", " ", " ", " " }));
-        jPanel30.add(Jcombobox_TurnoFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 100, -1));
+        Jcombobox_TurnoFarmaceutica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "TURNO:"));
+        jPanel30.add(Jcombobox_TurnoFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 190, -1));
 
         jPanel29.add(jPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 590));
 
@@ -2051,14 +2014,6 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JtexfieldCodigo_recepKeyTyped
 
-    private void Jtexfieldfechacontratacion_recep_KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldfechacontratacion_recep_KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtexfieldfechacontratacion_recep_KeyTyped
-
-    private void Jtexfieldfechanacimiento_recepKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldfechanacimiento_recepKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtexfieldfechanacimiento_recepKeyTyped
-
     private void jPanel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel16MouseClicked
         controllerRecepcionista.guardarRecepcionistaDesdeFormulario();
     }//GEN-LAST:event_jPanel16MouseClicked
@@ -2330,6 +2285,8 @@ public class admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Btn_salir;
     private javax.swing.JComboBox<String> Combo_TipoSala;
+    private com.toedter.calendar.JDateChooser Fecha_Contratacion_Recepcionista;
+    private com.toedter.calendar.JDateChooser Fecha_Nacimiento_Recep;
     private com.toedter.calendar.JDateChooser Fecha_contratacion_doctor;
     private com.toedter.calendar.JDateChooser Fecha_nacimiento;
     private javax.swing.JComboBox<String> JComboTurno;
@@ -2344,9 +2301,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField JtexfieldLote_Medicamento;
     private javax.swing.JTextField JtexfieldPrecio_Medicamento;
     private javax.swing.JTextField Jtexfieldfechacontratacion_farmaceutica;
-    private javax.swing.JTextField Jtexfieldfechacontratacion_recep_;
     private javax.swing.JTextField Jtexfieldfechanacimiento_farmeceutica;
-    private javax.swing.JTextField Jtexfieldfechanacimiento_recep;
     private javax.swing.JTextField Jtexfieldfechavencimiento_Medicamento;
     private javax.swing.JTextField Jtexfieldnombre_IDmEDICAMENTO;
     private javax.swing.JTextField Jtexfieldnombre_farmaceutica;
@@ -2411,10 +2366,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
@@ -2431,10 +2383,8 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
@@ -2519,8 +2469,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
-    private javax.swing.JSeparator jSeparator15;
-    private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator17;
     private javax.swing.JSeparator jSeparator18;
     private javax.swing.JSeparator jSeparator19;
