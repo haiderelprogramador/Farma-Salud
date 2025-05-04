@@ -621,7 +621,7 @@ public void configurarColoresTablaCitas() {
             String estado = value != null ? value.toString() : "";
             
             if (isSelected) {
-                c.setBackground(new Color(57, 105, 138)); // Color para selección
+                c.setBackground(new Color(57, 105, 138)); 
                 c.setForeground(Color.WHITE);
             } else if ("CANCELADA".equalsIgnoreCase(estado)) {
                 c.setBackground(Color.RED);
@@ -637,6 +637,70 @@ public void configurarColoresTablaCitas() {
     
     tablaCitas.getColumnModel().getColumn(11).setCellRenderer(rendererEstado);
    }
+
+   public void buscarPacientePorDocumento(String documento) {
+    if (tablePaciente == null || tableModelPaciente == null) {
+        JOptionPane.showMessageDialog(null, "La tabla de pacientes no está inicializada", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+       tablePaciente.clearSelection();
+
+    for (int i = 0; i < tableModelPaciente.getRowCount(); i++) {
+        String docTabla = tableModelPaciente.getValueAt(i, 0).toString(); 
+        if (docTabla.equals(documento)) {
+      
+            tablePaciente.setRowSelectionInterval(i, i);
+            tablePaciente.scrollRectToVisible(tablePaciente.getCellRect(i, 0, true));
+            
+          
+            pacienteSeleccionado = pacienteDAO.buscarPorDocumento(documento);
+            if (pacienteSeleccionado != null) {
+                JOptionPane.showMessageDialog(null, 
+                    "Paciente encontrado: " + pacienteSeleccionado.getNombres(),
+                    "Búsqueda exitosa", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+            return;
+        }
+    }
+
+    JOptionPane.showMessageDialog(null, 
+        "No se encontró un paciente con el documento: " + documento,
+        "Búsqueda sin resultados", 
+        JOptionPane.WARNING_MESSAGE);
+    }
+ public void buscarMedicoPorApellido(String apellido) {
+    if (tableMedico == null || tableModelMedico == null) {
+        JOptionPane.showMessageDialog(null, 
+            "La tabla de médicos no está inicializada", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    boolean encontrado = false;
+    
+    for (int i = 0; i < tableModelMedico.getRowCount(); i++) {
+        String apellidoTabla = tableModelMedico.getValueAt(i, 2).toString();
+        if (apellidoTabla.equalsIgnoreCase(apellido)) {
+            encontrado = true;
+            break; 
+        }
+    }
+
+    if (encontrado) {
+        JOptionPane.showMessageDialog(null,
+            "Se encontró  un médico con el apellido: " + apellido,
+            "Búsqueda exitosa",
+            JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(null,
+            "No se encontraron médicos con el apellido: " + apellido,
+            "Búsqueda sin resultados",
+            JOptionPane.WARNING_MESSAGE);
+    }
+}
 }
      
 

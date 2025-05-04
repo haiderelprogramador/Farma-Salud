@@ -111,5 +111,18 @@
     "eps": "Sanistas",
     "email": "roque@gmail.com",
     "celular": "1234567890"
+  },
+  {
+    "tipoSangre": "B+",
+    "tipoDocumento": "RC",
+    "Antecendentes": "tiene alergia al fluor",
+    "numeroDocumento": "1102229465",
+    "nombres": "yuliney",
+    "apellidos": "payares",
+    "fechaNacimiento": "1991-05-14",
+    "sexo": "M",
+    "eps": "Coosalud",
+    "email": "yuli@gmail.com",
+    "celular": "3234321126"
   }
 ]
