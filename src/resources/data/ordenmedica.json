@@ -112,5 +112,17 @@
     "cantidad": "22",
     "medicamentos": "dd",
     "fecha": "May 2, 2025, 9:15:58 AM"
+  },
+  {
+    "documentoPaciente": "12222222222",
+    "nombre": "bhfbf",
+    "apellido": "hdbvkdbv",
+    "tipoSangre": "B+",
+    "sexo": "M",
+    "eps": "Comfamiliar",
+    "diagnostico": "addddd",
+    "cantidad": "23",
+    "medicamentos": "acetaminofen",
+    "fecha": "May 4, 2025, 4:22:59 PM"
   }
 ]

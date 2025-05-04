@@ -64,8 +64,8 @@ public class admin extends javax.swing.JFrame {
     controllerDoctor.setCbSexo(cbSexo2);
     controllerDoctor.setCbHorario(Jcombo_horario);
     controllerDoctor.setCbEspecialidad(cbEspecialidad);
-    controllerDoctor.setDateChooserNacimiento(Fecha_nacimiento);
-    controllerDoctor.setDateChooserContratacion(Fecha_contratacion_doctor);
+    //controllerDoctor.setDateChooserNacimiento(dateChooserNacimiento);
+   // controllerDoctor.setDateChooserContratacion(dateChooserContratacion);
     
     controllerDoctor.initTableDoctor();
     controllerDoctor.cargarDatosEnTablaDoctor();
@@ -255,9 +255,7 @@ public class admin extends javax.swing.JFrame {
         cbSexo2 = new javax.swing.JComboBox<>();
         jLabel42 = new javax.swing.JLabel();
         cbEspecialidad = new javax.swing.JComboBox<>();
-        Fecha_nacimiento = new com.toedter.calendar.JDateChooser();
         jLabel86 = new javax.swing.JLabel();
-        Fecha_contratacion_doctor = new com.toedter.calendar.JDateChooser();
         Jcombo_horario = new javax.swing.JComboBox<>();
         jLabel87 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -807,11 +805,9 @@ public class admin extends javax.swing.JFrame {
 
         cbEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione  la especialidad del doctor>", "Medico general", "Cardilogo", "terapeusta", " ", " " }));
         jPanel4.add(cbEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 260, -1));
-        jPanel4.add(Fecha_nacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 70, -1));
 
         jLabel86.setText("Horario:");
         jPanel4.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 50, 20));
-        jPanel4.add(Fecha_contratacion_doctor, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, -1));
 
         Jcombo_horario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<SELECCIONE EL HORARIO>", "Lunes-miercoles-viernes", "Martes-jueves-sabado", "Sabado-domingo" }));
         jPanel4.add(Jcombo_horario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 190, -1));
@@ -2330,8 +2326,6 @@ public class admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Btn_salir;
     private javax.swing.JComboBox<String> Combo_TipoSala;
-    private com.toedter.calendar.JDateChooser Fecha_contratacion_doctor;
-    private com.toedter.calendar.JDateChooser Fecha_nacimiento;
     private javax.swing.JComboBox<String> JComboTurno;
     private javax.swing.JComboBox<String> JcomboSexo;
     private javax.swing.JComboBox<String> JcomboSexo1;
