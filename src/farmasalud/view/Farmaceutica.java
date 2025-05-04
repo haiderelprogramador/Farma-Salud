@@ -480,6 +480,8 @@ public class Farmaceutica extends javax.swing.JFrame {
         });
         jPanel21.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 290, 30));
 
+        jButton2.setBackground(new java.awt.Color(10, 92, 184));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Buscar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -501,12 +503,9 @@ public class Farmaceutica extends javax.swing.JFrame {
         jLabel15.setText("Consultar Medicamento");
         jPanel21.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, 30));
 
+        jButton3.setBackground(new java.awt.Color(10, 92, 184));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Mostrar Todos");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
         jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jButton3KeyPressed(evt);
@@ -631,12 +630,6 @@ public class Farmaceutica extends javax.swing.JFrame {
         // TODO add your handling code here:
       
     }//GEN-LAST:event_jButton3KeyPressed
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-          controllerMedicamento.mostrarTodosMedicamentos();
-        jButton3.setText("Mostrar Todos");
-    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
