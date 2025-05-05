@@ -94,8 +94,23 @@ public class ControllerDoctor {
     
     
     public void cargarDatosEnTablaDoctor() {
+    try {
+        // Limpiar la tabla primero
         tableModelDoctor.setRowCount(0);
+        
+        // Obtener los médicos con manejo de null
         List<Medico> medicos = medicoDAO.cargarTodos();
+        
+        // Verificar si la lista es null o vacía
+        if (medicos == null || medicos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, 
+                "No se encontraron médicos registrados", 
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        // Llenar la tabla con los datos
         for (Medico medico : medicos) {
             Object[] row = {
                 medico.getNombres(),
@@ -111,7 +126,14 @@ public class ControllerDoctor {
             };
             tableModelDoctor.addRow(row);
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, 
+            "Error al cargar los médicos: " + e.getMessage(),
+            "ERROR", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
     
     
     public void guardarDoctorDesdeFormulario() {
@@ -144,22 +166,26 @@ public class ControllerDoctor {
             LocalDate fechaContratacion = dateChooserContratacion.getDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             
-            
-            boolean existe = false;
-            for (Medico m : medicoDAO.cargarTodos()) {
-                if (m.getNumeroDocumento().equals(cedula)) {
+            List<Medico> medicos = medicoDAO.cargarTodos();
+        boolean existe = false;
+        
+        if (medicos != null) {
+            for (Medico m : medicos) {
+                if (m != null && m.getNumeroDocumento() != null && 
+                    m.getNumeroDocumento().equals(cedula)) {
                     existe = true;
                     break;
                 }
             }
-            
-            if (existe) {
-                JOptionPane.showMessageDialog(null,
-                    "Ya existe un doctor con esta cédula",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        }
+        
+        if (existe) {
+            JOptionPane.showMessageDialog(null,
+                "Ya existe un doctor con esta cédula",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
             
             // Crear nuevo médico
             Medico nuevoMedico = new Medico(
