@@ -27,7 +27,7 @@ import model.OrdenMedica;
  * @author HP
  */
 public class OrdenMedicaDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Documents\\NetBeansProjects\\farmaSalud-software\\src\\resources\\data\\ordenmedica.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\ordenmedica.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
     

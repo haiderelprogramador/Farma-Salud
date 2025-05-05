@@ -7,8 +7,7 @@
     "consultorio": "Consultorio 4",
     "motivo": "Seguimiento",
     "estado": "CANCELADA",
-    "documentoPaciente": "20000",
-    "especialidad": "General"
+    "documentoPaciente": "20000"
   },
   {
     "IdCita": "984",
@@ -18,8 +17,7 @@
     "consultorio": "Consultorio 2",
     "motivo": "Enfermedad Cronica",
     "estado": "CANCELADA",
-    "documentoPaciente": "20000",
-    "especialidad": "Oftamologia"
+    "documentoPaciente": "20000"
   },
   {
     "IdCita": "2345",
@@ -29,8 +27,7 @@
     "consultorio": "Consultorio 2",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
-    "documentoPaciente": "0997367373",
-    "especialidad": "General"
+    "documentoPaciente": "0997367373"
   },
   {
     "IdCita": "07",
@@ -40,8 +37,7 @@
     "consultorio": "Consultorio 4",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
-    "documentoPaciente": "0987654321",
-    "especialidad": "General"
+    "documentoPaciente": "0987654321"
   },
   {
     "IdCita": "5678",
@@ -51,7 +47,105 @@
     "consultorio": "Consultorio 2",
     "motivo": "Seguimiento",
     "estado": "COMPLETADA",
-    "documentoPaciente": "0997367373",
-    "especialidad": "Oftamologia"
+    "documentoPaciente": "0997367373"
+  },
+  {
+    "IdCita": "356532",
+    "fechaCita": "2001-09-06",
+    "hora": "10:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0987654321",
+    "documentoMedico": "1234567890"
+  },
+  {
+    "IdCita": "24545",
+    "fechaCita": "2022-05-12",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 2",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "1234567890",
+    "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "688",
+    "fechaCita": "2025-05-15",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 3",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "098642468",
+    "documentoMedico": "1234567890"
+  },
+  {
+    "IdCita": "78898",
+    "fechaCita": "2022-05-15",
+    "hora": "08:30",
+    "tipoCita": "Control",
+    "consultorio": "Consultorio 4",
+    "motivo": "Enfermedad Cronica",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0876578484",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "1234567890",
+      "nombres": "nicoller",
+      "apellidos": "lopez",
+      "fechaNacimiento": "2000-09-09",
+      "sexo": "F",
+      "eps": "Item 1",
+      "email": "nicolle@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "2345678",
+    "fechaCita": "2022-05-13",
+    "hora": "07:30",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0987654321",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12345889900",
+      "nombres": "juan",
+      "apellidos": "perez",
+      "fechaNacimiento": "2003-09-09",
+      "sexo": "F",
+      "eps": "Item 3",
+      "email": "juan@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "345678",
+    "fechaCita": "2022-05-15",
+    "hora": "08:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 2",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "1234567895",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "1234567890",
+      "nombres": "nicoller",
+      "apellidos": "lopez",
+      "fechaNacimiento": "2000-09-09",
+      "sexo": "F",
+      "eps": "Item 1",
+      "email": "nicolle@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "12345889900"
   }
 ]

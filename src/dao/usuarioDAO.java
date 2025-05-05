@@ -10,11 +10,11 @@ import model.*;
 
 public class usuarioDAO {
     private static final String MEDICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\empleados.json";
-    private static final String RECEPCIONISTAS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
-    private static final String ADMINISTRADORES_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\usuarios.json";
-    private static final String FARMACEUTICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\farmaceutica.json";
+    private static final String RECEPCIONISTAS_JSON ="C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\recepcionista.json";
+    private static final String ADMINISTRADORES_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\usuarios.json";
+    private static final String FARMACEUTICOS_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\farmaceutica.json";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final String PACIENTES_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\pacientes.json";
+    private static final String PACIENTES_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\pacientes.json";
     // Métodos públicos para buscar usuarios
     public Usuario validarCredencialesAdministrador(String email, String password) {
         try (FileReader reader = new FileReader(ADMINISTRADORES_JSON)) {
@@ -39,7 +39,7 @@ public class usuarioDAO {
     }
 
 
-    public Medico buscarMedico(String email, String documento) {
+     public Medico buscarMedico(String email, String documento) {
         try (FileReader reader = new FileReader(MEDICOS_JSON)) {
             JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
             for (int i = 0; i < array.size(); i++) {
@@ -47,15 +47,16 @@ public class usuarioDAO {
                 if (json.get("email").getAsString().equalsIgnoreCase(email) &&
                     json.get("numeroDocumento").getAsString().equals(documento)) {
                     return new Medico(
+                        json.get("numeroDocumento").getAsString(),
                         json.get("nombres").getAsString(),
                         json.get("apellidos").getAsString(),
-                        email,
-                        documento,
-                        json.get("celular").getAsString(),
-                        json.get("especialidad").getAsString(),
                         LocalDate.parse(json.get("fechaNacimiento").getAsString(), DATE_FORMATTER),
                         json.get("sexo").getAsString(),
-                        json.get("eps").getAsString()
+                        email,
+                        json.get("celular").getAsString(),
+                        json.get("especialidad").getAsString(),
+                        LocalDate.parse(json.get("fechaContratacion").getAsString(), DATE_FORMATTER),
+                        json.get("horario").getAsString()
                     );
                 }
             }
