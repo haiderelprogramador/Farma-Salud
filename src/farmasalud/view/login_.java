@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package farmasalud.view;
-import dao.usuarioDAO;
+//import dao.usuarioDAO;
 import javax.swing.*;
 import model.Usuario;
 import farmasalud.view.admin;
@@ -67,7 +67,7 @@ public class login_ extends javax.swing.JFrame {
         jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 300, 29));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutica", "Paciente" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutico", "Paciente" }));
         jComboBox1.setBorder(null);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,7 +141,7 @@ public class login_ extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_contraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String email = Jtextfield_usuario.getText().trim();
+    /*String email = Jtextfield_usuario.getText().trim();
     String documento = new String(Jtextfield_contraseña.getPassword());
     String rolSeleccionado = (String) jComboBox1.getSelectedItem();
     
@@ -206,7 +206,7 @@ private void mostrarError(String mensaje) {
         mensaje, 
         "Error", 
         JOptionPane.ERROR_MESSAGE);
-
+*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

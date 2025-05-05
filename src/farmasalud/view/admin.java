@@ -1989,7 +1989,7 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_salirMouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-        controllerDoctor.guardarDoctorDesdeFormulario();
+     //   controllerDoctor.guardarDoctorDesdeFormulario();
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -2001,12 +2001,12 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        if (TablaDoctores.getSelectedRow() == -1) {
+      /*  if (TablaDoctores.getSelectedRow() == -1) {
             controllerDoctor.cargarDatosDoctorEnFormulario();
         } else {
             controllerDoctor.actualizarDoctor();
             limpiarDoctor();
-        }
+        }*/
     
     }//GEN-LAST:event_jPanel6MouseClicked
 
@@ -2015,7 +2015,7 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_JtexfieldCodigo_recepKeyTyped
 
     private void jPanel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel16MouseClicked
-        controllerRecepcionista.guardarRecepcionistaDesdeFormulario();
+     //   controllerRecepcionista.guardarRecepcionistaDesdeFormulario();
     }//GEN-LAST:event_jPanel16MouseClicked
 
     private void TabladeRecepcionistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabladeRecepcionistasMouseClicked
@@ -2023,12 +2023,12 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_TabladeRecepcionistasMouseClicked
 
     private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
-        if (TabladeRecepcionistas.getSelectedRow() == -1) {
+       /* if (TabladeRecepcionistas.getSelectedRow() == -1) {
             controllerRecepcionista.cargarDatosRecepcionistaEnFormulario();
         } else {
             controllerRecepcionista.actualizarRecepcionista();
             controllerRecepcionista.limpiarRecepcionista();
-        }
+        }*/
                                      
     
     }//GEN-LAST:event_jPanel20MouseClicked
@@ -2081,15 +2081,15 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_panel_eliminarFarmaceuticaMouseClicked
 
     private void panel_agregarFarmaceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_agregarFarmaceuticaMouseClicked
-         controllerFarmaceutica.guardarFarmaceuticaDesdeFormulario();
+       //  controllerFarmaceutica.guardarFarmaceuticaDesdeFormulario();
     }//GEN-LAST:event_panel_agregarFarmaceuticaMouseClicked
 
     private void panel_modificarFarmaceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_modificarFarmaceuticaMouseClicked
-         if (TabladeFarmaceuticas.getSelectedRow() == -1) {
+       /*  if (TabladeFarmaceuticas.getSelectedRow() == -1) {
         JOptionPane.showMessageDialog(this, "Seleccione un farmacéutico para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
     } else {
         controllerFarmaceutica.actualizarFarmaceutica();
-    }
+    }*/
     }//GEN-LAST:event_panel_modificarFarmaceuticaMouseClicked
 
     private void JtexfieldCodigo_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtexfieldCodigo_farmaceuticaKeyTyped

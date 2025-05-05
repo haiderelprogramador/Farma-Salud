@@ -10,8 +10,8 @@ public class Paciente extends Persona {
     private String tipoDocumento;
     private String Antecendentes;
 
-    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String tipoDocumento,String tipoSangre,String Antecendentes) {
-        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
+    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String contraseña,String tipoDocumento,String tipoSangre,String Antecendentes) {
+        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular,contraseña);
          if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
         throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
     }

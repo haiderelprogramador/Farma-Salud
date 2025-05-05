@@ -16,8 +16,8 @@ public class Farmaceutica extends Persona {
     private LocalDate fechaContratacion;
     private String turno;
 
-    public Farmaceutica(String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String codigoEmpleado, LocalDate fechaContratacion, String turno ) {
-        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
+    public Farmaceutica(String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String contraseña,String codigoEmpleado, LocalDate fechaContratacion, String turno ) {
+        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular,contraseña);
         this.codigoEmpleado = codigoEmpleado;
         this.fechaContratacion = fechaContratacion;
         this.turno = turno;

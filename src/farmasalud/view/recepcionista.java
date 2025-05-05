@@ -1851,7 +1851,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
 
     private void btnguardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnguardarMouseClicked
 
-        controller.guardarPacienteDesdeFormulario();
+//        controller.guardarPacienteDesdeFormulario();
     }//GEN-LAST:event_btnguardarMouseClicked
 
     private void btnguardarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnguardarFocusLost
@@ -1879,7 +1879,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     }//GEN-LAST:event_cboTipoSangreActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        controller.actualizarPaciente();        // TODO add your handling code here:
+       // controller.actualizarPaciente();        // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtCelularRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularRKeyTyped
