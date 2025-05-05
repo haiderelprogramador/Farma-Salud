@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import model.*;
 
 public class usuarioDAO {
-    private static final String MEDICOS_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\empleados.json";
+    private static final String MEDICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\empleados.json";
     private static final String RECEPCIONISTAS_JSON ="C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\recepcionista.json";
     private static final String ADMINISTRADORES_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\usuarios.json";
     private static final String FARMACEUTICOS_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\farmaceutica.json";

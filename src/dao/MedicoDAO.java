@@ -17,7 +17,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 public class MedicoDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Pictures\\farmaSalud\\src\\resources\\data\\empleados.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\empleados.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
 
@@ -25,15 +25,19 @@ public class MedicoDAO {
 
     
     public List<Medico> cargarTodos() {
-        try (Reader reader = new FileReader(ARCHIVO_JSON)) {
-            Type tipoLista = new TypeToken<ArrayList<Medico>>(){}.getType();
-            List<Medico> medicos = gson.fromJson(reader, tipoLista);
-            return medicos != null ? medicos : new ArrayList<>();
-        } catch (IOException e) {
-            System.err.println("tienes eso malo y no se puede cargar: " + e.getMessage());
-            return new ArrayList<>();
-        }
+    File archivo = new File(ARCHIVO_JSON);
+    if (!archivo.exists()) {
+        System.err.println("¡El archivo no existe en la ruta: " + archivo.getAbsolutePath() + "!");
+        return new ArrayList<>();
     }
+    try (Reader reader = new FileReader(archivo)) {
+        Type tipoLista = new TypeToken<ArrayList<Medico>>(){}.getType();
+        return gson.fromJson(reader, tipoLista) != null ? gson.fromJson(reader, tipoLista) : new ArrayList<>();
+    } catch (IOException e) {
+        System.err.println("Error al leer el archivo JSON: " + e.getMessage());
+        return new ArrayList<>();
+    }
+}
     
     public void guardarMedico(Medico medico) {
         List<Medico> medicos = cargarTodos();
