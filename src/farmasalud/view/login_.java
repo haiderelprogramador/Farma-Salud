@@ -67,7 +67,7 @@ public class login_ extends javax.swing.JFrame {
         jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 300, 29));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutica", "Paciente" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutico", "Paciente" }));
         jComboBox1.setBorder(null);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
