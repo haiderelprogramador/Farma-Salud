@@ -162,11 +162,9 @@ private void configurarCitas(){
             cargarDatosCitaEnFormularioActualizacion();
         }
     });
-    
-
-/*controllerCitas.setLblCitasProgramadas(lblCitasProgramadas);
+controllerCitas.setLblCitasProgramadas(lblCitasProgramadas);
 controllerCitas.setLblCitasCanceladas(lblCitasCanceladas);
-controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);*/
+controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);
 
 
              controllerCitas.configurarColoresTablaCitas();    
@@ -176,7 +174,6 @@ controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);*/
     if (filaSeleccionada == -1) return;
 
     try {
-        // Cargar datos básicos de la cita
         txtNumeroDocumento2.setText(tablaCitas.getValueAt(filaSeleccionada, 0).toString());
         txtNombre2.setText(tablaCitas.getValueAt(filaSeleccionada, 1).toString());
         txtApellido2.setText(tablaCitas.getValueAt(filaSeleccionada, 2).toString());
@@ -184,8 +181,7 @@ controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);*/
         txtEmail2.setText(tablaCitas.getValueAt(filaSeleccionada, 4).toString());
         txtIdCita2.setText(tablaCitas.getValueAt(filaSeleccionada, 5).toString());
         
-        // Cargar fecha
-        Object fechaValue = tablaCitas.getValueAt(filaSeleccionada, 8); // Ajusta el índice según tu tabla
+        Object fechaValue = tablaCitas.getValueAt(filaSeleccionada, 8); 
         if (fechaValue != null) {
             try {
                 LocalDate fecha = (fechaValue instanceof LocalDate) 
@@ -289,6 +285,9 @@ public void verificarDisponibilidadHoraActualizacion() {
         TabbetCitas = new javax.swing.JTabbedPane();
         panelInicio = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
+        lblCitasProgramadas = new javax.swing.JLabel();
+        lblCitasCanceladas = new javax.swing.JLabel();
+        lblCitasCompletadas = new javax.swing.JLabel();
         panelModificarCita = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaCitas = new javax.swing.JTable();
@@ -346,7 +345,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jSeparator20 = new javax.swing.JSeparator();
         txtNombre2 = new javax.swing.JLabel();
         JDateFechaCita2 = new com.toedter.calendar.JDateChooser();
-        jButton2 = new javax.swing.JButton();
         panelAgendar = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
@@ -604,7 +602,16 @@ public void verificarDisponibilidadHoraActualizacion() {
             .addGap(0, 32, Short.MAX_VALUE)
         );
 
-        panelInicio.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 718, -1));
+        panelInicio.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 718, -1));
+
+        lblCitasProgramadas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelInicio.add(lblCitasProgramadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 70, 30));
+
+        lblCitasCanceladas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelInicio.add(lblCitasCanceladas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 60, 30));
+
+        lblCitasCompletadas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelInicio.add(lblCitasCompletadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 116, 60, 30));
 
         TabbetCitas.addTab("Inicio", panelInicio);
 
@@ -630,11 +637,15 @@ public void verificarDisponibilidadHoraActualizacion() {
         panelModificarCita.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 950, 180));
 
         jPanel21.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel44.setText("LISTADO DE CITAS");
+        jPanel21.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 261, 31));
 
         txtBuscarIdCita.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jPanel21.add(txtBuscarIdCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 174, 31));
+        jPanel21.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 2, -1, 32));
 
         btnBuscarCita.setText("Buscar");
         btnBuscarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -642,9 +653,11 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnBuscarCitaActionPerformed(evt);
             }
         });
+        jPanel21.add(btnBuscarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel16.setText("Id Cita");
+        jLabel16.setText("Documento Paciente");
+        jPanel21.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 8, 180, -1));
 
         jButton1.setText("refrescar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -657,45 +670,9 @@ public void verificarDisponibilidadHoraActualizacion() {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel21.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 11, -1, -1));
 
-        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
-        jPanel21.setLayout(jPanel21Layout);
-        jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
-                .addComponent(jButton1)
-                .addGap(79, 79, 79)
-                .addComponent(jLabel45)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(txtBuscarIdCita, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscarCita)
-                .addContainerGap(88, Short.MAX_VALUE))
-        );
-        jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
-                    .addComponent(txtBuscarIdCita, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarCita))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel16)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelModificarCita.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 960, 40));
+        panelModificarCita.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 960, 50));
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -886,14 +863,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jPanel5.add(txtNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 110, 30));
         jPanel5.add(JDateFechaCita2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, -1));
 
-        jButton2.setText("Cambiar Medico");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, -1, -1));
-
         panelModificarCita.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 930, 240));
 
         TabbetCitas.addTab("Modificar Cita ", panelModificarCita);
@@ -961,7 +930,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnAgendarCitaActionPerformed(evt);
             }
         });
-        jPanel8.add(btnAgendarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, 29));
+        jPanel8.add(btnAgendarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, 29));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Estado de la cita");
@@ -1019,7 +988,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel19.setText("Id Cita");
         jPanel8.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
-        jPanel8.add(JDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 110, -1));
+        jPanel8.add(JDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, 30));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -1183,14 +1152,16 @@ public void verificarDisponibilidadHoraActualizacion() {
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelAgendarLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
-                .addGap(53, 53, 53))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                        .addGap(53, 53, 53))
+                    .addGroup(panelAgendarLayout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         TabbetCitas.addTab("Agendar", panelAgendar);
@@ -1976,10 +1947,6 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
      panelBtnInformes1.setBackground(new Color(10,92,184));    // TODO add your handling code here:
     }//GEN-LAST:event_panelBtnInformes1MouseEntered
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void txtApellidoBMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoBMedicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidoBMedicoActionPerformed
@@ -2060,7 +2027,6 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JComboBox<String> cboTipoCita2;
     private javax.swing.JComboBox<String> cboTipoSangre;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2156,6 +2122,9 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel lblApellidoMedico;
+    private javax.swing.JLabel lblCitasCanceladas;
+    private javax.swing.JLabel lblCitasCompletadas;
+    private javax.swing.JLabel lblCitasProgramadas;
     private javax.swing.JLabel lblEspecialidadMedico;
     private javax.swing.JLabel lblNombreMedico;
     private javax.swing.JLabel lblNombreRecepcion1;

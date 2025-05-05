@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -315,6 +316,7 @@ public void cargarMedicoEnTabla() {
             medico.getNombres(),
             medico.getApellidos(),
             medico.getEspecialidad(),
+            
           
         };
         tableModelMedico.addRow(row);
@@ -536,6 +538,7 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                         medico.getNombres(),
                         medico.getApellidos(),
                         medico.getEspecialidad()
+                      
                     };
                     tableModelCita.addRow(row);
                 }
@@ -701,6 +704,47 @@ public void configurarColoresTablaCitas() {
             JOptionPane.WARNING_MESSAGE);
     }
 }
+  public void cargarCitasPorPaciente(String documentoPaciente) {
+    if (tablaCitas == null || tableModelCita == null) {
+        throw new IllegalStateException("La tabla de citas no está inicializada.");
+    }
+
+    tableModelCita.setRowCount(0); 
+
+    List<Cita> citasDelPaciente = citasDAO.cargarTodos().stream()
+            .filter(cita -> cita.getDocumentoPaciente().equals(documentoPaciente))
+            .collect(Collectors.toList());
+
+    if (citasDelPaciente.isEmpty()) {
+        JOptionPane.showMessageDialog(null, 
+            "No tienes citas programadas.", 
+            "Información", 
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    for (Cita cita : citasDelPaciente) {
+        Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+        Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+        
+        if (paciente != null && medico != null) {
+            Object[] row = {
+                cita.getIdCita(),
+                cita.getFechaCita(),
+                cita.getHora(),
+                cita.getMotivo(),
+                cita.getTipoCita(),
+                cita.getConsultorio(),
+                cita.getEstado().toString(),
+                medico.getNombres() + " " + medico.getApellidos(),
+                medico.getEspecialidad()
+            };
+            tableModelCita.addRow(row);
+        }
+    }
+  }
+
+
 }
      
 

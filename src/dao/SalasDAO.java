@@ -28,7 +28,7 @@ import model.Salas;
  * @author usuario
  */
 public class SalasDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\Downloads\\farmaSalud\\src\\resources\\data\\salas.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\salas.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
     .create();
     
