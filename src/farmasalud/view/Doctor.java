@@ -22,96 +22,16 @@ import model.OrdenMedica;
  */
 public class Doctor extends javax.swing.JFrame {
     
-    private ControllerPaciente controller;
-    private DefaultTableModel tableModelPaciente;
-    private PacienteDAO pacienteDAO = new PacienteDAO();
-    private ControllerOrdenMedica controllerorden;
-
+   
     
     
     public Doctor() {
       
     initComponents();
-   configurarPacientes();
-   controllerorden= new ControllerOrdenMedica(this);
-    configurarContollerOrden();
-  
-  
-      tablaPacientes.getSelectionModel().addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting()) {  
-            cargarDatosDelPacienteSeleccionado();
-        }
-    });
+   
 
         
     }
-    private void configurarPacientes() {
-        try {
-            controller = new ControllerPaciente();
-
-            controller.setTablaPacientes(tablaPacientes);
-            controller.setTxtNombre(jcantidad);
-            controller.setTxtApellidos(jcantidad);
-            controller.setTxtDocumentoR(jcantidad);
-            controller.setTxtEmail(jcantidad);
-          //  controller.setTxtFechaNacimiento(jcantidad);
-            controller.setTxtTelefono(jcantidad);
-            controller.setCbSexo(jComboBox2);
-            controller.setCbEps(jComboBox2);
-            controller.setCbTipoDocumento(jComboBox2);
-            controller.setCboTipoSangre(jComboBox2);
-            //.setTxtAreaAntecedente(jdiansotico);
-
-            controller.initTablePaciente();
-            controller.cargarDatosEnTablaPaciente();
-
-            
-
-        } catch (Exception e) {
-            mostrarError("Error configurando pacientes: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-   
-    
-
-     private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this,
-                mensaje,
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-    }
-     
-   private void cargarDatosDelPacienteSeleccionado() {
-    int filaSeleccionada = tablaPacientes.getSelectedRow();
-    
-    if (filaSeleccionada >= 0) {  
-        DefaultTableModel model = (DefaultTableModel) tablaPacientes.getModel();
-        
-        jLabel7.setText(model.getValueAt(filaSeleccionada, 1).toString());      
-        jLabel19.setText(model.getValueAt(filaSeleccionada, 2).toString());   
-        jLabel11.setText((String) model.getValueAt(filaSeleccionada, 9));     
-        jLabel15.setText((String) model.getValueAt(filaSeleccionada, 4));           
-        jLabel18.setText((String) model.getValueAt(filaSeleccionada, 5));          
-        jLabel21.setText(model.getValueAt(filaSeleccionada, 0).toString()); 
-    }
-}
-   
-   private void configurarContollerOrden(){
-   controllerorden.setjLabel21(jLabel21);
-   controllerorden.setjLabel7(jLabel7);
-   controllerorden.setjLabel19(jLabel19);
-   controllerorden.setjLabel11(jLabel11);
-   controllerorden.setjLabel18(jLabel18);
-   controllerorden.setjLabel15(jLabel15);
-   controllerorden.setjTextField1(jTextField1);
-   controllerorden.setJcantidad(jcantidad);
-   controllerorden.setJnombre(jnombre);
-   
-   
-   controllerorden.guardarDiagnostico();
-   }
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -565,7 +485,6 @@ public class Doctor extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
-        controllerorden.guardarDiagnostico();
     }//GEN-LAST:event_jButton4MouseClicked
 
     /**

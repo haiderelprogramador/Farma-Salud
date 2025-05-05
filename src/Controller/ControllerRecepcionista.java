@@ -114,7 +114,7 @@ public class ControllerRecepcionista {
         }
     }
     
-    public void guardarRecepcionistaDesdeFormulario() {
+   /* public void guardarRecepcionistaDesdeFormulario() {
         try {
             // Obtener datos del formulario
             String nombres = txtNombre.getText().trim();
@@ -211,7 +211,7 @@ public class ControllerRecepcionista {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    
-    }
+    }*/
     
     public void limpiarRecepcionista() {
         txtNombre.setText("");
@@ -263,7 +263,7 @@ public class ControllerRecepcionista {
         }
     }
     
-    public void actualizarRecepcionista() {
+    /*public void actualizarRecepcionista() {
         try {
             int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
             if (filaSeleccionada == -1) {
@@ -363,7 +363,7 @@ public class ControllerRecepcionista {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }
+    }*/
     
     public void cargarDatosRecepcionistaEnFormulario() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();

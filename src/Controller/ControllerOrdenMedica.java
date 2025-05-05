@@ -71,7 +71,7 @@ private JTextField jnombre;
     }
 
 
-public void guardarDiagnostico(){
+/*public void guardarDiagnostico(){
     
 try{
 String documentoPaciente = jLabel21.getText().trim();
@@ -120,7 +120,7 @@ String medicamentos = jnombre.getText().trim();
                     JOptionPane.ERROR_MESSAGE);
     
 }
-}   
+}   */
 public void limpiarFormulario(){
 jLabel21.setText("");
 jLabel7.setText("");

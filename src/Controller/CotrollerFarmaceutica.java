@@ -108,7 +108,7 @@ public class CotrollerFarmaceutica {
         }
     }
     
-    public void guardarFarmaceuticaDesdeFormulario() {
+  /*  public void guardarFarmaceuticaDesdeFormulario() {
     try {
         String nombres = Jtexfieldnombre_farmaceutica.getText().trim();
         String apellidos = jtextfieldApellido_farmaceutica.getText().trim();
@@ -183,7 +183,7 @@ public class CotrollerFarmaceutica {
             "ERROR", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }    
-}
+}*/
     
     public void limpiarFarmaceutica() {
         Jtexfieldnombre_farmaceutica.setText("");
@@ -234,7 +234,7 @@ public class CotrollerFarmaceutica {
         }
     }
     
-    public void actualizarFarmaceutica() {
+    /*public void actualizarFarmaceutica() {
         try {
             int filaSeleccionada = TabladeFarmaceuticas.getSelectedRow();
             if (filaSeleccionada == -1) {
@@ -328,7 +328,7 @@ public class CotrollerFarmaceutica {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }
+    }*/
     
     public void cargarDatosFarmaceuticaEnFormulario() {
         int filaSeleccionada = TabladeFarmaceuticas.getSelectedRow();

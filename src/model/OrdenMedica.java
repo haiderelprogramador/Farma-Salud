@@ -13,123 +13,73 @@ import java.util.List;
  * @author Maria liz
  */
 public class OrdenMedica  {
-    
-    private String idOrden;
-    private String documentoPaciente; // Relación con Paciente
-    private String nombre;
-    private String apellido;
-    private String tipoSangre;
-    private String sexo;
-    private String eps;
-    private String diagnostico;
-    private String cantidad;
-    private String medicamentos; // Lista de nombres de medicamentos
-    private Date fecha;
+ private int idOrden;
+ private String dosis;
+ private String descripcion;
+ private Medico medico;
+ private String fecha;
+ private Paciente paciente;
+ private List<Medicamento> medicamentos;
+ 
+ public OrdenMedica(int idOrden,String dosis,String descripcion,Medico medico,String fecha,Paciente paciente,List<Medicamento> medicamentos){
+    this.idOrden=idOrden;
+    this.dosis=dosis;
+    this.descripcion=descripcion;
+    this.medico=medico;
+    this.fecha=fecha;
+    this.paciente=paciente;
+ }
 
-    // Constructor, getters y setters
-    public OrdenMedica(String documentoPaciente,String nombre,String apellido,String tipoSangre,String sexo,String eps, String diagnostico, String cantidad, String medicamentos) {
-        this.documentoPaciente = documentoPaciente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.tipoSangre= tipoSangre;
-        this.sexo= sexo;
-        this.eps = eps;
-        this.diagnostico = diagnostico;
-        this.cantidad=cantidad;
-        this.medicamentos = medicamentos;
-        this.fecha = new Date(); // Fecha actual
-    }
-
-    public String getIdOrden() {
+    public int getIdOrden() {
         return idOrden;
     }
 
-    public void setIdOrden(String idOrden) {
+    public void setIdOrden(int idOrden) {
         this.idOrden = idOrden;
     }
 
-    public String getDocumentoPaciente() {
-        return documentoPaciente;
+    public String getDosis() {
+        return dosis;
     }
 
-    public void setDocumentoPaciente(String documentoPaciente) {
-        this.documentoPaciente = documentoPaciente;
+    public void setDosis(String dosis) {
+        this.dosis = dosis;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getApellido() {
-        return apellido;
+    public Medico getMedico() {
+        return medico;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
-    public String getTipoSangre() {
-        return tipoSangre;
-    }
-
-    public void setTipoSangre(String tipoSangre) {
-        this.tipoSangre = tipoSangre;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getEps() {
-        return eps;
-    }
-
-    public void setEps(String eps) {
-        this.eps = eps;
-    }
-    
-    
-
-    public String getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(String diagnostico) {
-        this.diagnostico = diagnostico;
-    }
-
-    public String getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public String getMedicamentos() {
-        return medicamentos;
-    }
-
-    public void setMedicamentos(String medicamentos) {
-        this.medicamentos = medicamentos;
-    }
-
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+ 
+ 
+ 
     
     
 }

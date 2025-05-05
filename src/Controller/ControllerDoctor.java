@@ -136,7 +136,7 @@ public class ControllerDoctor {
 }
     
     
-    public void guardarDoctorDesdeFormulario() {
+   /* public void guardarDoctorDesdeFormulario() {
         try {
             // Obtener datos del formulario
             String nombres = txtNombre.getText().trim();
@@ -217,7 +217,7 @@ public class ControllerDoctor {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    
-    }
+    }*/
     
     
     public void limpiarFormulario() {
@@ -270,7 +270,7 @@ public class ControllerDoctor {
     }
     
     
-    public void actualizarDoctor() {
+  /*  public void actualizarDoctor() {
         try {
             int filaSeleccionada = tablaDoctores.getSelectedRow();
             if (filaSeleccionada == -1) {
@@ -365,7 +365,7 @@ public class ControllerDoctor {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }
+    }*/
     
     
     public void cargarDatosDoctorEnFormulario() {

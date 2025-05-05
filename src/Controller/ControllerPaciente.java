@@ -99,7 +99,7 @@ public class ControllerPaciente {
     }
     
     
-    public void guardarPacienteDesdeFormulario() {
+    /*public void guardarPacienteDesdeFormulario() {
         try {
             String nombres = txtPriNombreR.getText().trim();
             String apellidos = txtPriApellidoR.getText().trim();
@@ -163,7 +163,7 @@ public class ControllerPaciente {
                 "ERROR", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    
-    }
+    }*/
     
     public void limpiarPaciente() {
         txtPriNombreR.setText("");
@@ -248,7 +248,7 @@ public class ControllerPaciente {
         }
     }
     
-    public void actualizarPaciente() {
+   /* public void actualizarPaciente() {
         try {
             int filaSeleccionada = tablaPacientes.getSelectedRow();
             if (filaSeleccionada == -1) {
@@ -331,7 +331,7 @@ public class ControllerPaciente {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }
+    }*/
     
     // Método para cargar datos del paciente seleccionado en el formulario
     public void cargarDatosPacienteEnFormulario() {
