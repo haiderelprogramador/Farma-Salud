@@ -38,11 +38,27 @@ public class FarmaceuticaDAO {
         }
     }
     
-    public void guardarFarmaceutica(Farmaceutica farmaceutica) {
+    public boolean guardarFarmaceutica(Farmaceutica farmaceutica) {
+    try {
         List<Farmaceutica> farmaceuticos = cargarTodos();
+        
+        // Verificar si ya existe un farmacéutico con el mismo documento o código
+        boolean existe = farmaceuticos.stream()
+            .anyMatch(f -> f.getNumeroDocumento().equals(farmaceutica.getNumeroDocumento()) || 
+                          f.getCodigoEmpleado().equals(farmaceutica.getCodigoEmpleado()));
+        
+        if (existe) {
+            return false; // Ya existe, no se guarda
+        }
+        
         farmaceuticos.add(farmaceutica);
         guardarTodos(farmaceuticos);
+        return true; // Guardado exitosamente
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false; // Error al guardar
     }
+}
     
     public void guardarTodos(List<Farmaceutica> farmaceuticos) {
         try (FileWriter writer = new FileWriter(ARCHIVO_JSON)) {

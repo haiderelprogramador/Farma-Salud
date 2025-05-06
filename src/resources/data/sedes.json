@@ -1,0 +1,14 @@
+[
+    {
+        "idSede": "SEDE001",
+        "nombreSede": "Sede Principal",
+        "direccion": "Calle 128 #48-67, Borotá",
+        "horarioFuncionamiento": "L-V 8:00-18:00"
+    },
+    {
+        "idSede": "SEDE002",
+        "nombreSede": "Sede Norte",
+        "direccion": "Avenida 5 #23-45, Barrio Norte",
+        "horarioFuncionamiento": "L-S 9:00-17:00"
+    }
+]
