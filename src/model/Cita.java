@@ -8,13 +8,13 @@ public class Cita {
     private LocalDate fechaCita;
     private String hora;
     private String tipoCita;
-    private String consultorio;
     private String motivo;
     private EstadoCita estado;
     private String documentoPaciente;
     private Paciente paciente;
     private Medico medico;
     private String documentoMedico;
+    private Salas sala;
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
@@ -34,7 +34,7 @@ public class Cita {
     }
 
     
-    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio,EstadoCita estado,Paciente paciente,Medico medico ) {
+    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,Salas sala,EstadoCita estado,Paciente paciente,Medico medico ) {
         
         this.IdCita=IdCita;
         this.motivo=motivo;
@@ -42,9 +42,9 @@ public class Cita {
         this.hora = hora;
         this.tipoCita=tipoCita;
         this.motivo=motivo;
-        this.consultorio=consultorio;
         this.estado = estado;
         this.medico=medico;
+        this.sala=sala;
            }
     
 
@@ -81,13 +81,7 @@ public class Cita {
         this.tipoCita = tipoCita;
     }
 
-    public String getConsultorio() {
-        return consultorio;
-    }
-
-    public void setConsultorio(String consultorio) {
-        this.consultorio = consultorio;
-    }
+  
 
     public String getMotivo() {
         return motivo;
@@ -136,5 +130,13 @@ public class Cita {
 
     public void setDocumentoMedico(String documentoMedico) {
         this.documentoMedico = documentoMedico;
+    }
+
+    public Salas getSala() {
+        return sala;
+    }
+
+    public void setSala(Salas sala) {
+        this.sala = sala;
     }
 }

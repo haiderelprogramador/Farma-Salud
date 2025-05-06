@@ -75,7 +75,7 @@ public class recepcionista extends javax.swing.JFrame {
     }
     private void configurarPacientes() {
         try {
-            controller = new ControllerPaciente();
+         //   controller = new ControllerPaciente();
 
             controller.setTablaPacientes(tablaPacientes);
             controller.setTxtNombre(txtPriNombreR);
@@ -121,7 +121,7 @@ private void configurarCitas(){
         controllerCitas.setCboTipoCita(cboTipoCita);
         controllerCitas.setCboMotivoCita(cboMotivoCita);
         controllerCitas.setCboEstadoCita(cboEstadoCita);
-        controllerCitas.setCboConsultorio(cboConsultorio);
+        controllerCitas.cargarConsultoriosDisponibles(cboConsultorio);
         
         controllerCitas.cargarPacienteEnTabla();
         controllerCitas.cargarCitasEnTabla();
@@ -135,7 +135,7 @@ private void configurarCitas(){
     controllerCitas.setCboMotivoCita2(cboMotivoCita2);
     controllerCitas.setCboTipoCita2(cboTipoCita2);
     controllerCitas.setCboEstadoCita2(cboEstadoCita2);
-    controllerCitas.setCboConsultorio2(cboConsultorio2);
+    controllerCitas.cargarConsultoriosDisponibles(cboConsultorio2);
     controllerCitas.setLblNombreMedico(lblNombreMedico); 
     controllerCitas.setLblApellidoMedico(lblApellidoMedico);
     controllerCitas.setLblEspecialidadMedico(lblEspecialidadMedico);

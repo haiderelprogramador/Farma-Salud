@@ -8,17 +8,15 @@ import com.toedter.calendar.JDateChooser;
 import dao.CitasDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
+import dao.SalasDAO;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,8 +26,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Cita;
 import model.Cita.EstadoCita;
-import model.Persona;
 import model.Medico;
+import model.Salas;
 
 
 
@@ -44,6 +42,7 @@ public class ControllerCitas {
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
+    private SalasDAO salasDAO = new SalasDAO();
     private Paciente pacienteSeleccionado;
     private Medico medicoSeleccionado;
     private DefaultTableModel tableModelMedico;
@@ -208,6 +207,16 @@ public class ControllerCitas {
         "Error", JOptionPane.ERROR_MESSAGE);
     return;
 }
+      Salas salaSeleccionada = salasDAO.cargarTodasSalas().stream()
+            .filter(s -> s.getNombreSala().equals(consultorio) && 
+                        "Consultorio".equalsIgnoreCase(s.getTipoSala()))
+            .findFirst()
+            .orElse(null);
+        
+        if (salaSeleccionada == null) {
+            JOptionPane.showMessageDialog(null, "El consultorio seleccionado no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
      LocalDate fechaCita = fechaDate.toInstant()
     .atZone(ZoneId.systemDefault())
@@ -235,7 +244,7 @@ public class ControllerCitas {
                 horaCita, 
                 motivo, 
                 tipo, 
-                consultorio,
+                salaSeleccionada,
                 estado, 
                 pacienteSeleccionado,
                 medicoSeleccionado
@@ -380,7 +389,7 @@ public void seleccionarMedico() {
                 cita.getMotivo(),
                 cita.getFechaCita(),
                 cita.getTipoCita(),
-                cita.getConsultorio(),
+                cita.getSala(),
                 cita.getEstado().toString(),
                 medico.getNumeroDocumento(),
                 medico.getNombres(),
@@ -416,7 +425,16 @@ public void seleccionarMedico() {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        Salas salaSeleccionada = salasDAO.cargarTodasSalas().stream()
+            .filter(s -> s.getNombreSala().equals(consultorio) && 
+                        "Consultorio".equalsIgnoreCase(s.getTipoSala()))
+            .findFirst()
+            .orElse(null);
+        
+        if (salaSeleccionada == null) {
+            JOptionPane.showMessageDialog(null, "El consultorio seleccionado no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Date fechaC = JDateFechaCita2.getDate();
         if (fechaC == null) {
             JOptionPane.showMessageDialog(null, 
@@ -446,7 +464,7 @@ public void seleccionarMedico() {
             horaCita, 
             motivo, 
             tipo, 
-            consultorio,
+            salaSeleccionada,
             estado, 
             pacienteSeleccionado,
             medicoSeleccionado
@@ -532,7 +550,7 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                         cita.getMotivo(),
                         cita.getFechaCita(),
                         cita.getTipoCita(),
-                        cita.getConsultorio(),
+                        cita.getSala(),
                         cita.getEstado().toString(),
                         medico.getNumeroDocumento(),
                         medico.getNombres(),
@@ -734,7 +752,7 @@ public void configurarColoresTablaCitas() {
                 cita.getHora(),
                 cita.getMotivo(),
                 cita.getTipoCita(),
-                cita.getConsultorio(),
+                cita.getSala(),
                 cita.getEstado().toString(),
                 medico.getNombres() + " " + medico.getApellidos(),
                 medico.getEspecialidad()
@@ -743,7 +761,19 @@ public void configurarColoresTablaCitas() {
         }
     }
   }
-
+    public void cargarConsultoriosDisponibles(JComboBox<String> comboBox) {
+        comboBox.removeAllItems();
+        comboBox.addItem("<Seleccione>");
+        
+        List<Salas> consultorios = salasDAO.cargarTodasSalas().stream()
+                .filter(s -> "Consultorio".equalsIgnoreCase(s.getTipoSala()))
+                .collect(Collectors.toList());
+        
+        for (Salas consultorio : consultorios) {
+            comboBox.addItem(consultorio.getNombreSala());
+        }
+    }
+    
 
 }
      

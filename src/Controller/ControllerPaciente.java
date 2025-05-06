@@ -24,7 +24,7 @@ import model.Paciente;
  *
  * @author Maria liz
  */
-public class ControllerPaciente {
+/*public class ControllerPaciente {
   
     private DefaultTableModel tableModelPaciente;
     private PacienteDAO pacienteDAO = new PacienteDAO();
@@ -366,5 +366,5 @@ public class ControllerPaciente {
             documentoOriginal = txtDocumentoR.getText();
         }
     }
-}
+}*/
 

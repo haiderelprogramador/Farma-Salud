@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Farmaceutica;
 
-public class CotrollerFarmaceutica {
+/*public class CotrollerFarmaceutica {
   
     private DefaultTableModel tableModelFarmaceutica;
     private FarmaceuticaDAO farmaceuticaDAO = new FarmaceuticaDAO();
@@ -351,4 +351,4 @@ public class CotrollerFarmaceutica {
     
     
     
-}
+}*/

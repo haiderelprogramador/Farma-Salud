@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Medico;
 
-public class ControllerDoctor {
+/*public class ControllerDoctor {
   
     private DefaultTableModel tableModelDoctor;
     private MedicoDAO medicoDAO = new MedicoDAO();
@@ -392,4 +392,4 @@ public class ControllerDoctor {
             this.documentoOriginal = txtCedula.getText();
         }
     }
-}
+}*/
