@@ -1,26 +1,41 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Paciente extends Persona {
     private String tipoSangre;
     private String tipoDocumento;
-    private String Antecendentes;
+    private String antecedentes;
 
-    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String tipoDocumento,String tipoSangre,String Antecendentes) {
-        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
-         if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
-        throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
-    }
-        this.tipoDocumento=tipoDocumento;
+    public Paciente(
+        String numeroDocumento, 
+        String nombres, 
+        String apellidos, 
+        LocalDate fechaNacimiento, 
+        String sexo, 
+        String eps, 
+        String email, 
+        String celular,
+        String contraseña,
+        String tipoDocumento,
+        String tipoSangre,
+        String antecedentes
+    ) {
+        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular, contraseña);
+        
+        if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
+        }
+        if (tipoDocumento == null || tipoDocumento.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de documento no puede ser nulo o vacío");
+        }
+        
+        this.tipoDocumento = tipoDocumento;
         this.tipoSangre = tipoSangre;
-        this.Antecendentes=Antecendentes;
-       
+        this.antecedentes = antecedentes;
     }
 
+    // Getters y Setters
     public String getTipoSangre() {
         return tipoSangre;
     }
@@ -34,15 +49,17 @@ public class Paciente extends Persona {
     }
 
     public void setTipoDocumento(String tipoDocumento) {
+        if (tipoDocumento == null || tipoDocumento.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de documento no puede ser nulo o vacío");
+        }
         this.tipoDocumento = tipoDocumento;
     }
 
-    public String getAntecendentes() {
-        return Antecendentes;
+    public String getAntecedentes() {
+        return antecedentes;
     }
 
-    public void setAntecendentes(String Antecendentes) {
-        this.Antecendentes = Antecendentes;
+    public void setAntecedentes(String antecedentes) {
+        this.antecedentes = antecedentes;
     }
-    
 }

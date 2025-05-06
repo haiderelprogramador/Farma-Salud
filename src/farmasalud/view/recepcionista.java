@@ -79,16 +79,16 @@ public class recepcionista extends javax.swing.JFrame {
 
             controller.setTablaPacientes(tablaPacientes);
             controller.setTxtNombre(txtPriNombreR);
-            controller.setTxtApellidos(txtPriApellidoR);
-            controller.setTxtDocumentoR(txtDocumentoR);
+            controller.setTxtApellido(txtApellido2);
+            controller.setTxtDocumento(txtDocumentoR);
             controller.setTxtEmail(txtEmailR);
-            controller.setJDateFechaNacimiento(JDateFechaNacimiento);      
-            controller.setTxtTelefono(txtCelularR);
+            controller.setDateChooserNacimiento(JDateFechaNacimiento);
+            controller.setTxtCelular(txtCelularR);
             controller.setCbSexo(cbSexo);
             controller.setCbEps(cbEps);
             controller.setCbTipoDocumento(cbTipoDocumento);
-            controller.setCboTipoSangre(cboTipoSangre);
-            controller.setTxtAreaAntecedente(jTextArea2);
+            controller.setCbTipoSangre(cboTipoSangre);
+            controller.setTxtAreaAntecedentes(jTextArea2);
 
             controller.initTablePaciente();
             controller.cargarDatosEnTablaPaciente();

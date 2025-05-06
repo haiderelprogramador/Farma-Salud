@@ -107,7 +107,7 @@
                     <StringItem index="1" value="Administrador"/>
                     <StringItem index="2" value="Doctor"/>
                     <StringItem index="3" value="Recepcionista"/>
-                    <StringItem index="4" value="Farmaceutica"/>
+                    <StringItem index="4" value="Farmaceutico"/>
                     <StringItem index="5" value="Paciente"/>
                   </StringArray>
                 </Property>
