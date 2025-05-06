@@ -17,209 +17,260 @@ import model.Farmaceutica;
     private FarmaceuticaDAO farmaceuticaDAO = new FarmaceuticaDAO();
     private String documentoOriginal;
     
-    // Componentes de la interfaz (sin cbEpss y cbEspecialidad)
-    private JTable TabladeFarmaceuticas;
-    private JTextField Jtexfieldnombre_farmaceutica;
-    private JTextField jtextfieldApellido_farmaceutica;
-    private JTextField jtextfielID_farmaceutica;
-    private JTextField Jtextfield_correo_farmaceutica;
-    private JTextField Jtexfieldfechanacimiento_farmeceutica;
-    private JTextField jtextfieldTelefono_farmaceutica;
-    private JTextField JtexfieldCodigo_farmaceutica;
-    private JTextField Jtexfieldfechacontratacion_farmaceutica;
-    private JComboBox<String> Jcombobox_sexoFarmaceutica;
+    // Componentes de la interfaz
+    private JTable tablaFarmaceuticas;
+    private JTextField txtNombre;
+    private JTextField txtApellido;
+    private JTextField txtDocumento;
+    private JTextField txtEmail;
+    private JTextField txtFechaNacimiento;
+    private JTextField txtTelefono;
+    private JTextField txtCodigoEmpleado;
+    private JTextField txtFechaContratacion;
+    private JComboBox<String> cbSexo;
     private JComboBox<String> cbTurno;
+    private JTextField txtContraseña;
     
-    // Métodos setters para los componentes (sin setCbEpss y setCbEspecialidad)
-    public void setTabladeFarmaceuticas(JTable TabladeFarmaceuticas) {
-        this.TabladeFarmaceuticas = TabladeFarmaceuticas;
-        this.tableModelFarmaceutica = (DefaultTableModel) TabladeFarmaceuticas.getModel();
+    // Setters para los componentes
+    public void setTablaFarmaceuticas(JTable tablaFarmaceuticas) {
+        this.tablaFarmaceuticas = tablaFarmaceuticas;
+        this.tableModelFarmaceutica = (DefaultTableModel) tablaFarmaceuticas.getModel();
     }
     
-    public void setJtexfieldnombre_farmaceutica(JTextField Jtexfieldnombre_farmaceutica) {
-        this.Jtexfieldnombre_farmaceutica = Jtexfieldnombre_farmaceutica;
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
     }
     
-    public void setJtextfieldApellido_farmaceutica(JTextField jtextfieldApellido_farmaceutica) {
-        this.jtextfieldApellido_farmaceutica = jtextfieldApellido_farmaceutica;
+    public void setTxtApellido(JTextField txtApellido) {
+        this.txtApellido = txtApellido;
     }
     
-    public void setJtextfielID_farmaceutica(JTextField jtextfielID_farmaceutica) {
-        this.jtextfielID_farmaceutica = jtextfielID_farmaceutica;
+    public void setTxtDocumento(JTextField txtDocumento) {
+        this.txtDocumento = txtDocumento;
     }
     
-    public void setJtextfield_correo_farmaceutica(JTextField Jtextfield_correo_farmaceutica) {
-        this.Jtextfield_correo_farmaceutica = Jtextfield_correo_farmaceutica;
+    public void setTxtEmail(JTextField txtEmail) {
+        this.txtEmail = txtEmail;
     }
     
-    public void setJtexfieldfechanacimiento_farmeceutica(JTextField Jtexfieldfechanacimiento_farmeceutica) {
-        this.Jtexfieldfechanacimiento_farmeceutica = Jtexfieldfechanacimiento_farmeceutica;
+    public void setTxtFechaNacimiento(JTextField txtFechaNacimiento) {
+        this.txtFechaNacimiento = txtFechaNacimiento;
     }
     
-    public void setJtextfieldTelefono_farmaceutica(JTextField jtextfieldTelefono_farmaceutica) {
-        this.jtextfieldTelefono_farmaceutica = jtextfieldTelefono_farmaceutica;
+    public void setTxtTelefono(JTextField txtTelefono) {
+        this.txtTelefono = txtTelefono;
     }
     
-    public void setJtexfieldCodigo_farmaceutica(JTextField JtexfieldCodigo_farmaceutica) {
-        this.JtexfieldCodigo_farmaceutica = JtexfieldCodigo_farmaceutica;
+    public void setTxtCodigoEmpleado(JTextField txtCodigoEmpleado) {
+        this.txtCodigoEmpleado = txtCodigoEmpleado;
     }
     
-    public void setJtexfieldfechacontratacion_farmaceutica(JTextField Jtexfieldfechacontratacion_farmaceutica) {
-        this.Jtexfieldfechacontratacion_farmaceutica = Jtexfieldfechacontratacion_farmaceutica;
+    public void setTxtFechaContratacion(JTextField txtFechaContratacion) {
+        this.txtFechaContratacion = txtFechaContratacion;
     }
     
-    public void setJcombobox_sexoFarmaceutica(JComboBox<String> Jcombobox_sexoFarmaceutica) {
-        this.Jcombobox_sexoFarmaceutica = Jcombobox_sexoFarmaceutica;
+    public void setCbSexo(JComboBox<String> cbSexo) {
+        this.cbSexo = cbSexo;
     }
     
     public void setCbTurno(JComboBox<String> cbTurno) {
         this.cbTurno = cbTurno;
     }
     
+    public void setTxtContraseña(JTextField txtContraseña) {
+        this.txtContraseña = txtContraseña;
+    }
+    
+    // Inicializar tabla
     public void initTableFarmaceutica() {
         tableModelFarmaceutica = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nacimiento", "Sexo", 
-                         "Email", "Telefono", "Código Empleado", "Fecha Contratación", "Turno"}, 0) {
+                         "Email", "Teléfono", "Código Empleado", "Fecha Contratación", "Turno"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        TabladeFarmaceuticas.setModel(tableModelFarmaceutica);
+        tablaFarmaceuticas.setModel(tableModelFarmaceutica);
     }
     
+    // Cargar datos en la tabla
     public void cargarDatosEnTablaFarmaceutica() {
-        tableModelFarmaceutica.setRowCount(0);
-        List<Farmaceutica> farmaceuticas = farmaceuticaDAO.cargarTodos();
-        for (Farmaceutica farmaceutica : farmaceuticas) {
-            Object[] row = {
-                farmaceutica.getNumeroDocumento(),
-                farmaceutica.getNombres(),
-                farmaceutica.getApellidos(),
-                farmaceutica.getFechaNacimiento(),
-                farmaceutica.getSexo(),
-                farmaceutica.getEmail(),
-                farmaceutica.getCelular(),
-                farmaceutica.getCodigoEmpleado(),
-                farmaceutica.getFechaContratacion(),
-                farmaceutica.getTurno()
-            };
-            tableModelFarmaceutica.addRow(row);
+        try {
+            tableModelFarmaceutica.setRowCount(0);
+            List<Farmaceutica> farmaceuticas = farmaceuticaDAO.cargarTodos();
+            
+            if (farmaceuticas == null || farmaceuticas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, 
+                    "No se encontraron farmacéuticos registrados", 
+                    "Información", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (Farmaceutica farmaceutica : farmaceuticas) {
+                Object[] row = {
+                    farmaceutica.getNumeroDocumento(),
+                    farmaceutica.getNombres(),
+                    farmaceutica.getApellidos(),
+                    farmaceutica.getFechaNacimiento(),
+                    farmaceutica.getSexo(),
+                    farmaceutica.getEmail(),
+                    farmaceutica.getCelular(),
+                    farmaceutica.getCodigoEmpleado(),
+                    farmaceutica.getFechaContratacion(),
+                    farmaceutica.getTurno()
+                };
+                tableModelFarmaceutica.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar farmacéuticos: " + e.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
     
+    // Guardar farmacéutico desde formulario
     public void guardarFarmaceuticaDesdeFormulario() {
-    try {
-        String nombres = Jtexfieldnombre_farmaceutica.getText().trim();
-        String apellidos = jtextfieldApellido_farmaceutica.getText().trim();
-        String documento = jtextfielID_farmaceutica.getText().trim();
-        String email = Jtextfield_correo_farmaceutica.getText().trim();
-        String fechaNacStr = Jtexfieldfechanacimiento_farmeceutica.getText().trim();
-        String telefono = jtextfieldTelefono_farmaceutica.getText().trim();
-        String codigoEmpleado = JtexfieldCodigo_farmaceutica.getText().trim();
-        String fechaContratacionStr = Jtexfieldfechacontratacion_farmaceutica.getText().trim();
-        String sexo = Jcombobox_sexoFarmaceutica.getSelectedItem().toString();
-        String turno = cbTurno.getSelectedItem().toString();
-        
-        // Validaciones adicionales
-        if (documento == null || documento.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El número de documento es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        if (nombres.isEmpty() || apellidos.isEmpty() || email.isEmpty() || 
-            telefono.isEmpty() || fechaNacStr.isEmpty() || codigoEmpleado.isEmpty() || 
-            fechaContratacionStr.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        LocalDate fechaNacimiento;
-        LocalDate fechaContratacion;
         try {
-            fechaNacimiento = LocalDate.parse(fechaNacStr);
-            fechaContratacion = LocalDate.parse(fechaContratacionStr);
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null,
-                "Formato de fecha inválido. Usa YYYY-MM-DD",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Verificación de existencia con manejo de nulos
-        boolean existe = farmaceuticaDAO.cargarTodos().stream()
-            .filter(f -> f.getNumeroDocumento() != null)
-            .anyMatch(f -> f.getNumeroDocumento().equals(documento));
+            // Obtener datos del formulario
+            String documento = txtDocumento.getText().trim();
+            String nombres = txtNombre.getText().trim();
+            String apellidos = txtApellido.getText().trim();
+            String email = txtEmail.getText().trim();
+            String fechaNacStr = txtFechaNacimiento.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
+            String fechaContratacionStr = txtFechaContratacion.getText().trim();
+            String sexo = cbSexo.getSelectedItem().toString();
+            String turno = cbTurno.getSelectedItem().toString();
+            String contraseña = txtContraseña.getText().trim();
             
-        if (existe) {
-            JOptionPane.showMessageDialog(null,
-                "Ya existe un farmacéutico con este documento",
-                "Error",
+            // Validar campos obligatorios
+            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
+                email.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() || 
+                codigoEmpleado.isEmpty() || fechaNacStr.isEmpty() || 
+                fechaContratacionStr.isEmpty()) {
+                JOptionPane.showMessageDialog(null, 
+                    "Todos los campos son obligatorios", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Convertir fechas
+            LocalDate fechaNacimiento;
+            LocalDate fechaContratacion;
+            try {
+                fechaNacimiento = LocalDate.parse(fechaNacStr);
+                fechaContratacion = LocalDate.parse(fechaContratacionStr);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null,
+                    "Formato de fecha inválido. Usa YYYY-MM-DD",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Verificar si ya existe
+            if (existeFarmaceutica(documento, codigoEmpleado)) {
+                JOptionPane.showMessageDialog(null,
+                    "Ya existe un farmacéutico con este documento o código de empleado",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Crear nuevo farmacéutico
+            Farmaceutica nuevoFarmaceutica = new Farmaceutica(
+                documento,
+                nombres,
+                apellidos,
+                fechaNacimiento,
+                sexo,
+                "", // EPS (vacío si no se usa)
+                email,
+                telefono,
+                contraseña,
+                codigoEmpleado,
+                fechaContratacion,
+                turno
+            );
+            
+            // Guardar en la base de datos
+            if (farmaceuticaDAO.guardarFarmaceutica(nuevoFarmaceutica)) {
+                JOptionPane.showMessageDialog(null, 
+                    "Farmacéutico guardado exitosamente", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                cargarDatosEnTablaFarmaceutica();
+                limpiarFormulario();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "No se pudo guardar el farmacéutico",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, 
+                "Error al guardar farmacéutico: " + e.getMessage(),
+                "Error", 
                 JOptionPane.ERROR_MESSAGE);
-            return;
+            e.printStackTrace();
         }
-        
-        Farmaceutica nuevoFarmaceutica = new Farmaceutica(
-            documento,
-            nombres,
-            apellidos,
-            fechaNacimiento,
-            sexo,
-            "", // EPS vacío
-            email,
-            telefono,
-            codigoEmpleado,
-            fechaContratacion,
-            turno
-        );
-        
-        farmaceuticaDAO.guardarFarmaceutica(nuevoFarmaceutica);
-        JOptionPane.showMessageDialog(null, "Farmacéutico guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        cargarDatosEnTablaFarmaceutica();
-        limpiarFarmaceutica();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error al guardar Farmacéutico: " + e.getMessage(),
-            "ERROR", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }    
-}
+    }
     
-    public void limpiarFarmaceutica() {
-        Jtexfieldnombre_farmaceutica.setText("");
-        jtextfieldApellido_farmaceutica.setText("");
-        jtextfielID_farmaceutica.setText("");
-        Jtextfield_correo_farmaceutica.setText("");
-        Jtexfieldfechanacimiento_farmeceutica.setText("");
-        jtextfieldTelefono_farmaceutica.setText("");
-        JtexfieldCodigo_farmaceutica.setText("");
-        Jtexfieldfechacontratacion_farmaceutica.setText("");
-        Jcombobox_sexoFarmaceutica.setSelectedIndex(0);
+    // Verificar si existe un farmacéutico
+    private boolean existeFarmaceutica(String documento, String codigoEmpleado) {
+        List<Farmaceutica> farmaceuticas = farmaceuticaDAO.cargarTodos();
+        if (farmaceuticas != null) {
+            return farmaceuticas.stream()
+                .anyMatch(f -> (f.getNumeroDocumento() != null && f.getNumeroDocumento().equals(documento)) ||
+                              (f.getCodigoEmpleado() != null && f.getCodigoEmpleado().equals(codigoEmpleado)));
+        }
+        return false;
+    }
+    
+    // Limpiar formulario
+    public void limpiarFormulario() {
+        txtDocumento.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtEmail.setText("");
+        txtFechaNacimiento.setText("");
+        txtTelefono.setText("");
+        txtContraseña.setText("");
+        txtCodigoEmpleado.setText("");
+        txtFechaContratacion.setText("");
+        cbSexo.setSelectedIndex(0);
         cbTurno.setSelectedIndex(0);
     }
     
+    // Eliminar farmacéutico seleccionado
     public void eliminarFarmaceuticaSeleccionado() {
-        int filaSeleccionada = TabladeFarmaceuticas.getSelectedRow();
+        int filaSeleccionada = tablaFarmaceuticas.getSelectedRow();
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(null, 
-                "Seleccione un farmacéutico de la tabla.", 
+                "Seleccione un farmacéutico de la tabla", 
                 "Error", 
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String numeroDocumento = tableModelFarmaceutica.getValueAt(filaSeleccionada, 0).toString();
-
+        String documento = tableModelFarmaceutica.getValueAt(filaSeleccionada, 0).toString();
+        
         int confirmacion = JOptionPane.showConfirmDialog(
             null, 
-            "¿Eliminar al farmacéutico con documento " + numeroDocumento + "?",
-            "Confirmar",
+            "¿Eliminar al farmacéutico con documento " + documento + "?",
+            "Confirmar eliminación",
             JOptionPane.YES_NO_OPTION
         );
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            boolean eliminado = farmaceuticaDAO.eliminarFarmaceutica(numeroDocumento);
-            if (eliminado) {
+            if (farmaceuticaDAO.eliminarFarmaceutica(documento)) {
                 JOptionPane.showMessageDialog(null, 
                     "Farmacéutico eliminado correctamente", 
                     "Éxito", 
@@ -234,33 +285,36 @@ import model.Farmaceutica;
         }
     }
     
+    // Actualizar farmacéutico
     public void actualizarFarmaceutica() {
         try {
-            int filaSeleccionada = TabladeFarmaceuticas.getSelectedRow();
+            int filaSeleccionada = tablaFarmaceuticas.getSelectedRow();
             if (filaSeleccionada == -1) {
                 JOptionPane.showMessageDialog(null, 
-                    "Seleccione un farmacéutico de la tabla para actualizar", 
+                    "Seleccione un farmacéutico de la tabla", 
                     "Error", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             String documentoOriginal = tableModelFarmaceutica.getValueAt(filaSeleccionada, 0).toString();
-
-            String nombres = Jtexfieldnombre_farmaceutica.getText().trim();
-            String apellidos = jtextfieldApellido_farmaceutica.getText().trim();
-            String documento = jtextfielID_farmaceutica.getText().trim();
-            String email = Jtextfield_correo_farmaceutica.getText().trim();
-            String fechaNacStr = Jtexfieldfechanacimiento_farmeceutica.getText().trim();
-            String telefono = jtextfieldTelefono_farmaceutica.getText().trim();
-            String codigoEmpleado = JtexfieldCodigo_farmaceutica.getText().trim();
-            String fechaContratacionStr = Jtexfieldfechacontratacion_farmaceutica.getText().trim();
-            String sexo = Jcombobox_sexoFarmaceutica.getSelectedItem().toString();
+            String documento = txtDocumento.getText().trim();
+            String nombres = txtNombre.getText().trim();
+            String apellidos = txtApellido.getText().trim();
+            String email = txtEmail.getText().trim();
+            String fechaNacStr = txtFechaNacimiento.getText().trim();
+            String telefono = txtTelefono.getText().trim();
+            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
+            String fechaContratacionStr = txtFechaContratacion.getText().trim();
+            String sexo = cbSexo.getSelectedItem().toString();
             String turno = cbTurno.getSelectedItem().toString();
+            String contraseña = txtContraseña.getText().trim();
 
-            if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-                email.isEmpty() || telefono.isEmpty() || fechaNacStr.isEmpty() ||
-                codigoEmpleado.isEmpty() || fechaContratacionStr.isEmpty()) {
+            // Validar campos obligatorios
+            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
+                email.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() || 
+                codigoEmpleado.isEmpty() || fechaNacStr.isEmpty() || 
+                fechaContratacionStr.isEmpty()) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",
                     "Error",
@@ -268,6 +322,7 @@ import model.Farmaceutica;
                 return;
             }
 
+            // Convertir fechas
             LocalDate fechaNacimiento;
             LocalDate fechaContratacion;
             try {
@@ -281,43 +336,44 @@ import model.Farmaceutica;
                 return;
             }
 
+            // Verificar si cambió el documento o código de empleado
             if (!documentoOriginal.equals(documento)) {
-                boolean existe = farmaceuticaDAO.cargarTodos().stream()
-                    .anyMatch(f -> f.getNumeroDocumento().equals(documento));
-                if (existe) {
+                if (existeFarmaceutica(documento, codigoEmpleado)) {
                     JOptionPane.showMessageDialog(null,
-                        "Ya existe un farmacéutico con este documento",
+                        "Ya existe un farmacéutico con este documento o código de empleado",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
+            // Crear farmacéutico actualizado
             Farmaceutica farmaceuticaActualizado = new Farmaceutica(
                 documento,
                 nombres,
                 apellidos,
                 fechaNacimiento,
                 sexo,
-                "", // EPS vacío
+                "", // EPS (vacío si no se usa)
                 email,
                 telefono,
+                contraseña,
                 codigoEmpleado,
                 fechaContratacion,
                 turno
             );
 
-            boolean actualizado = farmaceuticaDAO.actualizarFarmaceutica(documentoOriginal, farmaceuticaActualizado);
-            if (actualizado) {
+            // Actualizar en la base de datos
+            if (farmaceuticaDAO.actualizarFarmaceutica(documentoOriginal, farmaceuticaActualizado)) {
                 JOptionPane.showMessageDialog(null,
                     "Farmacéutico actualizado exitosamente",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
                 cargarDatosEnTablaFarmaceutica();
-                limpiarFarmaceutica();
+                limpiarFormulario();
             } else {
                 JOptionPane.showMessageDialog(null,
-                    "No se pudo actualizar el farmacéutico. Verifique los datos.",
+                    "No se pudo actualizar el farmacéutico",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
@@ -330,25 +386,37 @@ import model.Farmaceutica;
         }
     }
     
+    // Cargar datos del farmacéutico seleccionado en el formulario
     public void cargarDatosFarmaceuticaEnFormulario() {
-        int filaSeleccionada = TabladeFarmaceuticas.getSelectedRow();
+        int filaSeleccionada = tablaFarmaceuticas.getSelectedRow();
         if (filaSeleccionada != -1) {
-            jtextfielID_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 0).toString());
-            Jtexfieldnombre_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 1).toString());
-            jtextfieldApellido_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 2).toString());
-            Jtexfieldfechanacimiento_farmeceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 3).toString());
-            Jcombobox_sexoFarmaceutica.setSelectedItem(tableModelFarmaceutica.getValueAt(filaSeleccionada, 4).toString());
-            Jtextfield_correo_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 5).toString());
-            jtextfieldTelefono_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 6).toString());
-            JtexfieldCodigo_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 7).toString());
-            Jtexfieldfechacontratacion_farmaceutica.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 8).toString());
-            cbTurno.setSelectedItem(tableModelFarmaceutica.getValueAt(filaSeleccionada, 9).toString());
-            
-            documentoOriginal = jtextfielID_farmaceutica.getText();
+            try {
+                txtDocumento.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 0).toString());
+                txtNombre.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 1).toString());
+                txtApellido.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 2).toString());
+                txtFechaNacimiento.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 3).toString());
+                cbSexo.setSelectedItem(tableModelFarmaceutica.getValueAt(filaSeleccionada, 4).toString());
+                txtEmail.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 5).toString());
+                txtTelefono.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 6).toString());
+                txtCodigoEmpleado.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 7).toString());
+                txtFechaContratacion.setText(tableModelFarmaceutica.getValueAt(filaSeleccionada, 8).toString());
+                cbTurno.setSelectedItem(tableModelFarmaceutica.getValueAt(filaSeleccionada, 9).toString());
+                
+                this.documentoOriginal = txtDocumento.getText();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,
+                    "Error al cargar datos del farmacéutico: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
+<<<<<<< HEAD
     
     
     
     
 }*/
+=======
+}
+>>>>>>> e5415bb09cf6ad7afdc7428595581e29402a95eb

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import com.google.gson.Gson;
@@ -10,6 +6,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,123 +17,184 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import model.Recepcionista;
 
-/**
- *
- * @author Maria liz
- */
 public class RecepcionistaDAO {
-      private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\Downloads\\farmaSalud\\src\\resources\\data\\recepcionista.json";
-    private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-    .create();
-
+    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
+    private final Gson gson;
+    
+    public RecepcionistaDAO() {
+        this.gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .create();
+        verificarYEstructurarArchivo();
+    }
+    
+    private void verificarYEstructurarArchivo() {
+        try {
+            File archivo = new File(ARCHIVO_JSON);
+            
+            // Verificar si la ruta padre existe
+            File directorioPadre = archivo.getParentFile();
+            
+            // Si no existe el directorio padre, intentar crearlo
+            if (directorioPadre != null && !directorioPadre.exists()) {
+                if (!directorioPadre.mkdirs()) {
+                    throw new IOException("No se pudo crear el directorio: " + directorioPadre.getAbsolutePath());
+                }
+            }
+            
+            // Si no existe el archivo, crearlo con lista vacía
+            if (!archivo.exists()) {
+                try (FileWriter writer = new FileWriter(archivo)) {
+                    gson.toJson(new ArrayList<Recepcionista>(), writer);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al inicializar archivo JSON: " + e.getMessage());
+            throw new RuntimeException("Error crítico al inicializar archivo de datos", e);
+        }
+    }
     
     public List<Recepcionista> cargarTodos() {
-        try (Reader reader = new FileReader(ARCHIVO_JSON)) {
+        File archivo = new File(ARCHIVO_JSON);
+        
+        if (!archivo.exists() || archivo.length() == 0) {
+            return new ArrayList<>();
+        }
+        
+        try (Reader reader = new FileReader(archivo)) {
             Type tipoLista = new TypeToken<ArrayList<Recepcionista>>(){}.getType();
-            List<Recepcionista> recepcionista = gson.fromJson(reader, tipoLista);
-            return recepcionista != null ? recepcionista : new ArrayList<>();
+            List<Recepcionista> recepcionistas = gson.fromJson(reader, tipoLista);
+            return recepcionistas != null ? recepcionistas : new ArrayList<>();
         } catch (IOException e) {
-            System.err.println("Error al cargar citas: " + e.getMessage());
+            System.err.println("Error al leer el archivo JSON: " + e.getMessage());
             return new ArrayList<>();
         }
     }
     
-    public void guardarRecepcionista(Recepcionista recepcionista) {
-        List<Recepcionista> recepcionistas = cargarTodos();
-        recepcionistas.add(recepcionista);
-        guardarTodos(recepcionistas);
+    public boolean guardarRecepcionista(Recepcionista recepcionista) {
+        if (recepcionista == null) {
+            throw new IllegalArgumentException("El recepcionista no puede ser nulo");
+        }
+        
+        try {
+            List<Recepcionista> recepcionistas = cargarTodos();
+            
+            // Verificar si ya existe
+            boolean existe = recepcionistas.stream()
+                .anyMatch(r -> r.getNumeroDocumento().equals(recepcionista.getNumeroDocumento()));
+            
+            if (existe) {
+                return false;
+            }
+            
+            recepcionistas.add(recepcionista);
+            guardarTodos(recepcionistas);
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al guardar recepcionista: " + e.getMessage());
+            return false;
+        }
     }
     
     public void guardarTodos(List<Recepcionista> recepcionistas) {
+        if (recepcionistas == null) {
+            throw new IllegalArgumentException("La lista de recepcionistas no puede ser nula");
+        }
+        
         try (FileWriter writer = new FileWriter(ARCHIVO_JSON)) {
             gson.toJson(recepcionistas, writer);
         } catch (IOException e) {
-            System.err.println("Error al guardar recepcionista : " + e.getMessage());
+            System.err.println("Error al guardar recepcionistas: " + e.getMessage());
+            throw new RuntimeException("No se pudo guardar los recepcionistas", e);
         }
-    }public class LocalDateAdapter extends TypeAdapter<LocalDate>{
-        private final DateTimeFormatter formatter=DateTimeFormatter.ISO_LOCAL_DATE;
-        @Override
-        public void write(JsonWriter out,LocalDate value)throws IOException{
-            if(value!=null){
-                out.value(value.format(formatter));
-            }else{
-                out.nullValue();
-            }
-        }
-        @Override 
-    public LocalDate read(JsonReader in )throws IOException{
-    String date = in.nextString();
-    if (date == null || date.trim().isEmpty()) {
-        return null; // <- evita parsear texto vacío
     }
-    try {
-        return LocalDate.parse(date, formatter);
-    } catch (DateTimeParseException e) {
-        System.err.println("Fecha inválida encontrada en JSON: " + date);
-        return null;
-    }
-}
-    }
-    
-    //metodo modificar
-       public boolean actualizarRecepcionista(String cedulaOriginal, Recepcionista recepcionistaActualizado) {
-    try {
-        // Validación inicial de parámetros
-        if (cedulaOriginal == null || recepcionistaActualizado == null) {
-            return false;
-        }
-        
-        List<Recepcionista> recepcionistas = cargarTodos();
-        
-        // Buscar el recepcionista a actualizar
-        for (int i = 0; i < recepcionistas.size(); i++) {
-            Recepcionista actual = recepcionistas.get(i);
-            String numDoc = actual.getNumeroDocumento();
-            
-            // Comparación segura que evita NullPointerException
-            if (numDoc != null && numDoc.equals(cedulaOriginal)) {
-                // Reemplazar con los nuevos datos
-                recepcionistas.set(i, recepcionistaActualizado);
-                guardarTodos(recepcionistas);
-                return true;
-            }
-        }
-        return false;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-
-}
     
     public boolean eliminarRecepcionista(String numeroDocumento) {
-    try {
         if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
             throw new IllegalArgumentException("Número de documento no puede ser nulo o vacío");
         }
 
-        List<Recepcionista> recepcionistas = cargarTodos();
-
-        boolean removed = recepcionistas.removeIf(m -> 
-            numeroDocumento.equals(m.getNumeroDocumento())
-        );
-        
-        if (removed) {
-            guardarTodos(recepcionistas);
-            System.out.println("Recepcionista con documento " + numeroDocumento + " eliminado.");
+        try {
+            List<Recepcionista> recepcionistas = cargarTodos();
+            boolean removed = recepcionistas.removeIf(r -> 
+                r != null && numeroDocumento.equals(r.getNumeroDocumento())
+            );
+            
+            if (removed) {
+                guardarTodos(recepcionistas);
+            }
+            
+            return removed;
+        } catch (Exception e) {
+            System.err.println("Error al eliminar recepcionista: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public Recepcionista buscarPorDocumento(String documento) {
+        if (documento == null || documento.trim().isEmpty()) {
+            return null;
         }
         
-        return removed;
-        
-    }catch (Exception e) {
-        // Cualquier otro error inesperado
-        System.err.println("Error inesperado: " + e.getMessage());
-        return false;
+        List<Recepcionista> recepcionistas = cargarTodos();
+        return recepcionistas.stream()
+            .filter(Objects::nonNull)
+            .filter(r -> documento.equals(r.getNumeroDocumento()))
+            .findFirst()
+            .orElse(null);
     }
+    
+    public boolean actualizarRecepcionista(String documentoOriginal, Recepcionista recepcionistaActualizado) {
+        if (documentoOriginal == null || recepcionistaActualizado == null) {
+            return false;
+        }
+
+        try {
+            List<Recepcionista> recepcionistas = cargarTodos();
+            
+            for (int i = 0; i < recepcionistas.size(); i++) {
+                Recepcionista r = recepcionistas.get(i);
+                if (r != null && documentoOriginal.equals(r.getNumeroDocumento())) {
+                    recepcionistas.set(i, recepcionistaActualizado);
+                    guardarTodos(recepcionistas);
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            System.err.println("Error al actualizar recepcionista: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    private static class LocalDateAdapter extends TypeAdapter<LocalDate> {
+        private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         
+        @Override
+        public void write(JsonWriter out, LocalDate value) throws IOException {
+            if (value != null) {
+                out.value(value.format(formatter));
+            } else {
+                out.nullValue();
+            }
+        }
         
-}
-   
+        @Override 
+        public LocalDate read(JsonReader in) throws IOException {
+            String date = in.nextString();
+            if (date == null || date.trim().isEmpty()) {
+                return null;
+            }
+            try {
+                return LocalDate.parse(date, formatter);
+            } catch (DateTimeParseException e) {
+                System.err.println("Fecha inválida encontrada en JSON: " + date);
+                return null;
+            }
+        }
+    }
 }

@@ -54,15 +54,21 @@ public class MedicoDAO {
         }
     }
     
-    public void guardarMedico(Medico medico) {
-        if (medico == null) {
-            throw new IllegalArgumentException("El médico no puede ser nulo");
-        }
-        
+    public boolean guardarMedico(Medico medico) {
+    if (medico == null) {
+        throw new IllegalArgumentException("El médico no puede ser nulo");
+    }
+    
+    try {
         List<Medico> medicos = cargarTodos();
         medicos.add(medico);
         guardarTodos(medicos);
+        return true;
+    } catch (Exception e) {
+        System.err.println("Error al guardar médico: " + e.getMessage());
+        return false;
     }
+}
     
     public void guardarTodos(List<Medico> medicos) {
         if (medicos == null) {
