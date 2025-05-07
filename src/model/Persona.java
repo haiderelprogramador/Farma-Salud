@@ -12,9 +12,11 @@ public class Persona {
     private String email;
     private String celular;
     private byte[] fotoPerfil;
+    private String contraseña;
+
 
     // Constructor
-    public Persona(String numeroDocumento, String nombres, String apellidos,LocalDate fechaNacimiento,String sexo,String eps,String email,String celular) {
+    public Persona(String numeroDocumento, String nombres, String apellidos,LocalDate fechaNacimiento,String sexo,String eps,String email,String celular,String contraseña) {
         this.numeroDocumento = numeroDocumento;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -23,6 +25,7 @@ public class Persona {
         this.sexo=sexo;
         this.fechaNacimiento=fechaNacimiento;
         this.email=email;
+        this.contraseña=contraseña;
         
     }
 
@@ -97,6 +100,13 @@ public class Persona {
 
     public void setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
+    }
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
      

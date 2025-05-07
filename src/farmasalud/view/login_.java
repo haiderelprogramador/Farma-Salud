@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package farmasalud.view;
-import dao.usuarioDAO;
+//import dao.usuarioDAO;
 import javax.swing.*;
 import model.Usuario;
 import farmasalud.view.admin;
@@ -141,7 +141,7 @@ public class login_ extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_contraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String email = Jtextfield_usuario.getText().trim();
+    /*String email = Jtextfield_usuario.getText().trim();
     String documento = new String(Jtextfield_contraseña.getPassword());
     String rolSeleccionado = (String) jComboBox1.getSelectedItem();
     
@@ -206,7 +206,7 @@ private void mostrarError(String mensaje) {
         mensaje, 
         "Error", 
         JOptionPane.ERROR_MESSAGE);
-
+*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

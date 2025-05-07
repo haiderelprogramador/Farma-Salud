@@ -26,13 +26,14 @@ public class ControllerDoctor {
     private JTextField txtCedula;
     private JTextField txtCorreo;
     private JTextField txtTelefono;
+    private JTextField txtContraseña;
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbHorario;
     private JComboBox<String> cbEspecialidad;
     private JDateChooser dateChooserNacimiento;
     private JDateChooser dateChooserContratacion;
     
-    
+    // Setters para los componentes
     public void setTablaDoctores(JTable tablaDoctores) {
         this.tablaDoctores = tablaDoctores;
         this.tableModelDoctor = (DefaultTableModel) tablaDoctores.getModel();
@@ -56,6 +57,10 @@ public class ControllerDoctor {
     
     public void setTxtTelefono(JTextField txtTelefono) {
         this.txtTelefono = txtTelefono;
+    }
+    
+    public void setTxtContraseña(JTextField txtContraseña) {
+        this.txtContraseña = txtContraseña;
     }
     
     public void setCbSexo(JComboBox<String> cbSexo) {
@@ -92,27 +97,42 @@ public class ControllerDoctor {
         tablaDoctores.setModel(tableModelDoctor);
     }
     
-    
     public void cargarDatosEnTablaDoctor() {
-        tableModelDoctor.setRowCount(0);
-        List<Medico> medicos = medicoDAO.cargarTodos();
-        for (Medico medico : medicos) {
-            Object[] row = {
-                medico.getNombres(),
-                medico.getApellidos(),
-                medico.getNumeroDocumento(),
-                medico.getCelular(),
-                medico.getEmail(),
-                medico.getFechaNacimiento(),
-                medico.getSexo(),
-                medico.getEspecialidad(),
-                medico.getFechaContratacion(),
-                medico.getHorario()
-            };
-            tableModelDoctor.addRow(row);
+        try {
+            tableModelDoctor.setRowCount(0);
+            List<Medico> medicos = medicoDAO.cargarTodos();
+            
+            if (medicos == null || medicos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, 
+                    "No se encontraron médicos registrados", 
+                    "Información", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (Medico medico : medicos) {
+                Object[] row = {
+                    medico.getNombres(),
+                    medico.getApellidos(),
+                    medico.getNumeroDocumento(),
+                    medico.getCelular(),
+                    medico.getEmail(),
+                    medico.getFechaNacimiento(),
+                    medico.getSexo(),
+                    medico.getEspecialidad(),
+                    medico.getFechaContratacion(),
+                    medico.getHorario()
+                };
+                tableModelDoctor.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar los médicos: " + e.getMessage(),
+                "ERROR", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
-    
     
     public void guardarDoctorDesdeFormulario() {
         try {
@@ -122,13 +142,14 @@ public class ControllerDoctor {
             String cedula = txtCedula.getText().trim();
             String correo = txtCorreo.getText().trim();
             String telefono = txtTelefono.getText().trim();
+            String contraseña = txtContraseña.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String horario = cbHorario.getSelectedItem().toString();
             String especialidad = cbEspecialidad.getSelectedItem().toString();
             
             // Validar campos obligatorios
             if (nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || 
-                correo.isEmpty() || telefono.isEmpty() || 
+                correo.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() ||
                 dateChooserNacimiento.getDate() == null || 
                 dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, 
@@ -138,18 +159,22 @@ public class ControllerDoctor {
                 return;
             }
             
-            
             LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fechaContratacion = dateChooserContratacion.getDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             
-            
+            // Verificar si ya existe el médico
+            List<Medico> medicos = medicoDAO.cargarTodos();
             boolean existe = false;
-            for (Medico m : medicoDAO.cargarTodos()) {
-                if (m.getNumeroDocumento().equals(cedula)) {
-                    existe = true;
-                    break;
+            
+            if (medicos != null) {
+                for (Medico m : medicos) {
+                    if (m != null && m.getNumeroDocumento() != null && 
+                        m.getNumeroDocumento().equals(cedula)) {
+                        existe = true;
+                        break;
+                    }
                 }
             }
             
@@ -170,11 +195,11 @@ public class ControllerDoctor {
                 sexo,
                 correo,
                 telefono,
+                contraseña,
                 especialidad,
                 fechaContratacion,
                 horario
             );
-            
             
             medicoDAO.guardarMedico(nuevoMedico);
             JOptionPane.showMessageDialog(null, 
@@ -193,20 +218,19 @@ public class ControllerDoctor {
         }    
     }
     
-    
     public void limpiarFormulario() {
         txtNombre.setText("");
         txtApellidos.setText("");
         txtCedula.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
+        txtContraseña.setText("");
         cbSexo.setSelectedIndex(0);
         cbHorario.setSelectedIndex(0);
         cbEspecialidad.setSelectedIndex(0);
         dateChooserNacimiento.setDate(null);
         dateChooserContratacion.setDate(null);
     }
-    
     
     public void eliminarDoctorSeleccionado() {
         int filaSeleccionada = tablaDoctores.getSelectedRow();
@@ -243,7 +267,6 @@ public class ControllerDoctor {
         }
     }
     
-    
     public void actualizarDoctor() {
         try {
             int filaSeleccionada = tablaDoctores.getSelectedRow();
@@ -263,13 +286,14 @@ public class ControllerDoctor {
             String cedula = txtCedula.getText().trim();
             String correo = txtCorreo.getText().trim();
             String telefono = txtTelefono.getText().trim();
+            String contraseña = txtContraseña.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String horario = cbHorario.getSelectedItem().toString();
             String especialidad = cbEspecialidad.getSelectedItem().toString();
 
             // Validar campos obligatorios
             if (nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || 
-                correo.isEmpty() || telefono.isEmpty() || 
+                correo.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() ||
                 dateChooserNacimiento.getDate() == null || 
                 dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
@@ -279,13 +303,12 @@ public class ControllerDoctor {
                 return;
             }
 
-            
             LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fechaContratacion = dateChooserContratacion.getDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            
+            // Verificar si cambió la cédula y si ya existe
             if (!documentoOriginal.equals(cedula)) {
                 boolean existe = false;
                 for (Medico m : medicoDAO.cargarTodos()) {
@@ -304,7 +327,7 @@ public class ControllerDoctor {
                 }
             }
 
-            
+            // Crear médico actualizado
             Medico medicoActualizado = new Medico(
                 cedula,
                 nombres,
@@ -313,12 +336,12 @@ public class ControllerDoctor {
                 sexo,
                 correo,
                 telefono,
+                contraseña,
                 especialidad,
                 fechaContratacion,
                 horario
             );
 
-            
             if (medicoDAO.actualizarMedico(documentoOriginal, medicoActualizado)) {
                 JOptionPane.showMessageDialog(null,
                     "Doctor actualizado exitosamente",
@@ -340,7 +363,6 @@ public class ControllerDoctor {
             e.printStackTrace();
         }
     }
-    
     
     public void cargarDatosDoctorEnFormulario() {
         int filaSeleccionada = tablaDoctores.getSelectedRow();
