@@ -262,4 +262,38 @@ public class ControllerSede {
     public void generarNuevoCodigo() {
         txtCodigoSede.setText(sedeDAO.generarCodigoUnico());
     }
+    
+    
+public void buscarSedes(String criterio) {
+    try {
+        List<Sede> resultados = sedeDAO.buscarSedes(criterio);
+        
+        
+        tableModelSedes.setRowCount(0);
+        
+        
+        for (Sede sede : resultados) {
+            Object[] row = {
+                sede.getIdSede(),
+                sede.getNombreSede(),
+                sede.getDireccion(),
+                sede.getHorarioFuncionamiento()
+            };
+            tableModelSedes.addRow(row);
+        }
+        
+        if (resultados.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                "No se encontraron sedes que coincidan con: " + criterio,
+                "Búsqueda",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+            "Error al buscar sedes: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
 }
