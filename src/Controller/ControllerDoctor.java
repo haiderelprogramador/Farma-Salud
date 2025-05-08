@@ -2,10 +2,20 @@ package Controller;
 
 import com.toedter.calendar.JDateChooser;
 import dao.MedicoDAO;
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -32,6 +42,20 @@ public class ControllerDoctor {
     private JComboBox<String> cbEspecialidad;
     private JDateChooser dateChooserNacimiento;
     private JDateChooser dateChooserContratacion;
+    
+    // Configuración para el envío de correos (ajusta estos valores)
+    private static final String SMTP_HOST = "smtp.gmail.com";
+    private static final String SMTP_PORT = "587";
+    private static final String EMAIL_REMITENTE = "haider32108@gmail.com";
+    private static final String EMAIL_PASSWORD = "ulbfggqhnouyrwmc";
+    private static final String ASUNTO_CORREO = "Credenciales de acceso - Sistema Médico";
+    
+    // Caracteres para generar contraseñas
+    private static final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
+    private static final String NUMEROS = "0123456789";
+    private static final String SIMBOLOS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    private static final SecureRandom random = new SecureRandom();
     
     // Setters para los componentes
     public void setTablaDoctores(JTable tablaDoctores) {
@@ -82,6 +106,114 @@ public class ControllerDoctor {
     public void setDateChooserContratacion(JDateChooser dateChooserContratacion) {
         this.dateChooserContratacion = dateChooserContratacion;
     }
+    
+    
+    private String generarContrasena(int longitud) {
+        StringBuilder caracteresPermitidos = new StringBuilder();
+        caracteresPermitidos.append(MAYUSCULAS).append(MINUSCULAS).append(NUMEROS).append(SIMBOLOS);
+        
+        StringBuilder contrasena = new StringBuilder(longitud);
+        
+        // Asegurar al menos un caracter de cada tipo
+        contrasena.append(MAYUSCULAS.charAt(random.nextInt(MAYUSCULAS.length())));
+        contrasena.append(MINUSCULAS.charAt(random.nextInt(MINUSCULAS.length())));
+        contrasena.append(NUMEROS.charAt(random.nextInt(NUMEROS.length())));
+        contrasena.append(SIMBOLOS.charAt(random.nextInt(SIMBOLOS.length())));
+        
+        // Completar el resto
+        for (int i = 4; i < longitud; i++) {
+            contrasena.append(caracteresPermitidos.charAt(
+                random.nextInt(caracteresPermitidos.length())));
+        }
+        
+        // Mezclar los caracteres
+        return desordenarContrasena(contrasena.toString());
+    }
+    
+    private String desordenarContrasena(String contrasena) {
+        char[] caracteres = contrasena.toCharArray();
+        for (int i = 0; i < caracteres.length; i++) {
+            int posicionAleatoria = random.nextInt(caracteres.length);
+            char temp = caracteres[i];
+            caracteres[i] = caracteres[posicionAleatoria];
+            caracteres[posicionAleatoria] = temp;
+        }
+        return new String(caracteres);
+    }
+    
+    // Método para enviar credenciales por correo
+    private void enviarCredenciales(String destinatario, String nombre, String contrasena) {
+    try {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", SMTP_HOST);
+        props.put("mail.smtp.port", SMTP_PORT);
+        props.put("mail.smtp.ssl.trust", SMTP_HOST);
+        
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(EMAIL_REMITENTE, EMAIL_PASSWORD);
+            }
+        });
+        
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(EMAIL_REMITENTE));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+        message.setSubject(ASUNTO_CORREO);
+        
+        // Escapar todos los caracteres especiales para HTML
+        String contrasenaEscapada = escapeHtml(contrasena);
+        String nombreEscapado = escapeHtml(nombre);
+        
+        String cuerpo = "<html>"
+            + "<body style='font-family: Arial, sans-serif;'>"
+            + "<h2 style='color: #2c3e50;'>Bienvenido al Sistema Médico</h2>"
+            + "<p>Estimado/a <strong>" + nombreEscapado + "</strong>,</p>"
+            + "<p>Sus credenciales de acceso son:</p>"
+            + "<table style='border-collapse: collapse; width: 100%; max-width: 500px; margin: 20px 0;'>"
+            + "<tr style='background-color: #f2f2f2;'>"
+            + "<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>Usuario</th>"
+            + "<td style='border: 1px solid #ddd; padding: 8px;'>" + escapeHtml(destinatario) + "</td>"
+            + "</tr>"
+            + "<tr>"
+            + "<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>Contraseña</th>"
+            + "<td style='border: 1px solid #ddd; padding: 8px; font-family: monospace;'>" + contrasenaEscapada + "</td>"
+            + "</tr>"
+            + "</table>"
+            + "<p style='color: #e74c3c; font-weight: bold;'>"
+            + "Por seguridad, cambie esta contraseña después de su primer acceso."
+            + "</p>"
+            + "<p>Atentamente,<br>El equipo de administración</p>"
+            + "</body>"
+            + "</html>";
+        
+        message.setContent(cuerpo, "text/html; charset=utf-8");
+        
+        Transport.send(message);
+        
+    } catch (MessagingException e) {
+        JOptionPane.showMessageDialog(null, 
+            "Se guardó el doctor pero no se pudo enviar el correo con las credenciales: " + e.getMessage(),
+            "Advertencia", 
+            JOptionPane.WARNING_MESSAGE);
+    }
+}
+
+// Método para escapar caracteres especiales en HTML
+private String escapeHtml(String input) {
+    if (input == null) {
+        return "";
+    }
+    return input.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&apos;")
+                .replace("%", "&#37;")
+                .replace(",", "&#44;")
+                .replace("=", "&#61;");
+}
     
     // Inicialización de la tabla
     public void initTableDoctor() {
@@ -134,7 +266,7 @@ public class ControllerDoctor {
         }
     }
     
-    public void guardarDoctorDesdeFormulario() {
+       public void guardarDoctorDesdeFormulario() {
         try {
             // Obtener datos del formulario
             String nombres = txtNombre.getText().trim();
@@ -142,19 +274,27 @@ public class ControllerDoctor {
             String cedula = txtCedula.getText().trim();
             String correo = txtCorreo.getText().trim();
             String telefono = txtTelefono.getText().trim();
-            String contraseña = txtContraseña.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String horario = cbHorario.getSelectedItem().toString();
             String especialidad = cbEspecialidad.getSelectedItem().toString();
             
             // Validar campos obligatorios
             if (nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || 
-                correo.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() ||
+                correo.isEmpty() || telefono.isEmpty() ||
                 dateChooserNacimiento.getDate() == null || 
                 dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, 
                     "Todos los campos son obligatorios", 
                     "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Validar formato de correo
+            if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                JOptionPane.showMessageDialog(null,
+                    "El correo electrónico no tiene un formato válido",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -165,26 +305,16 @@ public class ControllerDoctor {
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             
             // Verificar si ya existe el médico
-            List<Medico> medicos = medicoDAO.cargarTodos();
-            boolean existe = false;
-            
-            if (medicos != null) {
-                for (Medico m : medicos) {
-                    if (m != null && m.getNumeroDocumento() != null && 
-                        m.getNumeroDocumento().equals(cedula)) {
-                        existe = true;
-                        break;
-                    }
-                }
-            }
-            
-            if (existe) {
+            if (medicoDAO.existeMedico(cedula)) {
                 JOptionPane.showMessageDialog(null,
                     "Ya existe un doctor con esta cédula",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            // Generar contraseña automática (12 caracteres)
+            String contrasena = generarContrasena(10);
             
             // Crear nuevo médico
             Medico nuevoMedico = new Medico(
@@ -195,19 +325,28 @@ public class ControllerDoctor {
                 sexo,
                 correo,
                 telefono,
-                contraseña,
+                contrasena,
                 especialidad,
                 fechaContratacion,
                 horario
             );
             
-            medicoDAO.guardarMedico(nuevoMedico);
-            JOptionPane.showMessageDialog(null, 
-                "Doctor guardado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-            cargarDatosEnTablaDoctor();
-            limpiarFormulario();
+            if (medicoDAO.guardarMedico(nuevoMedico)) {
+                // Enviar credenciales por correo
+                enviarCredenciales(correo, nombres + " " + apellidos, contrasena);
+                
+                JOptionPane.showMessageDialog(null, 
+                    "Doctor registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                cargarDatosEnTablaDoctor();
+                limpiarFormulario();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "No se pudo guardar el doctor",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, 
@@ -224,13 +363,13 @@ public class ControllerDoctor {
         txtCedula.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
-        txtContraseña.setText("");
         cbSexo.setSelectedIndex(0);
         cbHorario.setSelectedIndex(0);
         cbEspecialidad.setSelectedIndex(0);
         dateChooserNacimiento.setDate(null);
         dateChooserContratacion.setDate(null);
     }
+
     
     public void eliminarDoctorSeleccionado() {
         int filaSeleccionada = tablaDoctores.getSelectedRow();

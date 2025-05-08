@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import model.*;
 /*
 public class usuarioDAO {
-<<<<<<< HEAD
+
     // Usar rutas relativas o configurables
     private static final String JSON_BASE_PATH = "src/resources/data/";
     private static final String MEDICOS_JSON = JSON_BASE_PATH + "empleados.json";
@@ -18,12 +18,12 @@ public class usuarioDAO {
     private static final String FARMACEUTICOS_JSON = JSON_BASE_PATH + "farmaceutica.json";
     private static final String PACIENTES_JSON = JSON_BASE_PATH + "pacientes.json";
     
-=======
+
     private static final String MEDICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\empleados.json";
     private static final String RECEPCIONISTAS_JSON ="C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\recepcionista.json";
     private static final String ADMINISTRADORES_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\usuarios.json";
     private static final String FARMACEUTICOS_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\farmaceutica.json";
->>>>>>> 6c9a5a4fd30fdb4b7f0483b4a933646c727fe071
+
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     // Método unificado para validar credenciales

@@ -1,3 +1,15 @@
 [
-  {}
+  {
+    "especialidad": "Medico general",
+    "fechaContratacion": "2025-05-08",
+    "horario": "\u003cSELECCIONE EL HORARIO\u003e",
+    "numeroDocumento": "1048621456",
+    "nombres": "Sharlok",
+    "apellidos": "Alcazar",
+    "fechaNacimiento": "2002-05-23",
+    "sexo": "M",
+    "email": "imsharlok@gmail.com",
+    "celular": "3164419082",
+    "contraseña": "8Q3;sR9Fd{"
+  }
 ]
