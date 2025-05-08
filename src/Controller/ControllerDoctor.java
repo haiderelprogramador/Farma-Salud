@@ -1,5 +1,6 @@
 package Controller;
 
+import Utilidades.EnviadorCredenciales;
 import com.toedter.calendar.JDateChooser;
 import dao.MedicoDAO;
 import jakarta.mail.Authenticator;
@@ -22,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Medico;
+import Utilidades.GeneradorContraseñas;
 
 public class ControllerDoctor {
   
@@ -43,19 +45,9 @@ public class ControllerDoctor {
     private JDateChooser dateChooserNacimiento;
     private JDateChooser dateChooserContratacion;
     
-    // Configuración para el envío de correos (ajusta estos valores)
-    private static final String SMTP_HOST = "smtp.gmail.com";
-    private static final String SMTP_PORT = "587";
-    private static final String EMAIL_REMITENTE = "haider32108@gmail.com";
-    private static final String EMAIL_PASSWORD = "ulbfggqhnouyrwmc";
-    private static final String ASUNTO_CORREO = "Credenciales de acceso - Sistema Médico";
+    private GeneradorContraseñas generadorContraseñas = new GeneradorContraseñas();
+    private EnviadorCredenciales enviadorCredenciales = EnviadorCredenciales.getInstancia();
     
-    // Caracteres para generar contraseñas
-    private static final String MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
-    private static final String NUMEROS = "0123456789";
-    private static final String SIMBOLOS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-    private static final SecureRandom random = new SecureRandom();
     
     // Setters para los componentes
     public void setTablaDoctores(JTable tablaDoctores) {
@@ -108,112 +100,7 @@ public class ControllerDoctor {
     }
     
     
-    private String generarContrasena(int longitud) {
-        StringBuilder caracteresPermitidos = new StringBuilder();
-        caracteresPermitidos.append(MAYUSCULAS).append(MINUSCULAS).append(NUMEROS).append(SIMBOLOS);
-        
-        StringBuilder contrasena = new StringBuilder(longitud);
-        
-        // Asegurar al menos un caracter de cada tipo
-        contrasena.append(MAYUSCULAS.charAt(random.nextInt(MAYUSCULAS.length())));
-        contrasena.append(MINUSCULAS.charAt(random.nextInt(MINUSCULAS.length())));
-        contrasena.append(NUMEROS.charAt(random.nextInt(NUMEROS.length())));
-        contrasena.append(SIMBOLOS.charAt(random.nextInt(SIMBOLOS.length())));
-        
-        // Completar el resto
-        for (int i = 4; i < longitud; i++) {
-            contrasena.append(caracteresPermitidos.charAt(
-                random.nextInt(caracteresPermitidos.length())));
-        }
-        
-        // Mezclar los caracteres
-        return desordenarContrasena(contrasena.toString());
-    }
     
-    private String desordenarContrasena(String contrasena) {
-        char[] caracteres = contrasena.toCharArray();
-        for (int i = 0; i < caracteres.length; i++) {
-            int posicionAleatoria = random.nextInt(caracteres.length);
-            char temp = caracteres[i];
-            caracteres[i] = caracteres[posicionAleatoria];
-            caracteres[posicionAleatoria] = temp;
-        }
-        return new String(caracteres);
-    }
-    
-    // Método para enviar credenciales por correo
-    private void enviarCredenciales(String destinatario, String nombre, String contrasena) {
-    try {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", SMTP_HOST);
-        props.put("mail.smtp.port", SMTP_PORT);
-        props.put("mail.smtp.ssl.trust", SMTP_HOST);
-        
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL_REMITENTE, EMAIL_PASSWORD);
-            }
-        });
-        
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(EMAIL_REMITENTE));
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-        message.setSubject(ASUNTO_CORREO);
-        
-        // Escapar todos los caracteres especiales para HTML
-        String contrasenaEscapada = escapeHtml(contrasena);
-        String nombreEscapado = escapeHtml(nombre);
-        
-        String cuerpo = "<html>"
-            + "<body style='font-family: Arial, sans-serif;'>"
-            + "<h2 style='color: #2c3e50;'>Bienvenido al Sistema Médico</h2>"
-            + "<p>Estimado/a <strong>" + nombreEscapado + "</strong>,</p>"
-            + "<p>Sus credenciales de acceso son:</p>"
-            + "<table style='border-collapse: collapse; width: 100%; max-width: 500px; margin: 20px 0;'>"
-            + "<tr style='background-color: #f2f2f2;'>"
-            + "<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>Usuario</th>"
-            + "<td style='border: 1px solid #ddd; padding: 8px;'>" + escapeHtml(destinatario) + "</td>"
-            + "</tr>"
-            + "<tr>"
-            + "<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>Contraseña</th>"
-            + "<td style='border: 1px solid #ddd; padding: 8px; font-family: monospace;'>" + contrasenaEscapada + "</td>"
-            + "</tr>"
-            + "</table>"
-            + "<p style='color: #e74c3c; font-weight: bold;'>"
-            + "Por seguridad, cambie esta contraseña después de su primer acceso."
-            + "</p>"
-            + "<p>Atentamente,<br>El equipo de administración</p>"
-            + "</body>"
-            + "</html>";
-        
-        message.setContent(cuerpo, "text/html; charset=utf-8");
-        
-        Transport.send(message);
-        
-    } catch (MessagingException e) {
-        JOptionPane.showMessageDialog(null, 
-            "Se guardó el doctor pero no se pudo enviar el correo con las credenciales: " + e.getMessage(),
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE);
-    }
-}
-
-// Método para escapar caracteres especiales en HTML
-private String escapeHtml(String input) {
-    if (input == null) {
-        return "";
-    }
-    return input.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&apos;")
-                .replace("%", "&#37;")
-                .replace(",", "&#44;")
-                .replace("=", "&#61;");
-}
     
     // Inicialización de la tabla
     public void initTableDoctor() {
@@ -314,7 +201,7 @@ private String escapeHtml(String input) {
             }
             
             // Generar contraseña automática (12 caracteres)
-            String contrasena = generarContrasena(10);
+            String contrasena = generadorContraseñas.generarContrasena(10);
             
             // Crear nuevo médico
             Medico nuevoMedico = new Medico(
@@ -330,15 +217,26 @@ private String escapeHtml(String input) {
                 fechaContratacion,
                 horario
             );
-            
             if (medicoDAO.guardarMedico(nuevoMedico)) {
-                // Enviar credenciales por correo
-                enviarCredenciales(correo, nombres + " " + apellidos, contrasena);
+                // Enviar credenciales usando la clase EnviadorCredenciales
+                boolean envioExitoso = enviadorCredenciales.enviarCredenciales(
+                    correo, 
+                    nombres + " " + apellidos, 
+                    contrasena
+                );
                 
-                JOptionPane.showMessageDialog(null, 
-                    "Doctor registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                if (envioExitoso) {
+                    JOptionPane.showMessageDialog(null, 
+                        "Doctor registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, 
+                        "Doctor registrado exitosamente, pero no se pudo enviar el correo con las credenciales.", 
+                        "Advertencia", 
+                        JOptionPane.WARNING_MESSAGE);
+                }
+                
                 cargarDatosEnTablaDoctor();
                 limpiarFormulario();
             } else {
