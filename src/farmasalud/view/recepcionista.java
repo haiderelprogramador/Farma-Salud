@@ -50,13 +50,14 @@ public class recepcionista extends javax.swing.JFrame {
     
     public recepcionista() {
         initComponents();
+         controller = new ControllerPaciente(); 
          if (tablePaciente == null) {
         throw new IllegalStateException("La tabla tablePaciente no está inicializada en el diseño");
     }
           if (tablePaciente == null || tablaCitas == null) {
             throw new IllegalStateException("Las tablas no están inicializadas en el diseño");
         }
-        
+
         configurarPacientes();
         controllerCitas.setTablePaciente(tablePaciente);
         controllerCitas.cargarPacienteEnTabla();
@@ -75,22 +76,24 @@ public class recepcionista extends javax.swing.JFrame {
     }
     private void configurarPacientes() {
         try {
-         //   controller = new ControllerPaciente();
 
             controller.setTablaPacientes(tablaPacientes);
             controller.setTxtNombre(txtPriNombreR);
-            controller.setTxtApellidos(txtPriApellidoR);
-            controller.setTxtDocumentoR(txtDocumentoR);
+            controller.setTxtApellido(txtPriApellidoR);
+            controller.setTxtDocumento(txtDocumentoR);
             controller.setTxtEmail(txtEmailR);
-            controller.setJDateFechaNacimiento(JDateFechaNacimiento);      
-            controller.setTxtTelefono(txtCelularR);
+            controller.setDateChooserNacimiento(JDateFechaNacimiento);      
+            controller.setTxtCelular(txtCelularR);
             controller.setCbSexo(cbSexo);
             controller.setCbEps(cbEps);
             controller.setCbTipoDocumento(cbTipoDocumento);
-            controller.setCboTipoSangre(cboTipoSangre);
-            controller.setTxtAreaAntecedente(jTextArea2);
+            controller.setCbTipoSangre(cboTipoSangre);
+            controller.setTxtAreaAntecedentes(jTextArea2);
+            controller.setTxtContraseña(txtContraseña);
 
             controller.initTablePaciente();
+                        controller.setTablaPacientes(tablaPacientes);
+
             controller.cargarDatosEnTablaPaciente();
     
 
@@ -122,6 +125,7 @@ private void configurarCitas(){
         controllerCitas.setCboMotivoCita(cboMotivoCita);
         controllerCitas.setCboEstadoCita(cboEstadoCita);
         controllerCitas.cargarConsultoriosDisponibles(cboConsultorio);
+        controllerCitas.cargarSedesEnComboBox(cboSede);
         
         controllerCitas.cargarPacienteEnTabla();
         controllerCitas.cargarCitasEnTabla();
@@ -139,7 +143,7 @@ private void configurarCitas(){
     controllerCitas.setLblNombreMedico(lblNombreMedico); 
     controllerCitas.setLblApellidoMedico(lblApellidoMedico);
     controllerCitas.setLblEspecialidadMedico(lblEspecialidadMedico);
-    
+     controllerCitas.cargarSedesEnComboBox(cboSede2);
     controllerCitas.cargarCitasEnTabla();
     controllerCitas.cargarPacienteEnTabla();
     controllerCitas.cargarMedicoEnTabla();
@@ -345,6 +349,8 @@ public void verificarDisponibilidadHoraActualizacion() {
         jSeparator20 = new javax.swing.JSeparator();
         txtNombre2 = new javax.swing.JLabel();
         JDateFechaCita2 = new com.toedter.calendar.JDateChooser();
+        jLabel23 = new javax.swing.JLabel();
+        cboSede2 = new javax.swing.JComboBox<>();
         panelAgendar = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
@@ -364,6 +370,8 @@ public void verificarDisponibilidadHoraActualizacion() {
         refrecarTablaPaciente = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         JDateFechaCita = new com.toedter.calendar.JDateChooser();
+        jLabel24 = new javax.swing.JLabel();
+        cboSede = new javax.swing.JComboBox<>();
         jPanel11 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
@@ -415,6 +423,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         JDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        txtContraseña = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPacientes = new javax.swing.JTable();
         jLabel79 = new javax.swing.JLabel();
@@ -863,6 +872,12 @@ public void verificarDisponibilidadHoraActualizacion() {
         jPanel5.add(txtNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 110, 30));
         jPanel5.add(JDateFechaCita2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, -1));
 
+        jLabel23.setText("Sede");
+        jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 40, -1));
+
+        cboSede2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel5.add(cboSede2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
+
         panelModificarCita.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 930, 240));
 
         TabbetCitas.addTab("Modificar Cita ", panelModificarCita);
@@ -989,6 +1004,17 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel19.setText("Id Cita");
         jPanel8.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
         jPanel8.add(JDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, 30));
+
+        jLabel24.setText("Sede");
+        jPanel8.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, -1, -1));
+
+        cboSede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboSede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboSedeActionPerformed(evt);
+            }
+        });
+        jPanel8.add(cboSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 80, 40));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -1401,6 +1427,8 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Documento*");
 
+        txtContraseña.setEditable(false);
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -1446,9 +1474,14 @@ public void verificarDisponibilidadHoraActualizacion() {
                                         .addGap(77, 77, 77))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cboTipoSangre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(87, 87, 87)
+                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(cboTipoSangre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(87, 87, 87))
+                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(57, 57, 57)))
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1564,7 +1597,8 @@ public void verificarDisponibilidadHoraActualizacion() {
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -1959,6 +1993,10 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
       // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarMedicoActionPerformed
 
+    private void cboSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSedeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboSedeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2023,6 +2061,8 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JComboBox<String> cboHoraCita2;
     private javax.swing.JComboBox<String> cboMotivoCita;
     private javax.swing.JComboBox<String> cboMotivoCita2;
+    private javax.swing.JComboBox<String> cboSede;
+    private javax.swing.JComboBox<String> cboSede2;
     private javax.swing.JComboBox<String> cboTipoCita;
     private javax.swing.JComboBox<String> cboTipoCita2;
     private javax.swing.JComboBox<String> cboTipoSangre;
@@ -2042,6 +2082,8 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel34;
@@ -2144,6 +2186,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JTextField txtApellidoBMedico;
     private javax.swing.JTextField txtBuscarIdCita;
     private javax.swing.JTextField txtCelularR;
+    private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtDocumentoPaciente;
     private javax.swing.JTextField txtDocumentoR;
     private javax.swing.JTextField txtEmail2;

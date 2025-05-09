@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Recepcionista;
 
-/*public class ControllerRecepcionista {
+public class ControllerRecepcionista {
   
     private DefaultTableModel tableModelRecepcionista;
     private RecepcionistaDAO recepcionistaDAO = new RecepcionistaDAO();
@@ -416,4 +416,4 @@ import model.Recepcionista;
             }
         }
     }
-}*/
+}

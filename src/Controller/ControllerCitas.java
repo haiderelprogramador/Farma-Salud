@@ -9,6 +9,7 @@ import dao.CitasDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
+import dao.SedeDAO;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
@@ -28,6 +29,7 @@ import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Salas;
+import model.Sede;
 
 
 
@@ -43,6 +45,7 @@ public class ControllerCitas {
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
     private SalasDAO salasDAO = new SalasDAO();
+    private SedeDAO sedeDAO=new SedeDAO();
     private Paciente pacienteSeleccionado;
     private Medico medicoSeleccionado;
     private DefaultTableModel tableModelMedico;
@@ -72,6 +75,8 @@ public class ControllerCitas {
     private JLabel lblEspecialidadMedico;
     private JLabel lblNombreMedico;
     private JLabel lblApellidoMedico;
+    private JComboBox cboSede;
+    private JComboBox sede2;
     
   
 
@@ -172,6 +177,14 @@ public class ControllerCitas {
     public void setCboMotivoCita(JComboBox<String> cboMotivoCita) {
         this.cboMotivoCita = cboMotivoCita;
     }
+
+    public void setCboSede(JComboBox cboSede) {
+        this.cboSede = cboSede;
+    }
+
+    public void setSede2(JComboBox sede2) {
+        this.sede2 = sede2;
+    }
     
     
 
@@ -217,6 +230,7 @@ public class ControllerCitas {
             JOptionPane.showMessageDialog(null, "El consultorio seleccionado no es válido", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+         Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
 
      LocalDate fechaCita = fechaDate.toInstant()
     .atZone(ZoneId.systemDefault())
@@ -247,7 +261,9 @@ public class ControllerCitas {
                 salaSeleccionada,
                 estado, 
                 pacienteSeleccionado,
-                medicoSeleccionado
+                medicoSeleccionado,
+                sedeSeleccionada
+                
                 
             );
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
@@ -425,6 +441,8 @@ public void seleccionarMedico() {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+                 Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
+
         Salas salaSeleccionada = salasDAO.cargarTodasSalas().stream()
             .filter(s -> s.getNombreSala().equals(consultorio) && 
                         "Consultorio".equalsIgnoreCase(s.getTipoSala()))
@@ -447,7 +465,6 @@ public void seleccionarMedico() {
             .atZone(ZoneId.systemDefault())
             .toLocalDate();
             
-        // Validar si ya existe otra cita para este médico a la misma hora
         if (existeOtraCitaEnMismaHora(fechaCita2, horaCita, documentoMedico, idCitaOriginal)) {
             JOptionPane.showMessageDialog(null,
                 "El médico ya tiene otra cita programada para esta hora. Por favor seleccione otra hora u otro médico.",
@@ -467,7 +484,8 @@ public void seleccionarMedico() {
             salaSeleccionada,
             estado, 
             pacienteSeleccionado,
-            medicoSeleccionado
+            medicoSeleccionado,
+            sedeSeleccionada
         );
         
         citaActualizada.setDocumentoPaciente(documentoPaciente);
@@ -552,6 +570,7 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                         cita.getTipoCita(),
                         cita.getSala(),
                         cita.getEstado().toString(),
+                        cita.getSede(),
                         medico.getNumeroDocumento(),
                         medico.getNombres(),
                         medico.getApellidos(),
@@ -761,18 +780,28 @@ public void configurarColoresTablaCitas() {
         }
     }
   }
-    public void cargarConsultoriosDisponibles(JComboBox<String> comboBox) {
-        comboBox.removeAllItems();
-        comboBox.addItem("<Seleccione>");
-        
-        List<Salas> consultorios = salasDAO.cargarTodasSalas().stream()
-                .filter(s -> "Consultorio".equalsIgnoreCase(s.getTipoSala()))
-                .collect(Collectors.toList());
-        
-        for (Salas consultorio : consultorios) {
-            comboBox.addItem(consultorio.getNombreSala());
-        }
+   public void cargarConsultoriosDisponibles(JComboBox<String> comboBox) {
+    comboBox.removeAllItems();
+    comboBox.addItem("<Seleccione>");
+    
+    List<Salas> consultorios = salasDAO.cargarTodasSalas().stream()
+            .filter(s -> "Consultorio".equalsIgnoreCase(s.getTipoSala()))
+            .collect(Collectors.toList());
+    
+    for (Salas consultorio : consultorios) {
+        comboBox.addItem(consultorio.getNombreSala());
     }
+}
+   public void cargarSedesEnComboBox(JComboBox<String> comboBox) {
+    comboBox.removeAllItems();
+    comboBox.addItem("<Seleccione>"); 
+    
+    List<Sede> sedes = sedeDAO.cargarTodasSedes();
+    
+    for (Sede sede : sedes) {
+        comboBox.addItem(sede.getNombreSede());
+    }
+}
     
 
 }

@@ -14,15 +14,15 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
 
-<<<<<<< HEAD
+
 /**
  *
  * @author Maria liz
  */
-/*public class ControllerPaciente {
-=======
+
+
 public class ControllerPaciente {
->>>>>>> e5415bb09cf6ad7afdc7428595581e29402a95eb
+
   
     private DefaultTableModel tableModelPaciente;
     private PacienteDAO pacienteDAO = new PacienteDAO();
@@ -101,7 +101,7 @@ public class ControllerPaciente {
     public void initTablePaciente() {
         tableModelPaciente = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
-                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes"}, 0) {
+                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes","Contraseña"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -135,7 +135,8 @@ public class ControllerPaciente {
                     paciente.getCelular(),
                     paciente.getTipoDocumento(),
                     paciente.getTipoSangre(),
-                    paciente.getAntecedentes()
+                    paciente.getAntecedentes(),
+                    paciente.getContraseña()
                 };
                 tableModelPaciente.addRow(row);
             }
@@ -165,7 +166,7 @@ public class ControllerPaciente {
             
             // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
+                email.isEmpty() || celular.isEmpty()  || 
                 dateChooserNacimiento.getDate() == null) {
                 JOptionPane.showMessageDialog(null, 
                     "Todos los campos son obligatorios", 
@@ -382,7 +383,7 @@ public class ControllerPaciente {
                 txtNombre.setText(tableModelPaciente.getValueAt(filaSeleccionada, 1).toString());
                 txtApellido.setText(tableModelPaciente.getValueAt(filaSeleccionada, 2).toString());
                 
-                // Convertir y establecer fecha
+               
                 Object fechaValue = tableModelPaciente.getValueAt(filaSeleccionada, 3);
                 if (fechaValue instanceof LocalDate) {
                     LocalDate fechaNac = (LocalDate) fechaValue;
@@ -406,9 +407,7 @@ public class ControllerPaciente {
             }
         }
     }
-<<<<<<< HEAD
-}*/
-
-=======
 }
->>>>>>> e5415bb09cf6ad7afdc7428595581e29402a95eb
+
+
+

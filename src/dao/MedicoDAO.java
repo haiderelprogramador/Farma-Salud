@@ -17,7 +17,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 public class MedicoDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\medico.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\medico.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
 
