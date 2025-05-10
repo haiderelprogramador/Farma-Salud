@@ -1,67 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
+import java.util.List;
 
 public class Enfermedad {
-    private String idEnfermedad;
-    private String nombreEnfermedad;
-    private String tipoEnfermedad;
-    private String sintomas;
-    private String causaEnfermedad;
-
+    private int idEnfermedad;
+    private String nombre;
+    private String tipo;
+    private List<String> sintomas;
+    private List<String> causas;
     
-
-    public Enfermedad() {}
-
-    public Enfermedad(String idEnfermedad, String nombreEnfermedad, String tipoEnfermedad, 
-                     String sintomas, String causaEnfermedad) {
-        this.idEnfermedad = idEnfermedad;
-        this.nombreEnfermedad = nombreEnfermedad;
-        this.tipoEnfermedad = tipoEnfermedad;
-        this.sintomas = sintomas;
-        this.causaEnfermedad = causaEnfermedad;
+    public Enfermedad() {
+        // Constructor vacío necesario para GSON
     }
-    public String getIdEnfermedad() {
+    
+    public Enfermedad(int idEnfermedad, String nombre, String tipo, List<String> sintomas, List<String> causas) {
+        this.idEnfermedad = idEnfermedad;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.sintomas = sintomas;
+        this.causas = causas;
+    }
+    
+    // Getters y setters
+    public int getIdEnfermedad() {
         return idEnfermedad;
     }
-
-    public void setIdEnfermedad(String idEnfermedad) {
+    
+    public void setIdEnfermedad(int idEnfermedad) {
         this.idEnfermedad = idEnfermedad;
     }
-
-    public String getNombreEnfermedad() {
-        return nombreEnfermedad;
+    
+    public String getNombre() {
+        return nombre;
     }
-
-    public void setNombreEnfermedad(String nombreEnfermedad) {
-        this.nombreEnfermedad = nombreEnfermedad;
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-
-    public String getTipoEnfermedad() {
-        return tipoEnfermedad;
+    
+    public String getTipo() {
+        return tipo;
     }
-
-    public void setTipoEnfermedad(String tipoEnfermedad) {
-        this.tipoEnfermedad = tipoEnfermedad;
+    
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
-
-    public String getSintomas() {
+    
+    public List<String> getSintomas() {
         return sintomas;
     }
-
-    public void setSintomas(String sintomas) {
+    
+    public void setSintomas(List<String> sintomas) {
         this.sintomas = sintomas;
     }
-
-    public String getCausaEnfermedad() {
-        return causaEnfermedad;
+    
+    public List<String> getCausas() {
+        return causas;
     }
-
-    public void setCausaEnfermedad(String causaEnfermedad) {
-        this.causaEnfermedad = causaEnfermedad;
+    
+    public void setCausas(List<String> causas) {
+        this.causas = causas;
     }
- 
+    
+    @Override
+    public String toString() {
+        return "Enfermedad{" + 
+               "idEnfermedad=" + idEnfermedad + 
+               ", nombre='" + nombre + '\'' + 
+               ", tipo='" + tipo + '\'' + 
+               ", sintomas=" + sintomas + 
+               ", causas=" + causas + 
+               '}';
+    }
 }

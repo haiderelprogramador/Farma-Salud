@@ -27,6 +27,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import model.Sede;
 
 /**
@@ -218,5 +219,20 @@ public class SedeDAO {
             }
         }
         return null;
-    }}
+    }
+    
+    
+    public List<Sede> buscarSedes(String criterio) throws IOException {
+    List<Sede> todasSedes = cargarTodasSedes();
+    String criterioLower = criterio.toLowerCase();
+    
+    return todasSedes.stream()
+        .filter(sede -> 
+            (sede.getIdSede() != null && sede.getIdSede().toLowerCase().contains(criterioLower)) ||
+            (sede.getNombreSede() != null && sede.getNombreSede().toLowerCase().contains(criterioLower)) ||
+            (sede.getDireccion() != null && sede.getDireccion().toLowerCase().contains(criterioLower)) ||
+            (sede.getHorarioFuncionamiento() != null && sede.getHorarioFuncionamiento().toLowerCase().contains(criterioLower)))
+        .collect(Collectors.toList());
+}
+}
 
