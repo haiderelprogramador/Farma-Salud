@@ -21,7 +21,7 @@ import java.util.Objects;
 import model.Recepcionista;
 
 public class RecepcionistaDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\recepcionista.json";
     private final Gson gson;
     
     public RecepcionistaDAO() {

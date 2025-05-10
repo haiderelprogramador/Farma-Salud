@@ -277,7 +277,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel55 = new javax.swing.JLabel();
         panelBtnAgendar1 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
-        jLabel57 = new javax.swing.JLabel();
         AgendarPaciente = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
@@ -522,7 +521,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel56.setForeground(new java.awt.Color(255, 255, 255));
         jLabel56.setText("Agender cita");
         panelBtnAgendar1.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 15, 138, 28));
-        panelBtnAgendar1.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
 
         jPanel3.add(panelBtnAgendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 300, 60));
 
@@ -2101,7 +2099,6 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;

@@ -792,18 +792,35 @@ public void configurarColoresTablaCitas() {
         comboBox.addItem(consultorio.getNombreSala());
     }
 }
-   public void cargarSedesEnComboBox(JComboBox<String> comboBox) {
-    comboBox.removeAllItems();
-    comboBox.addItem("<Seleccione>"); 
-    
-    List<Sede> sedes = sedeDAO.cargarTodasSedes();
-    
-    for (Sede sede : sedes) {
-        comboBox.addItem(sede.getNombreSede());
+  public void cargarSedesEnComboBox(JComboBox<String> comboBox) {
+    if (comboBox == null) {
+        System.err.println("Error: El JComboBox de sedes es nulo");
+        return;
     }
-}
-    
 
+        try {
+            comboBox.removeAllItems();
+            comboBox.addItem("<Seleccione>");
+            
+            List<Sede> sedes = sedeDAO.cargarTodasSedes();
+            
+            
+            
+            for (Sede sede : sedes) {
+                if (sede != null && sede.getNombreSede() != null && !sede.getNombreSede().trim().isEmpty()) {
+                    System.out.println("Agregando sede: " + sede.getNombreSede());
+                    comboBox.addItem(sede.getNombreSede());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar sedes en ComboBox: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar las sedes: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
      
 

@@ -23,7 +23,7 @@ import java.util.List;
 import model.Farmaceutica;
 
 public class FarmaceuticaDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\farmaceutica.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\farmaceutica.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                                         .create();
 
