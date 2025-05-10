@@ -76,7 +76,7 @@ public class ControllerCitas {
     private JLabel lblNombreMedico;
     private JLabel lblApellidoMedico;
     private JComboBox cboSede;
-    private JComboBox sede2;
+    private JComboBox cboSede2;
     
   
 
@@ -182,8 +182,8 @@ public class ControllerCitas {
         this.cboSede = cboSede;
     }
 
-    public void setSede2(JComboBox sede2) {
-        this.sede2 = sede2;
+    public void setCboSede2(JComboBox cboSede2) {
+        this.cboSede2 = cboSede2;
     }
     
     
@@ -203,12 +203,11 @@ public class ControllerCitas {
             String horaCita = cboHoraCita.getSelectedItem().toString();
             String motivo = cboMotivoCita.getSelectedItem().toString();
             String tipo = cboTipoCita.getSelectedItem().toString();
-            String consultorio = cboConsultorio.getSelectedItem().toString();
             EstadoCita estado = EstadoCita.valueOf(cboEstadoCita.getSelectedItem().toString());   
            
             
              if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
-            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
+            tipo.equals("<Seleccione>")) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -220,17 +219,10 @@ public class ControllerCitas {
         "Error", JOptionPane.ERROR_MESSAGE);
     return;
 }
-      Salas salaSeleccionada = salasDAO.cargarTodasSalas().stream()
-            .filter(s -> s.getNombreSala().equals(consultorio) && 
-                        "Consultorio".equalsIgnoreCase(s.getTipoSala()))
-            .findFirst()
-            .orElse(null);
-        
-        if (salaSeleccionada == null) {
-            JOptionPane.showMessageDialog(null, "El consultorio seleccionado no es válido", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+       
          Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
+         Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio.getSelectedItem().toString());
+
 
      LocalDate fechaCita = fechaDate.toInstant()
     .atZone(ZoneId.systemDefault())
@@ -405,7 +397,6 @@ public void seleccionarMedico() {
                 cita.getMotivo(),
                 cita.getFechaCita(),
                 cita.getTipoCita(),
-                cita.getSala(),
                 cita.getEstado().toString(),
                 medico.getNumeroDocumento(),
                 medico.getNombres(),
@@ -432,27 +423,18 @@ public void seleccionarMedico() {
         String horaCita = cboHoraCita2.getSelectedItem().toString();
         String motivo = cboMotivoCita2.getSelectedItem().toString();
         String tipo = cboTipoCita2.getSelectedItem().toString();
-        String consultorio = cboConsultorio2.getSelectedItem().toString();
         EstadoCita estado = EstadoCita.valueOf(cboEstadoCita2.getSelectedItem().toString());   
         String documentoMedico = tablaCitas.getValueAt(filaSeleccionada, 12).toString();
 
         if (horaCita.isEmpty() || motivo.isEmpty() || 
-            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
+            tipo.equals("<Seleccione>")) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-                 Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
-
-        Salas salaSeleccionada = salasDAO.cargarTodasSalas().stream()
-            .filter(s -> s.getNombreSala().equals(consultorio) && 
-                        "Consultorio".equalsIgnoreCase(s.getTipoSala()))
-            .findFirst()
-            .orElse(null);
+                 Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede2.getSelectedItem().toString());
+                Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio2.getSelectedItem().toString());
         
-        if (salaSeleccionada == null) {
-            JOptionPane.showMessageDialog(null, "El consultorio seleccionado no es válido", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+      
         Date fechaC = JDateFechaCita2.getDate();
         if (fechaC == null) {
             JOptionPane.showMessageDialog(null, 
@@ -780,18 +762,34 @@ public void configurarColoresTablaCitas() {
         }
     }
   }
-   public void cargarConsultoriosDisponibles(JComboBox<String> comboBox) {
-    comboBox.removeAllItems();
-    comboBox.addItem("<Seleccione>");
-    
-    List<Salas> consultorios = salasDAO.cargarTodasSalas().stream()
-            .filter(s -> "Consultorio".equalsIgnoreCase(s.getTipoSala()))
-            .collect(Collectors.toList());
-    
-    for (Salas consultorio : consultorios) {
-        comboBox.addItem(consultorio.getNombreSala());
+  public void cargarSalasEnComboBox(JComboBox<String> comboBox) {
+    if (comboBox == null) {
+        System.err.println("Error: El JComboBox de sala es nulo");
+        return;
     }
-}
+
+        try {
+            comboBox.removeAllItems();
+            comboBox.addItem("<Seleccione>");
+            
+            List<Salas> sala = salasDAO.cargarTodasSalas();
+            
+            
+            
+            for (Salas salas : sala) {
+                if (salas != null && salas.getNombreSala() != null && !salas.getNombreSala().trim().isEmpty()) {
+                    comboBox.addItem(salas.getNombreSala());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar consultorio en ComboBox: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar los consultorio: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
   public void cargarSedesEnComboBox(JComboBox<String> comboBox) {
     if (comboBox == null) {
         System.err.println("Error: El JComboBox de sedes es nulo");
@@ -808,7 +806,6 @@ public void configurarColoresTablaCitas() {
             
             for (Sede sede : sedes) {
                 if (sede != null && sede.getNombreSede() != null && !sede.getNombreSede().trim().isEmpty()) {
-                    System.out.println("Agregando sede: " + sede.getNombreSede());
                     comboBox.addItem(sede.getNombreSede());
                 }
             }

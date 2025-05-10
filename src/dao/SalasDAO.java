@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import model.Salas;
+import model.Sede;
 
 /**
  *
@@ -67,6 +68,7 @@ public class SalasDAO {
             return new ArrayList<>();
         }
     }
+    
     
     public boolean guardarSalaConValidacion(Salas sala) {
     // Validaciones básicas
@@ -140,7 +142,13 @@ public class SalasDAO {
     return salas.stream()
                 .anyMatch(s -> codigoSala.equalsIgnoreCase(s.getCodigoSala()));
 }
-    
+    public Salas buscarPorNombre(String nombreSala) {
+    List<Salas> sala = cargarTodasSalas();
+    return sala.stream()
+            .filter(s -> s.getNombreSala().equalsIgnoreCase(nombreSala))
+            .findFirst()
+            .orElse(null);
+} 
     public String generarCodigoUnico() {
     List<Salas> salas = cargarTodasSalas();
     int maxNumero = 0;

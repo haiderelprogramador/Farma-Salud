@@ -124,7 +124,7 @@ private void configurarCitas(){
         controllerCitas.setCboTipoCita(cboTipoCita);
         controllerCitas.setCboMotivoCita(cboMotivoCita);
         controllerCitas.setCboEstadoCita(cboEstadoCita);
-        controllerCitas.cargarConsultoriosDisponibles(cboConsultorio);
+        controllerCitas.cargarSalasEnComboBox(cboConsultorio);
         controllerCitas.cargarSedesEnComboBox(cboSede);
         
         controllerCitas.cargarPacienteEnTabla();
@@ -139,7 +139,7 @@ private void configurarCitas(){
     controllerCitas.setCboMotivoCita2(cboMotivoCita2);
     controllerCitas.setCboTipoCita2(cboTipoCita2);
     controllerCitas.setCboEstadoCita2(cboEstadoCita2);
-    controllerCitas.cargarConsultoriosDisponibles(cboConsultorio2);
+    controllerCitas.cargarSalasEnComboBox(cboConsultorio2);
     controllerCitas.setLblNombreMedico(lblNombreMedico); 
     controllerCitas.setLblApellidoMedico(lblApellidoMedico);
     controllerCitas.setLblEspecialidadMedico(lblEspecialidadMedico);
