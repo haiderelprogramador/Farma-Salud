@@ -23,7 +23,7 @@ public class Medico extends Persona {
         this.horario = horario;
     }
 
-    // Getters y Setters
+   
     public String getEspecialidad() {
         return especialidad;
     }

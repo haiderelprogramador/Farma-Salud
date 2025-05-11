@@ -8,16 +8,16 @@ import com.toedter.calendar.JDateChooser;
 import dao.CitasDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
+import dao.SalasDAO;
+import dao.SedeDAO;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JButton;
+import java.util.stream.Collectors;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,8 +27,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Cita;
 import model.Cita.EstadoCita;
-import model.Persona;
 import model.Medico;
+import model.Salas;
+import model.Sede;
 
 
 
@@ -43,6 +44,8 @@ public class ControllerCitas {
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
+    private SalasDAO salasDAO = new SalasDAO();
+    private SedeDAO sedeDAO=new SedeDAO();
     private Paciente pacienteSeleccionado;
     private Medico medicoSeleccionado;
     private DefaultTableModel tableModelMedico;
@@ -72,6 +75,8 @@ public class ControllerCitas {
     private JLabel lblEspecialidadMedico;
     private JLabel lblNombreMedico;
     private JLabel lblApellidoMedico;
+    private JComboBox cboSede;
+    private JComboBox cboSede2;
     
   
 
@@ -172,6 +177,14 @@ public class ControllerCitas {
     public void setCboMotivoCita(JComboBox<String> cboMotivoCita) {
         this.cboMotivoCita = cboMotivoCita;
     }
+
+    public void setCboSede(JComboBox cboSede) {
+        this.cboSede = cboSede;
+    }
+
+    public void setCboSede2(JComboBox cboSede2) {
+        this.cboSede2 = cboSede2;
+    }
     
     
 
@@ -190,12 +203,11 @@ public class ControllerCitas {
             String horaCita = cboHoraCita.getSelectedItem().toString();
             String motivo = cboMotivoCita.getSelectedItem().toString();
             String tipo = cboTipoCita.getSelectedItem().toString();
-            String consultorio = cboConsultorio.getSelectedItem().toString();
             EstadoCita estado = EstadoCita.valueOf(cboEstadoCita.getSelectedItem().toString());   
            
             
              if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
-            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
+            tipo.equals("<Seleccione>")) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -207,6 +219,10 @@ public class ControllerCitas {
         "Error", JOptionPane.ERROR_MESSAGE);
     return;
 }
+       
+         Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
+         Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio.getSelectedItem().toString());
+
 
      LocalDate fechaCita = fechaDate.toInstant()
     .atZone(ZoneId.systemDefault())
@@ -234,10 +250,12 @@ public class ControllerCitas {
                 horaCita, 
                 motivo, 
                 tipo, 
-                consultorio,
+                salaSeleccionada,
                 estado, 
                 pacienteSeleccionado,
-                medicoSeleccionado
+                medicoSeleccionado,
+                sedeSeleccionada
+                
                 
             );
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
@@ -315,6 +333,7 @@ public void cargarMedicoEnTabla() {
             medico.getNombres(),
             medico.getApellidos(),
             medico.getEspecialidad(),
+            
           
         };
         tableModelMedico.addRow(row);
@@ -378,7 +397,6 @@ public void seleccionarMedico() {
                 cita.getMotivo(),
                 cita.getFechaCita(),
                 cita.getTipoCita(),
-                cita.getConsultorio(),
                 cita.getEstado().toString(),
                 medico.getNumeroDocumento(),
                 medico.getNombres(),
@@ -405,16 +423,18 @@ public void seleccionarMedico() {
         String horaCita = cboHoraCita2.getSelectedItem().toString();
         String motivo = cboMotivoCita2.getSelectedItem().toString();
         String tipo = cboTipoCita2.getSelectedItem().toString();
-        String consultorio = cboConsultorio2.getSelectedItem().toString();
         EstadoCita estado = EstadoCita.valueOf(cboEstadoCita2.getSelectedItem().toString());   
         String documentoMedico = tablaCitas.getValueAt(filaSeleccionada, 12).toString();
 
         if (horaCita.isEmpty() || motivo.isEmpty() || 
-            tipo.isEmpty() || consultorio.equals("<Seleccione>")) {
+            tipo.equals("<Seleccione>")) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+                 Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede2.getSelectedItem().toString());
+                Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio2.getSelectedItem().toString());
+        
+      
         Date fechaC = JDateFechaCita2.getDate();
         if (fechaC == null) {
             JOptionPane.showMessageDialog(null, 
@@ -427,7 +447,6 @@ public void seleccionarMedico() {
             .atZone(ZoneId.systemDefault())
             .toLocalDate();
             
-        // Validar si ya existe otra cita para este médico a la misma hora
         if (existeOtraCitaEnMismaHora(fechaCita2, horaCita, documentoMedico, idCitaOriginal)) {
             JOptionPane.showMessageDialog(null,
                 "El médico ya tiene otra cita programada para esta hora. Por favor seleccione otra hora u otro médico.",
@@ -444,10 +463,11 @@ public void seleccionarMedico() {
             horaCita, 
             motivo, 
             tipo, 
-            consultorio,
+            salaSeleccionada,
             estado, 
             pacienteSeleccionado,
-            medicoSeleccionado
+            medicoSeleccionado,
+            sedeSeleccionada
         );
         
         citaActualizada.setDocumentoPaciente(documentoPaciente);
@@ -530,12 +550,14 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                         cita.getMotivo(),
                         cita.getFechaCita(),
                         cita.getTipoCita(),
-                        cita.getConsultorio(),
+                        cita.getSala(),
                         cita.getEstado().toString(),
+                        cita.getSede(),
                         medico.getNumeroDocumento(),
                         medico.getNombres(),
                         medico.getApellidos(),
                         medico.getEspecialidad()
+                      
                     };
                     tableModelCita.addRow(row);
                 }
@@ -701,6 +723,101 @@ public void configurarColoresTablaCitas() {
             JOptionPane.WARNING_MESSAGE);
     }
 }
+  public void cargarCitasPorPaciente(String documentoPaciente) {
+    if (tablaCitas == null || tableModelCita == null) {
+        throw new IllegalStateException("La tabla de citas no está inicializada.");
+    }
+
+    tableModelCita.setRowCount(0); 
+
+    List<Cita> citasDelPaciente = citasDAO.cargarTodos().stream()
+            .filter(cita -> cita.getDocumentoPaciente().equals(documentoPaciente))
+            .collect(Collectors.toList());
+
+    if (citasDelPaciente.isEmpty()) {
+        JOptionPane.showMessageDialog(null, 
+            "No tienes citas programadas.", 
+            "Información", 
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    for (Cita cita : citasDelPaciente) {
+        Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+        Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+        
+        if (paciente != null && medico != null) {
+            Object[] row = {
+                cita.getIdCita(),
+                cita.getFechaCita(),
+                cita.getHora(),
+                cita.getMotivo(),
+                cita.getTipoCita(),
+                cita.getSala(),
+                cita.getEstado().toString(),
+                medico.getNombres() + " " + medico.getApellidos(),
+                medico.getEspecialidad()
+            };
+            tableModelCita.addRow(row);
+        }
+    }
+  }
+  public void cargarSalasEnComboBox(JComboBox<String> comboBox) {
+    if (comboBox == null) {
+        System.err.println("Error: El JComboBox de sala es nulo");
+        return;
+    }
+
+        try {
+            comboBox.removeAllItems();
+            comboBox.addItem("<Seleccione>");
+            
+            List<Salas> sala = salasDAO.cargarTodasSalas();
+            
+            
+            
+            for (Salas salas : sala) {
+                if (salas != null && salas.getNombreSala() != null && !salas.getNombreSala().trim().isEmpty()) {
+                    comboBox.addItem(salas.getNombreSala());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar consultorio en ComboBox: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar los consultorio: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+  public void cargarSedesEnComboBox(JComboBox<String> comboBox) {
+    if (comboBox == null) {
+        System.err.println("Error: El JComboBox de sedes es nulo");
+        return;
+    }
+
+        try {
+            comboBox.removeAllItems();
+            comboBox.addItem("<Seleccione>");
+            
+            List<Sede> sedes = sedeDAO.cargarTodasSedes();
+            
+            
+            
+            for (Sede sede : sedes) {
+                if (sede != null && sede.getNombreSede() != null && !sede.getNombreSede().trim().isEmpty()) {
+                    comboBox.addItem(sede.getNombreSede());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar sedes en ComboBox: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar las sedes: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
      
 
