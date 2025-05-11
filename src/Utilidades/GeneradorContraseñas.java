@@ -1,5 +1,7 @@
 package Utilidades;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class GeneradorContraseñas {
@@ -41,4 +43,22 @@ public class GeneradorContraseñas {
         }
         return new String(caracteres);
     }
-}
+    public static String encriptarContrasena(String contrasena) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(contrasena.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al encriptar contraseña", e);
+        }
+}}

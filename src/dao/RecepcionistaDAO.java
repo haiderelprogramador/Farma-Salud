@@ -22,9 +22,11 @@ import model.Recepcionista;
 
 public class RecepcionistaDAO {
     private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
+    private static RecepcionistaDAO instancia; // Instancia única del Singleton
     private final Gson gson;
     
-    public RecepcionistaDAO() {
+    // Constructor privado para evitar instanciación externa
+    private RecepcionistaDAO() {
         this.gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
@@ -32,21 +34,26 @@ public class RecepcionistaDAO {
         verificarYEstructurarArchivo();
     }
     
+    // Método público para obtener la instancia única
+    public static synchronized RecepcionistaDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new RecepcionistaDAO();
+        }
+        return instancia;
+    }
+    
     private void verificarYEstructurarArchivo() {
         try {
             File archivo = new File(ARCHIVO_JSON);
             
-            // Verificar si la ruta padre existe
             File directorioPadre = archivo.getParentFile();
             
-            // Si no existe el directorio padre, intentar crearlo
             if (directorioPadre != null && !directorioPadre.exists()) {
                 if (!directorioPadre.mkdirs()) {
                     throw new IOException("No se pudo crear el directorio: " + directorioPadre.getAbsolutePath());
                 }
             }
             
-            // Si no existe el archivo, crearlo con lista vacía
             if (!archivo.exists()) {
                 try (FileWriter writer = new FileWriter(archivo)) {
                     gson.toJson(new ArrayList<Recepcionista>(), writer);
@@ -83,7 +90,6 @@ public class RecepcionistaDAO {
         try {
             List<Recepcionista> recepcionistas = cargarTodos();
             
-            // Verificar si ya existe
             boolean existe = recepcionistas.stream()
                 .anyMatch(r -> r.getNumeroDocumento().equals(recepcionista.getNumeroDocumento()));
             
