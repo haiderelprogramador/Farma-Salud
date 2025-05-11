@@ -28,8 +28,8 @@ import javax.swing.event.ListSelectionListener;
  */
 public class admin extends javax.swing.JFrame {
 
-    private ControllerDoctor controllerDoctor = new ControllerDoctor();
-    private ControllerRecepcionista controllerRecepcionista = new ControllerRecepcionista();
+    private ControllerDoctor controllerDoctor = ControllerDoctor.getInstancia();
+    private ControllerRecepcionista controllerRecepcionista = ControllerRecepcionista.getInstancia();
     private ControllerSalas controllerSalas = new ControllerSalas();
     private CotrollerFarmaceutica controllerFarmaceutica = new CotrollerFarmaceutica();
     private ControllerMedicamento controllerMedicamento = new ControllerMedicamento(this);
