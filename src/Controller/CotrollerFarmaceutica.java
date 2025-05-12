@@ -411,11 +411,4 @@ public class CotrollerFarmaceutica {
             }
         }
     }
-
-    
-    
-    
-    
 }
-
-

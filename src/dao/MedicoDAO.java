@@ -17,9 +17,19 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 public class MedicoDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\medico.json";
+    
+    private static MedicoDAO instancia;
+    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\medico.json";
+
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
+    
+     public static synchronized MedicoDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new MedicoDAO();
+        }
+        return instancia;
+    }
 
     // Método para asegurar que el archivo exista
     private void asegurarArchivoExiste() {
@@ -187,4 +197,15 @@ public class MedicoDAO {
             }
         }
     }
+    
+    public boolean existeMedico(String numeroDocumento) {
+    if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
+        throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
+    }
+
+    List<Medico> medicos = cargarTodos();
+    return medicos.stream()
+        .filter(Objects::nonNull)
+        .anyMatch(m -> numeroDocumento.equals(m.getNumeroDocumento()));
+}
 }

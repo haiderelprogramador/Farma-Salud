@@ -1,5 +1,7 @@
 package Controller;
 
+import Utilidades.EnviadorCredenciales;
+import Utilidades.GeneradorContraseñas;
 import com.toedter.calendar.JDateChooser;
 import dao.RecepcionistaDAO;
 import java.time.LocalDate;
@@ -14,9 +16,10 @@ import javax.swing.table.DefaultTableModel;
 import model.Recepcionista;
 
 public class ControllerRecepcionista {
+    private static ControllerRecepcionista instancia;
   
     private DefaultTableModel tableModelRecepcionista;
-    private RecepcionistaDAO recepcionistaDAO = new RecepcionistaDAO();
+    private final RecepcionistaDAO recepcionistaDAO = RecepcionistaDAO.getInstancia();
     private String documentoOriginal;
     
     // Componentes de la vista
@@ -33,6 +36,20 @@ public class ControllerRecepcionista {
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbHorario;
     private JComboBox<String> cbEps;
+    
+    private final GeneradorContraseñas generadorContraseñas = new GeneradorContraseñas();
+    private final EnviadorCredenciales enviadorCredenciales = EnviadorCredenciales.getInstancia();
+
+    // Constructor privado
+    private ControllerRecepcionista() {}
+    
+    // Método para obtener la instancia singleton
+    public static synchronized ControllerRecepcionista getInstancia() {
+        if (instancia == null) {
+            instancia = new ControllerRecepcionista();
+        }
+        return instancia;
+    }
 
     // Setters para los componentes de la vista
     public void setTablaRecepcionistas(JTable tablaRecepcionistas) {
@@ -149,7 +166,6 @@ public class ControllerRecepcionista {
             String apellidos = txtApellido.getText().trim();
             String email = txtEmail.getText().trim();
             String celular = txtCelular.getText().trim();
-            String contraseña = txtContraseña.getText().trim();
             String codigoEmpleado = txtCodigoEmpleado.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
             String horario = cbHorario.getSelectedItem().toString();
@@ -157,12 +173,20 @@ public class ControllerRecepcionista {
             
             // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
-                codigoEmpleado.isEmpty() || dateChooserNacimiento.getDate() == null || 
-                dateChooserContratacion.getDate() == null) {
+                email.isEmpty() || celular.isEmpty() || codigoEmpleado.isEmpty() || 
+                dateChooserNacimiento.getDate() == null || dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, 
                     "Todos los campos son obligatorios", 
                     "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Validar formato de email
+            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                JOptionPane.showMessageDialog(null,
+                    "El correo electrónico no tiene un formato válido",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -182,6 +206,10 @@ public class ControllerRecepcionista {
                 return;
             }
             
+            // Generar contraseña automática
+            String contrasena = generadorContraseñas.generarContrasena(10);
+            String contrasenaEncriptada = generadorContraseñas.encriptarContrasena(contrasena);
+            
             // Crear nuevo recepcionista
             Recepcionista nuevoRecepcionista = new Recepcionista(
                 documento,
@@ -192,7 +220,7 @@ public class ControllerRecepcionista {
                 eps,
                 email,
                 celular,
-                contraseña,
+                contrasenaEncriptada,
                 codigoEmpleado,
                 fechaContratacion,
                 horario
@@ -200,10 +228,25 @@ public class ControllerRecepcionista {
             
             // Guardar en la base de datos
             if (recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista)) {
-                JOptionPane.showMessageDialog(null, 
-                    "Recepcionista guardado exitosamente", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                // Enviar credenciales
+                boolean envioExitoso = enviadorCredenciales.enviarCredenciales(
+                    email, 
+                    nombres + " " + apellidos, 
+                    contrasena
+                );
+                
+                if (envioExitoso) {
+                    JOptionPane.showMessageDialog(null, 
+                        "Recepcionista registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, 
+                        "Recepcionista registrado exitosamente, pero no se pudo enviar el correo con las credenciales.", 
+                        "Advertencia", 
+                        JOptionPane.WARNING_MESSAGE);
+                }
+                
                 cargarDatosEnTablaRecepcionista();
                 limpiarFormulario();
             } else {
@@ -212,25 +255,21 @@ public class ControllerRecepcionista {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, 
                 "Error al guardar recepcionista: " + e.getMessage(),
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-        }
+        }    
     }
     
     // Verificar si existe un recepcionista
     private boolean existeRecepcionista(String documento, String codigoEmpleado) {
         List<Recepcionista> recepcionistas = recepcionistaDAO.cargarTodos();
-        if (recepcionistas != null) {
-            return recepcionistas.stream()
-                .anyMatch(r -> (r.getNumeroDocumento() != null && r.getNumeroDocumento().equals(documento)) ||
-                              (r.getCodigoEmpleado() != null && r.getCodigoEmpleado().equals(codigoEmpleado)));
-        }
-        return false;
+        return recepcionistas.stream()
+            .anyMatch(r -> (r.getNumeroDocumento().equals(documento) || 
+                          (r.getCodigoEmpleado().equals(codigoEmpleado))));
     }
     
     // Limpiar formulario
@@ -381,39 +420,26 @@ public class ControllerRecepcionista {
     public void cargarDatosRecepcionistaEnFormulario() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
         if (filaSeleccionada != -1) {
-            try {
-                txtDocumento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString());
-                txtNombre.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 1).toString());
-                txtApellido.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
-                
-                // Convertir y establecer fechas
-                Object fechaNacValue = tableModelRecepcionista.getValueAt(filaSeleccionada, 3);
-                if (fechaNacValue instanceof LocalDate) {
-                    LocalDate fechaNac = (LocalDate) fechaNacValue;
-                    dateChooserNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                }
-                
-                cbSexo.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 4).toString());
-                cbEps.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 5).toString());
-                txtEmail.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 6).toString());
-                txtCelular.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
-                txtCodigoEmpleado.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 8).toString());
-                
-                Object fechaContValue = tableModelRecepcionista.getValueAt(filaSeleccionada, 9);
-                if (fechaContValue instanceof LocalDate) {
-                    LocalDate fechaCont = (LocalDate) fechaContValue;
-                    dateChooserContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                }
-                
-                cbHorario.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
-                
-                this.documentoOriginal = txtDocumento.getText();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,
-                    "Error al cargar datos del recepcionista: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
+            txtDocumento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString());
+            txtNombre.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 1).toString());
+            txtApellido.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
+            
+            // Convertir y establecer fechas
+            LocalDate fechaNac = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 3);
+            dateChooserNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            
+            cbSexo.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 4).toString());
+            cbEps.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 5).toString());
+            txtEmail.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 6).toString());
+            txtCelular.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
+            txtCodigoEmpleado.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 8).toString());
+            
+            LocalDate fechaCont = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 9);
+            dateChooserContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            
+            cbHorario.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
+            
+            this.documentoOriginal = txtDocumento.getText();
         }
     }
 }

@@ -35,7 +35,8 @@ import model.Sede;
  * @author usuario
  */
 public class SedeDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\sedes.json";
+     private static final String JSON_BASE_PATH = "src/resources/data/";
+    private static final String ARCHIVO_JSON = JSON_BASE_PATH+"sedes.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
     .create();
     
