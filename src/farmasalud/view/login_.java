@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 //import dao.usuarioDAO;
+import dao.usuarioDAO;
 import javax.swing.*;
 import model.Usuario;
 import farmasalud.view.admin;
@@ -141,72 +142,84 @@ public class login_ extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_contraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    /*String email = Jtextfield_usuario.getText().trim();
-    String documento = new String(Jtextfield_contraseña.getPassword());
+                                        
+    String email = Jtextfield_usuario.getText().trim();
+    String contraseña = new String(Jtextfield_contraseña.getPassword());
     String rolSeleccionado = (String) jComboBox1.getSelectedItem();
     
-    
-    if (email.isEmpty() || documento.isEmpty()) {
-        mostrarError("Email y número de documento son requeridos");
+    // Validaciones básicas
+    if (email.isEmpty() || contraseña.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Email y contraseña son requeridos", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
         return;
     }
-
     
-    if (rolSeleccionado.equals("<Seleccione su rol>")) {
-        mostrarError("Debe seleccionar un rol válido");
+    if (rolSeleccionado.equals("<Seleccione una opcion>")) {
+        JOptionPane.showMessageDialog(this, 
+            "Debe seleccionar un rol válido", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     try {
-        
+        // Instanciar el DAO
         usuarioDAO usuarioDAO = new usuarioDAO();
-        Object usuario = usuarioDAO.validarCredenciales(email, documento, rolSeleccionado);
+        
+        // Validar credenciales
+        Object usuario = usuarioDAO.validarCredenciales(email, contraseña, rolSeleccionado);
 
         if (usuario == null) {
-            mostrarError("Credenciales incorrectas o usuario no existe");
+            JOptionPane.showMessageDialog(this, 
+                "Credenciales incorrectas o usuario no existe", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        
-        if (usuarioDAO.esAdministrador(usuario)) {
-            abrirVista(new admin(), "Bienvenido Administrador");
-        } else if (usuarioDAO.esRecepcionista(usuario)) {
-            abrirVista(new recepcionista(), "Bienvenida Recepcionista");
-        } else if (usuarioDAO.esMedico(usuario)) {
-            abrirVista(new Doctor(), "Bienvenido Doctor");
-        } else if (usuarioDAO.esFarmaceutico(usuario)) {
-            abrirVista(new Farmaceutica(), "Bienvenido/a Farmacéutico/a");
-        } else if (usuarioDAO.esPaciente(usuario)) {
-            abrirVista(new Paciente(), "Bienvenido Paciente");
+        // Redirigir según el tipo de usuario
+        switch(rolSeleccionado) {
+            case "Administrador":
+                abrirVista(new admin(), "Bienvenido Administrador");
+                break;
+            case "Doctor":
+                abrirVista(new Doctor(), "Bienvenido Doctor");
+                break;
+            case "Recepcionista":
+                abrirVista(new recepcionista(), "Bienvenida Recepcionista");
+                break;
+            case "Paciente":
+                abrirVista(new Paciente(), "Bienvenido Paciente");
+                break;
         }
         
     } catch (Exception e) {
-        mostrarError("Error durante el login: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error durante el login: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
 }
 
-// Métodos auxiliares para mejor organización
-
+// Método auxiliar para abrir vistas
 private void abrirVista(JFrame vista, String mensajeBienvenida) {
     try {
         vista.setVisible(true);
-        this.dispose();
+        this.dispose(); // Cierra la ventana de login
         JOptionPane.showMessageDialog(this, 
             mensajeBienvenida, 
             "Login Exitoso", 
             JOptionPane.INFORMATION_MESSAGE);
     } catch (Exception e) {
-        mostrarError("Error al abrir la vista: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error al abrir la vista: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
     }
-}
 
-private void mostrarError(String mensaje) {
-    JOptionPane.showMessageDialog(this, 
-        mensaje, 
-        "Error", 
-        JOptionPane.ERROR_MESSAGE);
-*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
