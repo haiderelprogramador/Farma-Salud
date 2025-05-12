@@ -4,7 +4,6 @@
     "fechaCita": "2000-09-09",
     "hora": "08:30",
     "tipoCita": "\u003cTipo de cita\u003e",
-    "consultorio": "Consultorio 4",
     "motivo": "Seguimiento",
     "estado": "CANCELADA",
     "documentoPaciente": "20000"
@@ -14,7 +13,6 @@
     "fechaCita": "2000-09-09",
     "hora": "08:00",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
     "motivo": "Enfermedad Cronica",
     "estado": "CANCELADA",
     "documentoPaciente": "20000"
@@ -24,7 +22,6 @@
     "fechaCita": "2000-09-08",
     "hora": "08:00",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
     "documentoPaciente": "0997367373"
@@ -34,7 +31,6 @@
     "fechaCita": "2000-09-09",
     "hora": "07:30",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 4",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
     "documentoPaciente": "0987654321"
@@ -44,7 +40,6 @@
     "fechaCita": "2000-09-09",
     "hora": "08:30",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
     "motivo": "Seguimiento",
     "estado": "COMPLETADA",
     "documentoPaciente": "0997367373"
@@ -54,7 +49,6 @@
     "fechaCita": "2001-09-06",
     "hora": "10:00",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
     "motivo": "Seguimiento",
     "estado": "PROGRAMADA",
     "documentoPaciente": "0987654321",
@@ -65,7 +59,6 @@
     "fechaCita": "2022-05-12",
     "hora": "07:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 2",
     "motivo": "Prevencion",
     "estado": "COMPLETADA",
     "documentoPaciente": "1234567890",
@@ -76,7 +69,6 @@
     "fechaCita": "2025-05-15",
     "hora": "07:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
     "documentoPaciente": "098642468",
@@ -87,7 +79,6 @@
     "fechaCita": "2022-05-15",
     "hora": "08:30",
     "tipoCita": "Control",
-    "consultorio": "Consultorio 4",
     "motivo": "Enfermedad Cronica",
     "estado": "PROGRAMADA",
     "documentoPaciente": "0876578484",
@@ -109,7 +100,6 @@
     "fechaCita": "2022-05-13",
     "hora": "07:30",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
     "motivo": "Prevencion",
     "estado": "PROGRAMADA",
     "documentoPaciente": "0987654321",
@@ -131,7 +121,6 @@
     "fechaCita": "2022-05-15",
     "hora": "08:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 2",
     "motivo": "Seguimiento",
     "estado": "CANCELADA",
     "documentoPaciente": "1234567895",
@@ -153,7 +142,6 @@
     "fechaCita": "2022-05-15",
     "hora": "07:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
     "motivo": "Enfermedad Cronica",
     "estado": "PROGRAMADA",
     "documentoPaciente": "0987654321",
@@ -175,7 +163,6 @@
     "fechaCita": "2025-05-16",
     "hora": "07:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
     "motivo": "Problemas Especificos",
     "estado": "PROGRAMADA",
     "documentoPaciente": "1234567895",
@@ -192,5 +179,168 @@
       "celular": "9038949093"
     },
     "documentoMedico": "12345678902"
+  },
+  {
+    "IdCita": "45",
+    "fechaCita": "2025-05-09",
+    "hora": "09:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "\u003cSeleccionar\u003e",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    }
+  },
+  {
+    "IdCita": "77",
+    "fechaCita": "2025-05-02",
+    "hora": "07:30",
+    "tipoCita": "Regular",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    }
+  },
+  {
+    "IdCita": "02",
+    "fechaCita": "2025-05-10",
+    "hora": "07:30",
+    "tipoCita": "Control",
+    "motivo": "Control",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "fghmknn",
+      "codigoSala": "456789",
+      "tipoSala": "Sala de Pediatría",
+      "capacidadSala": "3"
+    }
+  },
+  {
+    "IdCita": "83892",
+    "fechaCita": "2025-05-09",
+    "hora": "10:00",
+    "tipoCita": "Regular",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    }
+  },
+  {
+    "IdCita": "8493",
+    "fechaCita": "2025-05-09",
+    "hora": "08:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "56",
+    "fechaCita": "2025-05-14",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "documentoMedico": "12342534",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
   }
 ]

@@ -5,6 +5,7 @@
 package farmasalud.view;
 
 import Controller.ControllerCitas;
+import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ import model.Paciente;
 public class recepcionista extends javax.swing.JFrame {
 
     ControllerCitas controllerCitas = new ControllerCitas();
+    ControllerCitasPaciente controllerPacienteCita=new ControllerCitasPaciente();
     private DefaultTableModel tableModel;
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;
@@ -126,7 +128,9 @@ private void configurarCitas(){
         controllerCitas.setCboEstadoCita(cboEstadoCita);
         controllerCitas.cargarSalasEnComboBox(cboConsultorio);
         controllerCitas.cargarSedesEnComboBox(cboSede);
-        
+       
+        controllerCitas.setCboSede(cboSede);
+        controllerCitas.setCboConsultorio(cboConsultorio);        
         controllerCitas.cargarPacienteEnTabla();
         controllerCitas.cargarCitasEnTabla();
         controllerCitas.cargarCitasEnTabla();
@@ -147,6 +151,8 @@ private void configurarCitas(){
     controllerCitas.cargarCitasEnTabla();
     controllerCitas.cargarPacienteEnTabla();
     controllerCitas.cargarMedicoEnTabla();
+       controllerCitas.setCboSede2(cboSede2);
+        controllerCitas.setCboConsultorio2(cboConsultorio2);
     controllerCitas.actualizarEstadisticasCitas();
 
 
@@ -166,6 +172,7 @@ private void configurarCitas(){
             cargarDatosCitaEnFormularioActualizacion();
         }
     });
+
 controllerCitas.setLblCitasProgramadas(lblCitasProgramadas);
 controllerCitas.setLblCitasCanceladas(lblCitasCanceladas);
 controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);
@@ -208,6 +215,7 @@ controllerCitas.setLblCitasCompletadas(lblCitasCompletadas);
         Object nombreMedico = tablaCitas.getValueAt(filaSeleccionada, 13);
         Object apellidoMedico = tablaCitas.getValueAt(filaSeleccionada, 14);
         Object especialidadMedico = tablaCitas.getValueAt(filaSeleccionada, 12);
+        cboSede2.setSelectedItem(tablaCitas.getValueAt(filaSeleccionada, 15).toString());
         
         lblNombreMedico.setText(nombreMedico != null ? nombreMedico.toString() : "");
         lblApellidoMedico.setText(apellidoMedico != null ? apellidoMedico.toString() : "");

@@ -64,7 +64,6 @@ public class PacienteDAO {
         }
     }
     
-    // Guardar un nuevo paciente
     public boolean guardarPaciente(Paciente paciente) {
         if (paciente == null) {
             throw new IllegalArgumentException("El paciente no puede ser nulo");

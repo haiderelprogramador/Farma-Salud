@@ -89,6 +89,7 @@ public class CitasDAO {
             System.err.println("Error al guardar Cita : " + e.getMessage());
         }
     }
+       
      public List<Cita> obtenerCitasPorPaciente(String documentoPaciente) {
     List<Cita> todasLasCitas = cargarTodos();
     List<Cita> citasPaciente = new ArrayList<>();

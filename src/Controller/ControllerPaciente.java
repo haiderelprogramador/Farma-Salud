@@ -352,7 +352,6 @@ public class ControllerPaciente {
                 antecedentes
             );
 
-            // Actualizar en la base de datos
             if (pacienteDAO.actualizarPaciente(documentoOriginal, pacienteActualizado)) {
                 JOptionPane.showMessageDialog(null,
                     "Paciente actualizado exitosamente",

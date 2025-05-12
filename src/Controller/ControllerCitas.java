@@ -77,11 +77,17 @@ public class ControllerCitas {
     private JLabel lblApellidoMedico;
     private JComboBox cboSede;
     private JComboBox cboSede2;
-    
+    private Sede sedeSeleccionada;
+    private Salas salaSeleccionada;
+      private ControllerCitasPaciente controllerPaciente;
+
   
 
    
-  
+
+public void setControllerCitasPaciente(ControllerCitasPaciente controllerPaciente) {
+    this.controllerPaciente = controllerPaciente;
+}
    
     public void setTablaMedico(JTable tableMedico) {
         if (tableMedico == null) {
@@ -198,6 +204,7 @@ public class ControllerCitas {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un medico primero", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
             String IdCita = txtIdCita.getText().trim();
             String fechaStr = JDateFechaCita.getDate().toString();
             String horaCita = cboHoraCita.getSelectedItem().toString();
@@ -219,9 +226,45 @@ public class ControllerCitas {
         "Error", JOptionPane.ERROR_MESSAGE);
     return;
 }
-       
-         Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede.getSelectedItem().toString());
-         Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio.getSelectedItem().toString());
+     String nombreSede = cboSede.getSelectedItem().toString();
+if (nombreSede.equals("<Seleccione>")) {
+    JOptionPane.showMessageDialog(null,
+        "Debe seleccionar una sede válida",
+        "Error",
+        JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+sedeSeleccionada = sedeDAO.buscarPorNombre(nombreSede);
+if (sedeSeleccionada == null) {
+    JOptionPane.showMessageDialog(null,
+        "La sede seleccionada no existe",
+        "Error",
+        JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+
+String nombreConsultorio = cboConsultorio.getSelectedItem().toString();
+
+if (nombreConsultorio.equals("<Seleccione>")) {
+    JOptionPane.showMessageDialog(null, 
+        "Debe seleccionar un consultorio válido", 
+        "Error", 
+        JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+salaSeleccionada = salasDAO.buscarPorNombre(nombreConsultorio);
+
+if (salaSeleccionada == null) {
+    JOptionPane.showMessageDialog(null, 
+        "El consultorio seleccionado no existe", 
+        "Error", 
+        JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
 
 
      LocalDate fechaCita = fechaDate.toInstant()
@@ -264,6 +307,7 @@ public class ControllerCitas {
             actualizarEstadisticasCitas(); 
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           cargarCitasEnTabla();
+         
           limpiarCita();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al guardar cita: " + e.getMessage(),
@@ -363,13 +407,15 @@ public void seleccionarMedico() {
     }
     
     tableModelCita = new DefaultTableModel(
-        new Object[]{ "Documento", "Nombre", "Apellido", "Eps", "Telefono","Id Cita", "Hora Cita", 
-                     "Motivo", "Fecha Cita", "Tipo Cita", "Consultorio", "Estado","id Medico","NombreMedico","ApellidoMedico,","Especialidad"}, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
+    new Object[]{ "Documento", "Nombre", "Apellido", "Eps", "Telefono", "Id Cita", "Hora Cita", 
+                 "Motivo", "Fecha Cita", "Tipo Cita", "Consultorio", "Estado", 
+                 "id Medico", "NombreMedico", "ApellidoMedico", "Especialidad", "Sede" }, 0) {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+};
+
     tablaCitas.setModel(tableModelCita); 
     }
     public void cargarCitasEnTabla() {
@@ -384,7 +430,8 @@ public void seleccionarMedico() {
     for (Cita cita : citas) {
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
         Medico medico=medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
-        
+         String nombreSala = (cita.getSala() != null) ? cita.getSala().getNombreSala() : "No asignado";
+         String nombreSede = (cita.getSede() != null) ? cita.getSede().getNombreSede() : "No asignada";
         if (paciente != null && medico !=null) {
             Object[] row = {
                 paciente.getNumeroDocumento(),
@@ -397,11 +444,13 @@ public void seleccionarMedico() {
                 cita.getMotivo(),
                 cita.getFechaCita(),
                 cita.getTipoCita(),
+                nombreSala,
                 cita.getEstado().toString(),
                 medico.getNumeroDocumento(),
                 medico.getNombres(),
                 medico.getApellidos(),
-                medico.getEspecialidad()
+                medico.getEspecialidad(),
+                nombreSede
             };
             tableModelCita.addRow(row);
         }
@@ -431,8 +480,8 @@ public void seleccionarMedico() {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-                 Sede sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede2.getSelectedItem().toString());
-                Salas salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio2.getSelectedItem().toString());
+                  sedeSeleccionada = sedeDAO.buscarPorNombre(cboSede2.getSelectedItem().toString());
+                 salaSeleccionada = salasDAO.buscarPorNombre(cboConsultorio2.getSelectedItem().toString());
         
       
         Date fechaC = JDateFechaCita2.getDate();
@@ -537,6 +586,9 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                 
                 Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
                 Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+                String nombreSede = (cita.getSede() != null) ? cita.getSede().getNombreSede() : "No asignada";
+               String nombreSala = (cita.getSala() != null) ? cita.getSala().getNombreSala() : "No asignado";
+
                 
                 if (paciente != null && medico != null) {
                     Object[] row = {
@@ -550,13 +602,13 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
                         cita.getMotivo(),
                         cita.getFechaCita(),
                         cita.getTipoCita(),
-                        cita.getSala(),
+                         nombreSala,
                         cita.getEstado().toString(),
-                        cita.getSede(),
                         medico.getNumeroDocumento(),
                         medico.getNombres(),
                         medico.getApellidos(),
-                        medico.getEspecialidad()
+                        medico.getEspecialidad(),
+                        nombreSede 
                       
                     };
                     tableModelCita.addRow(row);
