@@ -79,6 +79,18 @@ public class PacienteDAO {
             return false;
         }
     }
+    public Paciente buscarPorEmail(String email) {
+    if (email == null || email.trim().isEmpty()) {
+        return null;
+    }
+    
+    List<Paciente> pacientes = cargarTodos();
+    return pacientes.stream()
+        .filter(Objects::nonNull)
+        .filter(p -> email.equalsIgnoreCase(p.getEmail()))
+        .findFirst()
+        .orElse(null);
+}
     
     // Guardar todos los pacientes en el archivo JSON
     public void guardarTodos(List<Paciente> pacientes) {
@@ -116,7 +128,7 @@ public class PacienteDAO {
             return false;
         }
     }
-    
+
     // Buscar paciente por número de documento
     public Paciente buscarPorDocumento(String documento) {
         if (documento == null || documento.trim().isEmpty()) {

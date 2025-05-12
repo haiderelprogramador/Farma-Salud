@@ -151,8 +151,6 @@ ControllerCitasPaciente controllerPacienteCita=new ControllerCitasPaciente();
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Email");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
-
-        lblEmail.setText("jLabel12");
         jPanel2.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 160, 30));
 
         jSeparator8.setBackground(new java.awt.Color(28, 43, 110));

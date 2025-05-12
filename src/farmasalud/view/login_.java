@@ -8,6 +8,7 @@ import dao.usuarioDAO;
 import javax.swing.*;
 import model.Usuario;
 import farmasalud.view.admin;
+import model.Paciente;
 /**
  *
  * @author usuario
@@ -191,8 +192,12 @@ public class login_ extends javax.swing.JFrame {
                 abrirVista(new recepcionista(), "Bienvenida Recepcionista");
                 break;
             case "Paciente":
-                abrirVista(new Paciente(), "Bienvenido Paciente");
-                break;
+    Paciente pacienteLogueado = (Paciente) usuario;
+    DialogAgendarCita dialog = new DialogAgendarCita(this, true);
+    dialog.setDocumentoPaciente(pacienteLogueado.getNumeroDocumento());
+    dialog.setVisible(true); // ¡Faltaba esta línea crucial!
+    this.dispose();
+    break;
         }
         
     } catch (Exception e) {

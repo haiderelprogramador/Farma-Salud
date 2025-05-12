@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
  */
 public class Paciente extends javax.swing.JFrame {
 
+
     public Paciente() {
         initComponents();
         ImageIcon iconoOriginal = new ImageIcon("C:\\Users\\Maria liz\\Documents\\atencion.jpeg");

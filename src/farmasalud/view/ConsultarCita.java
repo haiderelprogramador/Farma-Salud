@@ -6,9 +6,11 @@ package farmasalud.view;
 
 import Controller.ControllerCitasPaciente;
 import dao.CitasDAO;
+import java.awt.Button;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.View;
 import model.Cita;
 
 /**
@@ -25,13 +27,16 @@ public class ConsultarCita extends javax.swing.JDialog {
     public ConsultarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controllerCitasPaciente.setJDateFechaCita(dateCita);
         controllerCitasPaciente.setTablaCitas(tableCitas);
         controllerCitasPaciente.initTableModelCita(); 
 
-// Llamar al método del ControllerCitasPaciente
 controllerCitasPaciente.cargarCitasPacienteEnTabla();
-  
+this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+ 
+
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +55,9 @@ controllerCitasPaciente.cargarCitasPacienteEnTabla();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCitas = new javax.swing.JTable();
         btnRefrescar = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -104,10 +110,17 @@ controllerCitasPaciente.cargarCitasPacienteEnTabla();
         ));
         jScrollPane1.setViewportView(tableCitas);
 
-        btnRefrescar.setText("jButton1");
+        btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefrescarActionPerformed(evt);
+            }
+        });
+
+        btnAtras.setText("atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
             }
         });
 
@@ -126,14 +139,21 @@ controllerCitasPaciente.cargarCitasPacienteEnTabla();
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRefrescar)
-                .addGap(62, 62, 62))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRefrescar)
+                        .addGap(62, 62, 62))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAtras)
+                        .addGap(17, 17, 17))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(btnAtras)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,13 +166,16 @@ controllerCitasPaciente.cargarCitasPacienteEnTabla();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCitaActionPerformed
-// En tu clase de la vista (donde creas el controlador):
-controllerCitasPaciente.setJDateFechaCita(dateCita); // Reemplaza tuJDateChooser con tu componente real       // TODO add your handling code here:
+controllerCitasPaciente.buscarCitasPorFecha(); 
     }//GEN-LAST:event_btnBuscarCitaActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+ controllerCitasPaciente.cargarCitasPacienteEnTabla();        // TODO add your handling code here:
     }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+    this.dispose();     // TODO add your handling code here:
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,6 +220,7 @@ controllerCitasPaciente.setJDateFechaCita(dateCita); // Reemplaza tuJDateChooser
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBuscarCita;
     private javax.swing.JButton btnRefrescar;
     private com.toedter.calendar.JDateChooser dateCita;

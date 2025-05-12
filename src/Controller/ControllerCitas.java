@@ -120,6 +120,7 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
     }
     public void setJDateFechaCita(JDateChooser JDateFechaCita) {
         this.JDateFechaCita = JDateFechaCita;
+        configurarDateChooser();
     }
     
     public void setTxtIdCita(JTextField txtIdCita) {
@@ -132,6 +133,7 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
     } 
      public void setJDateFechaCita2(JDateChooser JDateFechaCita2) {
         this.JDateFechaCita2 = JDateFechaCita2;
+        configurarDateChooser();
     }  
      public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
         this.cboHoraCita2 = cboHoraCita2;
@@ -870,6 +872,20 @@ public void configurarColoresTablaCitas() {
                 JOptionPane.ERROR_MESSAGE);
         }
     }
+public void configurarDateChooser() {
+    Date fechaActual = new Date();
+    
+    if (JDateFechaCita != null) {
+        JDateFechaCita.setMinSelectableDate(fechaActual);
+        JDateFechaCita.setDateFormatString("yyyy-MM-dd");
+    }
+    
+    if (JDateFechaCita2 != null) {
+        JDateFechaCita2.setMinSelectableDate(fechaActual);
+        JDateFechaCita2.setDateFormatString("yyyy-MM-dd");
+    }
+}
+
 }
      
 

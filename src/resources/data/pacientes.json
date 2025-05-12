@@ -12,5 +12,19 @@
     "email": "arai@gmail.com",
     "celular": "1234567890",
     "contraseña": "455789"
+  },
+  {
+    "tipoSangre": "A-",
+    "tipoDocumento": "CC",
+    "antecedentes": "sufre de alergias",
+    "numeroDocumento": "8384354545",
+    "nombres": "ines",
+    "apellidos": "castro",
+    "fechaNacimiento": "1985-04-15",
+    "sexo": "M",
+    "eps": "Coosalud",
+    "email": "ine@gmail.com",
+    "celular": "43899339",
+    "contraseña": ""
   }
 ]

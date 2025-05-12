@@ -154,7 +154,7 @@ private void configurarCitas(){
        controllerCitas.setCboSede2(cboSede2);
         controllerCitas.setCboConsultorio2(cboConsultorio2);
     controllerCitas.actualizarEstadisticasCitas();
-
+    controllerCitas.configurarDateChooser();
 
     tablePaciente.getSelectionModel().addListSelectionListener(e -> {
         if (!e.getValueIsAdjusting()) {

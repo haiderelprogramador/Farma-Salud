@@ -1,6 +1,5 @@
 [
   {
-<<<<<<< HEAD
   "especialidad": "Cardilogo",
     "numeroDocumento": "12342534",
     "nombres": "adsfg",
@@ -10,8 +9,7 @@
     "eps": "Item 2",
     "email": "sfdfds@gmail.com",
     "celular": "23345"
-    }
-=======
+    },{
     "especialidad": "Cardilogo",
     "fechaContratacion": "2025-05-08",
     "horario": "Martes-jueves-sabado",
@@ -50,5 +48,4 @@
     "celular": "3164419082",
     "contraseña": "WnKi\u003c:z1!,"
   }
->>>>>>> 0ba25f5c8962d2566cb8a64ec234af454ebe9615
 ]
