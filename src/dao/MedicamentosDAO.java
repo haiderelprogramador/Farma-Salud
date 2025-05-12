@@ -24,7 +24,8 @@ import model.Medicamento;
 
 
 public class MedicamentosDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\medicamentos.json";
+    private static final String JSON_BASE_PATH = System.getProperty("user.dir") + "/src/resources/data/";
+    private static final String ARCHIVO_JSON = JSON_BASE_PATH + "medicamentos.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
     .create();
     
