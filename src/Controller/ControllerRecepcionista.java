@@ -1,5 +1,7 @@
 package Controller;
 
+import Utilidades.EnviadorCredenciales;
+import Utilidades.GeneradorContraseñas;
 import com.toedter.calendar.JDateChooser;
 import dao.RecepcionistaDAO;
 import java.time.LocalDate;
@@ -14,24 +16,42 @@ import javax.swing.table.DefaultTableModel;
 import model.Recepcionista;
 
 public class ControllerRecepcionista {
+    private static ControllerRecepcionista instancia;
   
     private DefaultTableModel tableModelRecepcionista;
-    private RecepcionistaDAO recepcionistaDAO = new RecepcionistaDAO();
+    private final RecepcionistaDAO recepcionistaDAO = RecepcionistaDAO.getInstancia();
     private String documentoOriginal;
     
+    // Componentes de la vista
     private JTable tablaRecepcionistas;
     private JTextField txtNombre;
-    private JTextField txtApellidos;
+    private JTextField txtApellido;
     private JTextField txtDocumento;
     private JTextField txtEmail;
-    private JDateChooser dateFechaNacimiento;
-    private JTextField txtTelefono;
+    private JTextField txtCelular;
+    private JTextField txtContraseña;
     private JTextField txtCodigoEmpleado;
-    private JDateChooser dateFechaContratacion;
+    private JDateChooser dateChooserNacimiento;
+    private JDateChooser dateChooserContratacion;
     private JComboBox<String> cbSexo;
+    private JComboBox<String> cbHorario;
     private JComboBox<String> cbEps;
-    private JComboBox<String> cbTurno;
     
+    private final GeneradorContraseñas generadorContraseñas = new GeneradorContraseñas();
+    private final EnviadorCredenciales enviadorCredenciales = EnviadorCredenciales.getInstancia();
+
+    // Constructor privado
+    private ControllerRecepcionista() {}
+    
+    // Método para obtener la instancia singleton
+    public static synchronized ControllerRecepcionista getInstancia() {
+        if (instancia == null) {
+            instancia = new ControllerRecepcionista();
+        }
+        return instancia;
+    }
+
+    // Setters para los componentes de la vista
     public void setTablaRecepcionistas(JTable tablaRecepcionistas) {
         this.tablaRecepcionistas = tablaRecepcionistas;
         this.tableModelRecepcionista = (DefaultTableModel) tablaRecepcionistas.getModel();
@@ -41,8 +61,8 @@ public class ControllerRecepcionista {
         this.txtNombre = txtNombre;
     }
     
-    public void setTxtApellidos(JTextField txtApellidos) {
-        this.txtApellidos = txtApellidos;
+    public void setTxtApellido(JTextField txtApellido) {
+        this.txtApellido = txtApellido;
     }
     
     public void setTxtDocumento(JTextField txtDocumento) {
@@ -53,38 +73,43 @@ public class ControllerRecepcionista {
         this.txtEmail = txtEmail;
     }
     
-    public void setTxtFechaNacimiento(JDateChooser dateFechaNacimiento) {
-        this.dateFechaNacimiento = dateFechaNacimiento;
+    public void setTxtCelular(JTextField txtCelular) {
+        this.txtCelular = txtCelular;
     }
     
-    public void setTxtTelefono(JTextField txtTelefono) {
-        this.txtTelefono = txtTelefono;
+    public void setTxtContraseña(JTextField txtContraseña) {
+        this.txtContraseña = txtContraseña;
     }
     
     public void setTxtCodigoEmpleado(JTextField txtCodigoEmpleado) {
         this.txtCodigoEmpleado = txtCodigoEmpleado;
     }
     
-    public void setTxtFechaContratacion(JDateChooser dateFechaContratacion) {
-        this.dateFechaContratacion = dateFechaContratacion;
+    public void setDateChooserNacimiento(JDateChooser dateChooserNacimiento) {
+        this.dateChooserNacimiento = dateChooserNacimiento;
+    }
+    
+    public void setDateChooserContratacion(JDateChooser dateChooserContratacion) {
+        this.dateChooserContratacion = dateChooserContratacion;
     }
     
     public void setCbSexo(JComboBox<String> cbSexo) {
         this.cbSexo = cbSexo;
     }
     
+    public void setCbHorario(JComboBox<String> cbHorario) {
+        this.cbHorario = cbHorario;
+    }
+    
     public void setCbEps(JComboBox<String> cbEps) {
         this.cbEps = cbEps;
     }
     
-    public void setCbTurno(JComboBox<String> cbTurno) {
-        this.cbTurno = cbTurno;
-    }
-    
+    // Inicialización de la tabla
     public void initTableRecepcionista() {
         tableModelRecepcionista = new DefaultTableModel(
-            new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nacimiento", "Sexo", 
-                         "Eps", "Email", "Telefono", "Código Empleado", "Fecha Contratación", "Turno"}, 0) {
+            new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
+                        "EPS", "Email", "Teléfono", "Código Empleado", "Fecha Contratación", "Horario"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -93,47 +118,63 @@ public class ControllerRecepcionista {
         tablaRecepcionistas.setModel(tableModelRecepcionista);
     }
     
+    // Cargar datos en la tabla
     public void cargarDatosEnTablaRecepcionista() {
-        tableModelRecepcionista.setRowCount(0);
-        List<Recepcionista> recepcionistas = recepcionistaDAO.cargarTodos();
-        for (Recepcionista recepcionista : recepcionistas) {
-            Object[] row = {
-                recepcionista.getNumeroDocumento(),
-                recepcionista.getNombres(),
-                recepcionista.getApellidos(),
-                recepcionista.getFechaNacimiento(),
-                recepcionista.getSexo(),
-                recepcionista.getEps(),
-                recepcionista.getEmail(),
-                recepcionista.getCelular(),
-                recepcionista.getCodigoEmpleado(),
-                recepcionista.getFechaContratacion(),
-                recepcionista.getTurno()
-            };
-            tableModelRecepcionista.addRow(row);
+        try {
+            tableModelRecepcionista.setRowCount(0);
+            List<Recepcionista> recepcionistas = recepcionistaDAO.cargarTodos();
+            
+            if (recepcionistas == null || recepcionistas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, 
+                    "No se encontraron recepcionistas registrados", 
+                    "Información", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (Recepcionista recepcionista : recepcionistas) {
+                Object[] row = {
+                    recepcionista.getNumeroDocumento(),
+                    recepcionista.getNombres(),
+                    recepcionista.getApellidos(),
+                    recepcionista.getFechaNacimiento(),
+                    recepcionista.getSexo(),
+                    recepcionista.getEps(),
+                    recepcionista.getEmail(),
+                    recepcionista.getCelular(),
+                    recepcionista.getCodigoEmpleado(),
+                    recepcionista.getFechaContratacion(),
+                    recepcionista.getHorario()
+                };
+                tableModelRecepcionista.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar recepcionistas: " + e.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
     
-   /* public void guardarRecepcionistaDesdeFormulario() {
+    // Guardar recepcionista desde formulario
+    public void guardarRecepcionistaDesdeFormulario() {
         try {
             // Obtener datos del formulario
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellidos.getText().trim();
             String documento = txtDocumento.getText().trim();
+            String nombres = txtNombre.getText().trim();
+            String apellidos = txtApellido.getText().trim();
             String email = txtEmail.getText().trim();
-            String telefono = txtTelefono.getText().trim();
+            String celular = txtCelular.getText().trim();
             String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-            String sexo = cbSexo.getSelectedItem() != null ? cbSexo.getSelectedItem().toString() : "";
-            String eps = cbEps.getSelectedItem() != null ? cbEps.getSelectedItem().toString() : "";
-            String turno = cbTurno.getSelectedItem() != null ? cbTurno.getSelectedItem().toString() : "";
-            
-            
+            String sexo = cbSexo.getSelectedItem().toString();
+            String horario = cbHorario.getSelectedItem().toString();
+            String eps = cbEps.getSelectedItem().toString();
             
             // Validar campos obligatorios
-            if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-                email.isEmpty() || telefono.isEmpty() || codigoEmpleado.isEmpty() ||
-                sexo.isEmpty() || eps.isEmpty() || turno.isEmpty() ||
-                dateFechaNacimiento.getDate() == null || dateFechaContratacion.getDate() == null) {
+            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
+                email.isEmpty() || celular.isEmpty() || codigoEmpleado.isEmpty() || 
+                dateChooserNacimiento.getDate() == null || dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null, 
                     "Todos los campos son obligatorios", 
                     "Error", 
@@ -141,42 +182,33 @@ public class ControllerRecepcionista {
                 return;
             }
             
-            // Obtener fechas de los JDateChooser
-            LocalDate fechaNacimiento = dateFechaNacimiento.getDate().toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaContratacion = dateFechaContratacion.getDate().toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-            
-            // Validar que fecha contratación no sea anterior a fecha nacimiento
-            if (fechaContratacion.isBefore(fechaNacimiento)) {
-                JOptionPane.showMessageDialog(null,
-                    "La fecha de contratación no puede ser anterior a la fecha de nacimiento",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Validar que no exista ya un recepcionista con este documento
-            boolean existe = recepcionistaDAO.cargarTodos().stream()
-                .filter(r -> r.getNumeroDocumento() != null) 
-                .anyMatch(r -> r.getNumeroDocumento().equals(documento));
-                
-            if (existe) {
-                JOptionPane.showMessageDialog(null,
-                    "Ya existe un recepcionista con este documento",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
             // Validar formato de email
             if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
                 JOptionPane.showMessageDialog(null,
-                    "El formato del email no es válido",
+                    "El correo electrónico no tiene un formato válido",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            // Convertir fechas
+            LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaContratacion = dateChooserContratacion.getDate()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            
+            // Verificar si ya existe
+            if (existeRecepcionista(documento, codigoEmpleado)) {
+                JOptionPane.showMessageDialog(null,
+                    "Ya existe un recepcionista con este documento o código de empleado",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Generar contraseña automática
+            String contrasena = generadorContraseñas.generarContrasena(10);
+            String contrasenaEncriptada = generadorContraseñas.encriptarContrasena(contrasena);
             
             // Crear nuevo recepcionista
             Recepcionista nuevoRecepcionista = new Recepcionista(
@@ -187,68 +219,97 @@ public class ControllerRecepcionista {
                 sexo,
                 eps,
                 email,
-                telefono,
+                celular,
+                contrasenaEncriptada,
                 codigoEmpleado,
                 fechaContratacion,
-                turno
+                horario
             );
             
             // Guardar en la base de datos
-            recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista);
-            JOptionPane.showMessageDialog(null, 
-                "Recepcionista guardado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
+            if (recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista)) {
+                // Enviar credenciales
+                boolean envioExitoso = enviadorCredenciales.enviarCredenciales(
+                    email, 
+                    nombres + " " + apellidos, 
+                    contrasena
+                );
                 
-            // Actualizar tabla y limpiar formulario
-            cargarDatosEnTablaRecepcionista();
-            limpiarRecepcionista();
-            
+                if (envioExitoso) {
+                    JOptionPane.showMessageDialog(null, 
+                        "Recepcionista registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, 
+                        "Recepcionista registrado exitosamente, pero no se pudo enviar el correo con las credenciales.", 
+                        "Advertencia", 
+                        JOptionPane.WARNING_MESSAGE);
+                }
+                
+                cargarDatosEnTablaRecepcionista();
+                limpiarFormulario();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "No se pudo guardar el recepcionista",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, 
-                "Error al guardar Recepcionista: " + e.getMessage(),
-                "ERROR", 
+                "Error al guardar recepcionista: " + e.getMessage(),
+                "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    
     }*/
     
-    public void limpiarRecepcionista() {
-        txtNombre.setText("");
-        txtApellidos.setText("");
-        txtDocumento.setText("");
-        txtEmail.setText("");
-        dateFechaNacimiento.setDate(null);
-        txtTelefono.setText("");
-        txtCodigoEmpleado.setText("");
-        dateFechaContratacion.setDate(null);
-        cbSexo.setSelectedIndex(0);
-        cbEps.setSelectedIndex(0);
-        cbTurno.setSelectedIndex(0);
+    // Verificar si existe un recepcionista
+    private boolean existeRecepcionista(String documento, String codigoEmpleado) {
+        List<Recepcionista> recepcionistas = recepcionistaDAO.cargarTodos();
+        return recepcionistas.stream()
+            .anyMatch(r -> (r.getNumeroDocumento().equals(documento) || 
+                          (r.getCodigoEmpleado().equals(codigoEmpleado))));
     }
     
+    // Limpiar formulario
+    public void limpiarFormulario() {
+        txtDocumento.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtEmail.setText("");
+        txtCelular.setText("");
+        txtContraseña.setText("");
+        txtCodigoEmpleado.setText("");
+        dateChooserNacimiento.setDate(null);
+        dateChooserContratacion.setDate(null);
+        cbSexo.setSelectedIndex(0);
+        cbHorario.setSelectedIndex(0);
+        cbEps.setSelectedIndex(0);
+    }
+    
+    // Eliminar recepcionista seleccionado
     public void eliminarRecepcionistaSeleccionado() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(null, 
-                "Seleccione un recepcionista de la tabla.", 
+                "Seleccione un recepcionista de la tabla", 
                 "Error", 
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String numeroDocumento = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
-
+        String documento = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
+        
         int confirmacion = JOptionPane.showConfirmDialog(
             null, 
-            "¿Eliminar al recepcionista con documento " + numeroDocumento + "?",
-            "Confirmar",
+            "¿Eliminar al recepcionista con documento " + documento + "?",
+            "Confirmar eliminación",
             JOptionPane.YES_NO_OPTION
         );
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            boolean eliminado = recepcionistaDAO.eliminarRecepcionista(numeroDocumento);
-            if (eliminado) {
+            if (recepcionistaDAO.eliminarRecepcionista(documento)) {
                 JOptionPane.showMessageDialog(null, 
                     "Recepcionista eliminado correctamente", 
                     "Éxito", 
@@ -263,70 +324,64 @@ public class ControllerRecepcionista {
         }
     }
     
+<<<<<<< HEAD
     /*public void actualizarRecepcionista() {
+=======
+    // Actualizar recepcionista
+    public void actualizarRecepcionista() {
+>>>>>>> b52e1702bc40d4a1e954f56cb12f223118ad7fd8
         try {
             int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
             if (filaSeleccionada == -1) {
                 JOptionPane.showMessageDialog(null, 
-                    "Seleccione un recepcionista de la tabla para actualizar", 
+                    "Seleccione un recepcionista de la tabla", 
                     "Error", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             String documentoOriginal = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
-
-            // Obtener datos del formulario
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellidos.getText().trim();
             String documento = txtDocumento.getText().trim();
+            String nombres = txtNombre.getText().trim();
+            String apellidos = txtApellido.getText().trim();
             String email = txtEmail.getText().trim();
-            String telefono = txtTelefono.getText().trim();
+            String celular = txtCelular.getText().trim();
+            String contraseña = txtContraseña.getText().trim();
             String codigoEmpleado = txtCodigoEmpleado.getText().trim();
             String sexo = cbSexo.getSelectedItem().toString();
+            String horario = cbHorario.getSelectedItem().toString();
             String eps = cbEps.getSelectedItem().toString();
-            String turno = cbTurno.getSelectedItem().toString();
-            
+
             // Validar campos obligatorios
-            if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-                email.isEmpty() || telefono.isEmpty() || codigoEmpleado.isEmpty() ||
-                dateFechaNacimiento.getDate() == null || dateFechaContratacion.getDate() == null) {
+            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
+                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
+                codigoEmpleado.isEmpty() || dateChooserNacimiento.getDate() == null || 
+                dateChooserContratacion.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
-            // Obtener fechas de los JDateChooser
-            LocalDate fechaNacimiento = dateFechaNacimiento.getDate().toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaContratacion = dateFechaContratacion.getDate().toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-            
-            // Validar que fecha contratación no sea anterior a fecha nacimiento
-            if (fechaContratacion.isBefore(fechaNacimiento)) {
-                JOptionPane.showMessageDialog(null,
-                    "La fecha de contratación no puede ser anterior a la fecha de nacimiento",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
 
-            // Validar si cambió el documento y si ya existe
+            // Convertir fechas
+            LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaContratacion = dateChooserContratacion.getDate()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            // Verificar si cambió el documento o código de empleado
             if (!documentoOriginal.equals(documento)) {
-                boolean existe = recepcionistaDAO.cargarTodos().stream()
-                    .anyMatch(r -> r.getNumeroDocumento().equals(documento));
-                if (existe) {
+                if (existeRecepcionista(documento, codigoEmpleado)) {
                     JOptionPane.showMessageDialog(null,
-                        "Ya existe un recepcionista con este documento",
+                        "Ya existe un recepcionista con este documento o código de empleado",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
-            // Crear objeto recepcionista actualizado
+            // Crear recepcionista actualizado
             Recepcionista recepcionistaActualizado = new Recepcionista(
                 documento,
                 nombres,
@@ -335,24 +390,24 @@ public class ControllerRecepcionista {
                 sexo,
                 eps,
                 email,
-                telefono,
+                celular,
+                contraseña,
                 codigoEmpleado,
                 fechaContratacion,
-                turno
+                horario
             );
 
             // Actualizar en la base de datos
-            boolean actualizado = recepcionistaDAO.actualizarRecepcionista(documentoOriginal, recepcionistaActualizado);
-            if (actualizado) {
+            if (recepcionistaDAO.actualizarRecepcionista(documentoOriginal, recepcionistaActualizado)) {
                 JOptionPane.showMessageDialog(null,
                     "Recepcionista actualizado exitosamente",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
                 cargarDatosEnTablaRecepcionista();
-                limpiarRecepcionista();
+                limpiarFormulario();
             } else {
                 JOptionPane.showMessageDialog(null,
-                    "No se pudo actualizar el recepcionista. Verifique los datos.",
+                    "No se pudo actualizar el recepcionista",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
@@ -365,29 +420,30 @@ public class ControllerRecepcionista {
         }
     }*/
     
+    // Cargar datos del recepcionista seleccionado en el formulario
     public void cargarDatosRecepcionistaEnFormulario() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
         if (filaSeleccionada != -1) {
             txtDocumento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString());
             txtNombre.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 1).toString());
-            txtApellidos.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
+            txtApellido.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
             
-            // Establecer fechas en los JDateChooser
+            // Convertir y establecer fechas
             LocalDate fechaNac = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 3);
-            dateFechaNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            dateChooserNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             
             cbSexo.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 4).toString());
             cbEps.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 5).toString());
             txtEmail.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 6).toString());
-            txtTelefono.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
+            txtCelular.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
             txtCodigoEmpleado.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 8).toString());
             
             LocalDate fechaCont = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 9);
-            dateFechaContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            dateChooserContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             
-            cbTurno.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
+            cbHorario.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
             
-            documentoOriginal = txtDocumento.getText();
+            this.documentoOriginal = txtDocumento.getText();
         }
     }
 }

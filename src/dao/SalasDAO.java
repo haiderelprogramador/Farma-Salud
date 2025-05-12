@@ -22,13 +22,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import model.Salas;
+import model.Sede;
 
 /**
  *
  * @author usuario
  */
 public class SalasDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\Downloads\\farmaSalud\\src\\resources\\data\\salas.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\salas.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
     .create();
     
@@ -67,6 +68,7 @@ public class SalasDAO {
             return new ArrayList<>();
         }
     }
+    
     
     public boolean guardarSalaConValidacion(Salas sala) {
     // Validaciones básicas
@@ -140,7 +142,13 @@ public class SalasDAO {
     return salas.stream()
                 .anyMatch(s -> codigoSala.equalsIgnoreCase(s.getCodigoSala()));
 }
-    
+    public Salas buscarPorNombre(String nombreSala) {
+    List<Salas> sala = cargarTodasSalas();
+    return sala.stream()
+            .filter(s -> s.getNombreSala().equalsIgnoreCase(nombreSala))
+            .findFirst()
+            .orElse(null);
+} 
     public String generarCodigoUnico() {
     List<Salas> salas = cargarTodasSalas();
     int maxNumero = 0;
