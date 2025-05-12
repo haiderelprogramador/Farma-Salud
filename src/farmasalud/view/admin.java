@@ -28,8 +28,8 @@ import javax.swing.event.ListSelectionListener;
  */
 public class admin extends javax.swing.JFrame {
 
-    private ControllerDoctor controllerDoctor = new ControllerDoctor();
-    private ControllerRecepcionista controllerRecepcionista = new ControllerRecepcionista();
+    private ControllerDoctor controllerDoctor = ControllerDoctor.getInstancia();
+    private ControllerRecepcionista controllerRecepcionista = ControllerRecepcionista.getInstancia();
     private ControllerSalas controllerSalas = new ControllerSalas();
     private CotrollerFarmaceutica controllerFarmaceutica = new CotrollerFarmaceutica();
     private ControllerMedicamento controllerMedicamento = new ControllerMedicamento(this);
@@ -960,7 +960,7 @@ public class admin extends javax.swing.JFrame {
         jLabel15.setText("AGREGAR DOCTOR");
         jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 190, 40));
 
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 350, 60));
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 370, 60));
 
         jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -977,7 +977,7 @@ public class admin extends javax.swing.JFrame {
         jLabel16.setText("MODIFICAR DOCTOR");
         jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 220, 40));
 
-        jPanel4.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 350, 60));
+        jPanel4.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 370, 60));
 
         jPanel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -991,7 +991,7 @@ public class admin extends javax.swing.JFrame {
         jLabel13.setText("ELIMINAR DOCTOR");
         jPanel9.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 190, 40));
 
-        jPanel4.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 350, 60));
+        jPanel4.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 370, 60));
 
         jButton1.setText("ACTUALIZAR TABLA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1189,7 +1189,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanel14.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel13.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 390, 60));
+        jPanel13.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 370, 60));
 
         jPanel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel16.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1211,7 +1211,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanel16.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 350, 60));
 
-        jPanel13.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 390, 60));
+        jPanel13.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 370, 60));
 
         jPanel20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel20.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1249,7 +1249,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanel20.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel13.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 390, 60));
+        jPanel13.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 370, 60));
 
         jLabel43.setText("CODIGO:");
         jPanel13.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 60, 30));
@@ -1290,7 +1290,7 @@ public class admin extends javax.swing.JFrame {
         jPanel13.add(Fecha_Contratacion_Recepcionista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 200, -1));
         jPanel13.add(Fecha_Nacimiento_Recep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, -1));
 
-        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 590));
+        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 600));
 
         TabladeRecepcionistas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "RECEPCIONISTAS DISPONIBLES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         TabladeRecepcionistas.setModel(new javax.swing.table.DefaultTableModel(
@@ -1370,7 +1370,7 @@ public class admin extends javax.swing.JFrame {
         jLabel36.setText("AGREGAR");
         jPanel25.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 120, 40));
 
-        jPanel24.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 210, 60));
+        jPanel24.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 270, 60));
 
         jPanel26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel26.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1383,9 +1383,9 @@ public class admin extends javax.swing.JFrame {
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel38.setText("MODIFICAR");
-        jPanel26.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 120, 40));
+        jPanel26.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 120, 40));
 
-        jPanel24.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 220, 60));
+        jPanel24.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 280, 60));
 
         jPanel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1402,20 +1402,20 @@ public class admin extends javax.swing.JFrame {
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel27Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel27Layout.createSequentialGroup()
+                .addContainerGap(91, Short.MAX_VALUE)
                 .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(76, 76, 76))
         );
         jPanel27Layout.setVerticalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel24.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 220, 60));
+        jPanel24.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 280, 60));
 
         jPanel12.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 220));
 
@@ -1560,7 +1560,7 @@ public class admin extends javax.swing.JFrame {
 
         panel_eliminarFarmaceutica.add(jPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel30.add(panel_eliminarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 390, 60));
+        jPanel30.add(panel_eliminarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 370, 60));
 
         panel_agregarFarmaceutica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panel_agregarFarmaceutica.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1582,7 +1582,7 @@ public class admin extends javax.swing.JFrame {
 
         panel_agregarFarmaceutica.add(jPanel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 350, 60));
 
-        jPanel30.add(panel_agregarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 390, 60));
+        jPanel30.add(panel_agregarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 370, 60));
 
         panel_modificarFarmaceutica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panel_modificarFarmaceutica.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1620,7 +1620,7 @@ public class admin extends javax.swing.JFrame {
 
         panel_modificarFarmaceutica.add(jPanel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel30.add(panel_modificarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 390, 60));
+        jPanel30.add(panel_modificarFarmaceutica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 370, 60));
 
         jLabel61.setText("CODIGO:");
         jPanel30.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 60, 30));
@@ -1889,7 +1889,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanelEliminarMedicamento.add(jPanel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel35.add(jPanelEliminarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 390, 60));
+        jPanel35.add(jPanelEliminarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 370, 60));
 
         jPanel_AgregarMedicamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel_AgregarMedicamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1911,7 +1911,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanel_AgregarMedicamento.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 350, 60));
 
-        jPanel35.add(jPanel_AgregarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 390, 60));
+        jPanel35.add(jPanel_AgregarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 370, 60));
 
         jPanelModificarMedicamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelModificarMedicamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1949,7 +1949,7 @@ public class admin extends javax.swing.JFrame {
 
         jPanelModificarMedicamento.add(jPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 350, 60));
 
-        jPanel35.add(jPanelModificarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 390, 60));
+        jPanel35.add(jPanelModificarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 370, 60));
 
         jLabel82.setText("Lote:");
         jPanel35.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 60, 30));

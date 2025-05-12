@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import model.Enfermedad;
 
 public class EnfermedadesDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\enfermedades.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\enfermedades.json";
     // Configurar Gson para manejar nombres de campo con guiones bajos
     private final Gson gson = new GsonBuilder()
         .setPrettyPrinting()

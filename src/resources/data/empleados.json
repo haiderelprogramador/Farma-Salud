@@ -1,14 +1,4 @@
-[
-  {
-    "numeroDocumento": "",
-    "nombres": "",
-    "apellidos": "",
-    "sexo": "",
-    "eps": "",
-    "email": "",
-    "celular": ""
-  },
-  {
+[  {
     "especialidad": "Cardilogo",
     "numeroDocumento": "12342534",
     "nombres": "adsfg",

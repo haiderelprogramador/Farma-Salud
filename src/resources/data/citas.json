@@ -147,5 +147,50 @@
       "celular": "1234567890"
     },
     "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "34567890",
+    "fechaCita": "2022-05-15",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 3",
+    "motivo": "Enfermedad Cronica",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0987654321",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12345889900",
+      "nombres": "juan",
+      "apellidos": "perez",
+      "fechaNacimiento": "2003-09-09",
+      "sexo": "F",
+      "eps": "Item 3",
+      "email": "juan@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "54",
+    "fechaCita": "2025-05-16",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 3",
+    "motivo": "Problemas Especificos",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "1234567895",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "12345678902",
+      "nombres": "jgkf",
+      "apellidos": "djknkd",
+      "fechaNacimiento": "2025-05-16",
+      "sexo": "F",
+      "email": "kjvknfvj@gmail.com",
+      "celular": "9038949093"
+    },
+    "documentoMedico": "12345678902"
   }
 ]

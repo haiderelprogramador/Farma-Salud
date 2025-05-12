@@ -51,11 +51,11 @@ public class Doctor extends javax.swing.JFrame {
 
             controller.setTablaPacientes(tablaPacientes);
             controller.setTxtNombre(jcantidad);
-            controller.setTxtApellido(jTextField1);
-            controller.setTxtDocumento(jTextField1);
+            controller.setTxtApellido(jcantidad);
+            controller.setTxtDocumento(jcantidad);
             controller.setTxtEmail(jcantidad);
           //  controller.setTxtFechaNacimiento(jcantidad);
-            controller.setTxtCelular(jTextField1);
+            controller.setTxtCelular(jcantidad);
             controller.setCbSexo(jComboBox2);
             controller.setCbEps(jComboBox2);
             controller.setCbTipoDocumento(jComboBox2);

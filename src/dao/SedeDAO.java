@@ -35,7 +35,7 @@ import model.Sede;
  * @author usuario
  */
 public class SedeDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\sedes.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\sedes.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
     .create();
     
@@ -205,6 +205,13 @@ public class SedeDAO {
             return false;
         }
     }
+    public Sede buscarPorNombre(String nombreSede) {
+    List<Sede> sedes = cargarTodasSedes();
+    return sedes.stream()
+            .filter(s -> s.getNombreSede().equalsIgnoreCase(nombreSede))
+            .findFirst()
+            .orElse(null);
+}
     
     // Método adicional para buscar sede por código
     public Sede buscarSedePorCodigo(String codigoSede) {
