@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Persona;
@@ -38,19 +39,21 @@ import model.Paciente;
  *
  * @author Maria liz
  */
-public class recepcionista extends javax.swing.JFrame {
+public class recepcionista extends javax.swing.JFrame implements CitaListener{
 
-    ControllerCitas controllerCitas = new ControllerCitas();
     private DefaultTableModel tableModel;
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO = new PacienteDAO();
-  
+        ControllerCitas controllerCitas = ControllerCitas.getInstance();
+
      
     
     public recepcionista() {
         initComponents();
+
+        this.controllerCitas = ControllerCitas.getInstance(); // ✅ correcto
          controller = new ControllerPaciente(); 
          if (tablePaciente == null) {
         throw new IllegalStateException("La tabla tablePaciente no está inicializada en el diseño");
@@ -58,10 +61,13 @@ public class recepcionista extends javax.swing.JFrame {
           if (tablePaciente == null || tablaCitas == null) {
             throw new IllegalStateException("Las tablas no están inicializadas en el diseño");
         }
-
+       
         configurarPacientes();
         controllerCitas.setTablePaciente(tablePaciente);
         controllerCitas.cargarPacienteEnTabla();
+     ControllerCitas.getInstance().addCitaListener(this);
+ControllerCitasPaciente.getInstance().addCitaListener(this);
+
        configurarCitas();
        
         this.setTitle("Sistema de Recepción");
@@ -75,6 +81,14 @@ public class recepcionista extends javax.swing.JFrame {
         }
          btnBuscarCita.addActionListener(e -> buscarCitaPorDocumento());
     }
+@Override
+public void citaAgregada(Cita cita) {
+    System.out.println("Listener recibido en recepcionista, recargando tabla...");
+    SwingUtilities.invokeLater(() -> controllerCitas.cargarCitasEnTabla());
+}
+
+
+
     private void configurarPacientes() {
         try {
 
@@ -1967,7 +1981,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     }//GEN-LAST:event_refrecarTablaPacienteMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    controllerCitas.cargarCitasEnTabla();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked

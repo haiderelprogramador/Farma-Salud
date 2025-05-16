@@ -10,11 +10,13 @@ import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
+import farmasalud.view.CitaListener;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,9 +81,17 @@ public class ControllerCitas {
     private JComboBox cboSede2;
     private Sede sedeSeleccionada;
     private Salas salaSeleccionada;
-      private ControllerCitasPaciente controllerPaciente;
+    private ControllerCitasPaciente controllerPaciente;
+    private static ControllerCitas instance;
 
-  
+public static ControllerCitas getInstance() {
+    if (instance == null) {
+        instance = new ControllerCitas();
+    }
+    return instance;
+}
+
+
 
    
 
@@ -193,6 +203,28 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
     public void setCboSede2(JComboBox cboSede2) {
         this.cboSede2 = cboSede2;
     }
+    private final List<CitaListener> listeners = new ArrayList<>();
+
+public void addCitaListener(CitaListener listener) {
+    if (listener != null && !listeners.contains(listener)) {
+        listeners.add(listener);
+    }
+}
+public CitasDAO getCitasDAO() {
+    return this.citasDAO;
+}
+
+public void removeCitaListener(CitaListener listener) {
+    listeners.remove(listener);
+}
+public void notificarCitaAgregada(Cita cita) {
+    System.out.println("Notificando nueva cita agregada a listeners...");
+    for (CitaListener listener : listeners) {
+        listener.citaAgregada(cita);
+    }
+}
+
+
     
     
 
@@ -306,6 +338,7 @@ if (salaSeleccionada == null) {
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
               nuevaCita.setDocumentoMedico(medicoSeleccionado.getNumeroDocumento());
             citasDAO.guardarCita(nuevaCita);
+            notificarCitaAgregada(nuevaCita);
             actualizarEstadisticasCitas(); 
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           cargarCitasEnTabla();

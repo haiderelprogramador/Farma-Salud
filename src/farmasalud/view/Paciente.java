@@ -212,7 +212,7 @@ public class Paciente extends javax.swing.JFrame {
 
         // Ahora actualiza y muestra
         dialogConsulta.actualizarTablaCitas();
-        dialogConsulta.setVisible(true);
+       // dialogConsulta.setVisible(true);
 
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, 

@@ -35,6 +35,8 @@ import model.Medico;
 import model.Paciente;
 import model.Salas;
 import model.Sede;
+import Controller.ControllerCitas;
+
 
 /**
  *
@@ -64,13 +66,12 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
-    private CitasDAO citasDAO=new CitasDAO();
+private CitasDAO citasDAO = ControllerCitas.getInstance().getCitasDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
     SalasDAO salasDAO=new SalasDAO();
 
-   // Instancia Singleton
     private static ControllerCitasPaciente instance;
     
     // Listeners
@@ -86,7 +87,6 @@ public class ControllerCitasPaciente {
         this.salasDAO = new SalasDAO();
     }
 
-    // Método para obtener la instancia Singleton
     public static synchronized ControllerCitasPaciente getInstance() {
         if (instance == null) {
             instance = new ControllerCitasPaciente();
@@ -94,7 +94,7 @@ public class ControllerCitasPaciente {
         return instance;
     }
 
-    // Métodos para gestionar listeners
+
     public void addCitaListener(CitaListener listener) {
         if (listener != null && !listeners.contains(listener)) {
             listeners.add(listener);
@@ -118,6 +118,7 @@ public class ControllerCitasPaciente {
         this.lblEspecialidadMedico = lblEspecialidadMedico;
          configurarComboMedico();
     }
+    
     
 
     public void setLblDocumento(JLabel lblDocumento) {
@@ -291,7 +292,15 @@ if (cboTipoCita.getSelectedIndex() <= 0 ||
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+          String nombreCompletoMedico = medicoSeleccionado.getNombres() + " " + medicoSeleccionado.getApellidos();
+    String idCitaActual = txtIdCita.getText().trim();
+if (existeOtraCitaEnMismaHora(fechaCita, horaCita, nombreCompletoMedico, idCitaActual)) {
+    JOptionPane.showMessageDialog(null,
+        "El médico ya tiene una cita en esta fecha y hora. Por favor seleccione otra hora.",
+        "Horario no disponible",
+        JOptionPane.WARNING_MESSAGE);
+    return;
+}
         boolean existe = citasDAO.cargarTodos().stream()
             .anyMatch(p -> p.getIdCita() != null && p.getIdCita().equals(idCita));
         if (existe) {
@@ -319,7 +328,13 @@ if (cboTipoCita.getSelectedIndex() <= 0 ||
 
         citasDAO.guardarCita(nuevaCita);
         JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        notificarCitaAgregada(nuevaCita);
+      notificarCitaAgregada(nuevaCita);
+
+// ✅ NUEVA LÍNEA: Notifica al controlador de recepcionista también
+          ControllerCitas.getInstance().notificarCitaAgregada(nuevaCita);
+
+
+
         cargarCitasPacienteEnTabla();
 
     } catch (Exception e) {
@@ -593,7 +608,7 @@ public void configurarColoresTablaCitas() {
         return;
     }
 
-    tableModelCitas.setRowCount(0); // Limpiar
+    tableModelCitas.setRowCount(0); 
 
     List<Cita> citas = citasDAO.cargarTodos();
 

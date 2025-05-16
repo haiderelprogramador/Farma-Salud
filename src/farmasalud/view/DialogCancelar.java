@@ -70,13 +70,11 @@ public class DialogCancelar extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         lblEstadoCita = new javax.swing.JComboBox<>();
         jSeparator12 = new javax.swing.JSeparator();
-        panelRound1 = new farmasalud.view.PanelRound();
-        jDateChooserCita = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
-        btnbuscarCita = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jSeparator13 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        jDateChooserCita = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -216,29 +214,6 @@ public class DialogCancelar extends javax.swing.JDialog {
         jSeparator12.setForeground(new java.awt.Color(28, 43, 110));
         jPanel2.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 170, -1));
 
-        panelRound1.setRoundBottomLeft(30);
-        panelRound1.setRoundBottomRight(30);
-        panelRound1.setRoundTopLeft(30);
-        panelRound1.setRoundTopRight(30);
-        panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jDateChooserCita.setBackground(new java.awt.Color(28, 43, 110));
-        panelRound1.add(jDateChooserCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 150, 30));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Fecha Cita ");
-        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 150, -1));
-
-        btnbuscarCita.setText("Buscar");
-        btnbuscarCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscarCitaActionPerformed(evt);
-            }
-        });
-        panelRound1.add(btnbuscarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
-
-        jPanel2.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 550, 50));
-
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setText("Hora Cita");
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, -1, -1));
@@ -250,6 +225,13 @@ public class DialogCancelar extends javax.swing.JDialog {
         jSeparator13.setForeground(new java.awt.Color(28, 43, 110));
         jPanel2.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 170, -1));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Fecha Cita ");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 90, -1));
+
+        jDateChooserCita.setBackground(new java.awt.Color(28, 43, 110));
+        jPanel2.add(jDateChooserCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 150, 30));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 590, 520));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 640));
@@ -260,11 +242,6 @@ public class DialogCancelar extends javax.swing.JDialog {
     private void cboEpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEpsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboEpsActionPerformed
-
-    private void btnbuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarCitaActionPerformed
- 
-
-    }//GEN-LAST:event_btnbuscarCitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,7 +286,6 @@ public class DialogCancelar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnbuscarCita;
     private javax.swing.JComboBox<String> cboConsultorio;
     private javax.swing.JComboBox<String> cboEps;
     private javax.swing.JComboBox<String> cboMedico;
@@ -353,6 +329,5 @@ public class DialogCancelar extends javax.swing.JDialog {
     private javax.swing.JLabel lblEspecialidadMedico;
     private javax.swing.JComboBox<String> lblEstadoCita;
     private javax.swing.JLabel lblNombre;
-    private farmasalud.view.PanelRound panelRound1;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,12 +7,19 @@ package farmasalud.view;
 import Controller.ControllerCitasPaciente;
 import dao.CitasDAO;
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 import model.Cita;
+
 
 /**
  *
@@ -35,6 +42,12 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
         this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this);
         configurarControlador();
+      
+        
+    }
+    public void InicializarMenu(){
+        JMenuItem dialogCancelar =new JMenuItem("Cancelar o Modificar Cita ");
+        tableCitas.add(dialogCancelar);
     }
 
     private void configurarControlador() {
@@ -46,6 +59,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
             controller.cargarCitasPorPaciente(documentoPaciente);
         }
     }
+    
 
     @Override
     public void citaAgregada(Cita cita) {
@@ -61,11 +75,51 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
   public void setDocumentoPaciente(String documento) {
     this.documentoPaciente = documento;
     if (documento != null && !documento.trim().isEmpty()) {
-        controller.setTablaCitas(tableCitas);         // 🔁 REGISTRAR la tabla
-        controller.initTableModelCita();              // ✅ Inicializa el modelo
-        controller.cargarCitasPorPaciente(documento); // 📥 Carga las citas del paciente
+        controller.setTablaCitas(tableCitas);         
+        controller.initTableModelCita();             
+        controller.cargarCitasPorPaciente(documento);
+           configurarPopupMenu(); 
     }
 }
+    private void configurarPopupMenu() {
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem itemCancelar = new JMenuItem("Cancelar o Modificar Cita");
+        popupMenu.add(itemCancelar);
+
+        itemCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                int filaSeleccionada = tableCitas.getSelectedRow();
+                if (filaSeleccionada >= 0) {
+                    DialogCancelar dialog = new DialogCancelar(null, true);
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        
+        tableCitas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                mostrarPopup(evt);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                mostrarPopup(evt);
+            }
+
+            private void mostrarPopup(MouseEvent evt) {
+                if (evt.isPopupTrigger()) {
+                    int fila = tableCitas.rowAtPoint(evt.getPoint());
+                    if (fila >= 0) {
+                        tableCitas.setRowSelectionInterval(fila, fila);
+                        popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                    }
+                }
+            }
+        });
+    }
 
     public JTable getTableCitas() {
         return tableCitas;
@@ -85,6 +139,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -285,6 +340,7 @@ controllerCitasPaciente.buscarCitasPorFecha();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableCitas;
     // End of variables declaration//GEN-END:variables
