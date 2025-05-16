@@ -121,7 +121,18 @@ public class CitasDAO {
         }
     }
     return citasMedico;
+}public Cita obtenerCitaPorId(String idCita) {
+    List<Cita> citas = cargarTodos(); // Tu método que carga citas desde JSON o DB
+    for (Cita cita : citas) {
+        if (cita.getIdCita().equals(idCita)) {
+            return cita;
+        }
+    }
+    return null;
+}public Cita buscarPorId(String idCita) {
+    return obtenerCitaPorId(idCita); // Simplemente llama al método existente
 }
+
      public boolean eliminarCita(String IdCita) {
     try {
         if (IdCita == null || IdCita.trim().isEmpty()) {

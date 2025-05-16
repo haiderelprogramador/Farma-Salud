@@ -12,8 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -81,45 +84,50 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
            configurarPopupMenu(); 
     }
 }
-    private void configurarPopupMenu() {
-        JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem itemCancelar = new JMenuItem("Cancelar o Modificar Cita");
-        popupMenu.add(itemCancelar);
+   private void configurarPopupMenu() {
+    JPopupMenu popupMenu = new JPopupMenu();
+    JMenuItem itemCancelar = new JMenuItem("Cancelar o Modificar Cita");
+    popupMenu.add(itemCancelar);
 
-        itemCancelar.addActionListener(new ActionListener() {
-            @Override
+   itemCancelar.addActionListener(new ActionListener() {
+        @Override
             public void actionPerformed(ActionEvent evt) {
                 int filaSeleccionada = tableCitas.getSelectedRow();
                 if (filaSeleccionada >= 0) {
                     DialogCancelar dialog = new DialogCancelar(null, true);
+                    dialog.cargarDatosDesdeFilaSeleccionada(tableCitas, filaSeleccionada);  // Carga directa desde tabla
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
                 }
             }
         });
-        
-        tableCitas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                mostrarPopup(evt);
-            }
 
-            @Override
-            public void mouseReleased(MouseEvent evt) {
-                mostrarPopup(evt);
-            }
+    // Mantener el resto del código del popup menu igual
+    tableCitas.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent evt) {
+            mostrarPopup(evt);
+        }
 
-            private void mostrarPopup(MouseEvent evt) {
-                if (evt.isPopupTrigger()) {
-                    int fila = tableCitas.rowAtPoint(evt.getPoint());
-                    if (fila >= 0) {
-                        tableCitas.setRowSelectionInterval(fila, fila);
-                        popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
-                    }
+        @Override
+        public void mouseReleased(MouseEvent evt) {
+            mostrarPopup(evt);
+        }
+
+        private void mostrarPopup(MouseEvent evt) {
+            if (evt.isPopupTrigger()) {
+                int fila = tableCitas.rowAtPoint(evt.getPoint());
+                if (fila >= 0) {
+                    tableCitas.setRowSelectionInterval(fila, fila);
+                    popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
                 }
             }
-        });
-    }
+        }
+    });
+}
+
 
     public JTable getTableCitas() {
         return tableCitas;

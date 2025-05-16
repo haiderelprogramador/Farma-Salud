@@ -53,7 +53,10 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
     public recepcionista() {
         initComponents();
 
-        this.controllerCitas = ControllerCitas.getInstance(); // ✅ correcto
+        this.controllerCitas = ControllerCitas.getInstance();
+        ControllerCitas.getInstance().addCitaListener(this);
+   ControllerCitasPaciente.getInstance().addCitaListener(this);
+
          controller = new ControllerPaciente(); 
          if (tablePaciente == null) {
         throw new IllegalStateException("La tabla tablePaciente no está inicializada en el diseño");
@@ -65,9 +68,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
         configurarPacientes();
         controllerCitas.setTablePaciente(tablePaciente);
         controllerCitas.cargarPacienteEnTabla();
-     ControllerCitas.getInstance().addCitaListener(this);
-ControllerCitasPaciente.getInstance().addCitaListener(this);
-
+    
        configurarCitas();
        
         this.setTitle("Sistema de Recepción");
@@ -84,7 +85,7 @@ ControllerCitasPaciente.getInstance().addCitaListener(this);
 @Override
 public void citaAgregada(Cita cita) {
     System.out.println("Listener recibido en recepcionista, recargando tabla...");
-    SwingUtilities.invokeLater(() -> controllerCitas.cargarCitasEnTabla());
+     controllerCitas.cargarCitasEnTabla();
 }
 
 

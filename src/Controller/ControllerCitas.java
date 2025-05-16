@@ -93,6 +93,7 @@ public static ControllerCitas getInstance() {
 
 
 
+
    
 
 public void setControllerCitasPaciente(ControllerCitasPaciente controllerPaciente) {
@@ -218,7 +219,6 @@ public void removeCitaListener(CitaListener listener) {
     listeners.remove(listener);
 }
 public void notificarCitaAgregada(Cita cita) {
-    System.out.println("Notificando nueva cita agregada a listeners...");
     for (CitaListener listener : listeners) {
         listener.citaAgregada(cita);
     }
@@ -338,7 +338,7 @@ if (salaSeleccionada == null) {
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
               nuevaCita.setDocumentoMedico(medicoSeleccionado.getNumeroDocumento());
             citasDAO.guardarCita(nuevaCita);
-            notificarCitaAgregada(nuevaCita);
+           ControllerCitas.getInstance().notificarCitaAgregada(nuevaCita);
             actualizarEstadisticasCitas(); 
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           cargarCitasEnTabla();
@@ -463,6 +463,7 @@ public void seleccionarMedico() {
     
     List<Cita> citas = citasDAO.cargarTodos();
     for (Cita cita : citas) {
+
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
         Medico medico=medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
          String nombreSala = (cita.getSala() != null) ? cita.getSala().getNombreSala() : "No asignado";

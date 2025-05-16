@@ -71,6 +71,21 @@ private CitasDAO citasDAO = ControllerCitas.getInstance().getCitasDAO();
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
     SalasDAO salasDAO=new SalasDAO();
+     private JTextField txtIdCita2;
+    private JDateChooser jDateChooserCita;
+    private JComboBox<String> cboHoraCita2;
+    private JComboBox<String> cboMotivoCita2;
+    private JComboBox<String> cboTipoCita2;
+    private JComboBox<String> lblEstadoCita2;
+    private JComboBox<String> cboConsultorio2;
+    private JComboBox<String> cboSede2;
+    private JComboBox<String> cboMedico2;
+    private JLabel lblEspecialidadMedico2;
+    private JLabel lblNombrePaciente2;
+    private JLabel lblApellidoPaciente2;
+    private JLabel lblEmail2;
+    private JLabel lblDocumentoPaciente2;
+    private JLabel lblEps2;
 
     private static ControllerCitasPaciente instance;
     
@@ -86,6 +101,7 @@ private CitasDAO citasDAO = ControllerCitas.getInstance().getCitasDAO();
         this.sedesDAO = new SedeDAO();
         this.salasDAO = new SalasDAO();
     }
+    
 
     public static synchronized ControllerCitasPaciente getInstance() {
         if (instance == null) {
@@ -105,11 +121,73 @@ private CitasDAO citasDAO = ControllerCitas.getInstance().getCitasDAO();
         listeners.remove(listener);
     }
 
-    private void notificarCitaAgregada(Cita cita) {
-        for (CitaListener listener : listeners) {
-            listener.citaAgregada(cita);
-        }
+   public void notificarCitaAgregada(Cita cita) {
+    System.out.println("Notificando nueva cita a listeners en ControllerCitas");
+    for (CitaListener listener : listeners) {
+        listener.citaAgregada(cita);
     }
+}
+
+    public void setTxtIdCita2(JTextField txtIdCita2) {
+        this.txtIdCita2 = txtIdCita2;
+    }
+
+    public void setjDateChooserCita(JDateChooser jDateChooserCita) {
+        this.jDateChooserCita = jDateChooserCita;
+    }
+
+    public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
+        this.cboHoraCita2 = cboHoraCita2;
+    }
+
+    public void setCboMotivoCita2(JComboBox<String> cboMotivoCita2) {
+        this.cboMotivoCita2 = cboMotivoCita2;
+    }
+
+    public void setCboTipoCita2(JComboBox<String> cboTipoCita2) {
+        this.cboTipoCita2 = cboTipoCita2;
+    }
+
+    public void setLblEstadoCita2(JComboBox<String> lblEstadoCita2) {
+        this.lblEstadoCita2 = lblEstadoCita2;
+    }
+
+    public void setCboConsultorio2(JComboBox<String> cboConsultorio2) {
+        this.cboConsultorio2 = cboConsultorio2;
+    }
+
+    public void setCboSede2(JComboBox<String> cboSede2) {
+        this.cboSede2 = cboSede2;
+    }
+
+    public void setCboMedico2(JComboBox<String> cboMedico2) {
+        this.cboMedico2 = cboMedico2;
+    }
+
+    public void setLblEspecialidadMedico2(JLabel lblEspecialidadMedico2) {
+        this.lblEspecialidadMedico2 = lblEspecialidadMedico2;
+    }
+
+    public void setLblNombrePaciente2(JLabel lblNombrePaciente2) {
+        this.lblNombrePaciente2 = lblNombrePaciente2;
+    }
+
+    public void setLblApellidoPaciente2(JLabel lblApellidoPaciente2) {
+        this.lblApellidoPaciente2 = lblApellidoPaciente2;
+    }
+
+    public void setLblEmail2(JLabel lblEmail2) {
+        this.lblEmail2 = lblEmail2;
+    }
+
+    public void setLblDocumentoPaciente2(JLabel lblDocumentoPaciente2) {
+        this.lblDocumentoPaciente2 = lblDocumentoPaciente2;
+    }
+
+    public void setLblEps2(JLabel lblEps2) {
+        this.lblEps2 = lblEps2;
+    }
+
 
     public void setPacienteActual(Paciente pacienteActual){
         this.pacienteActual=pacienteActual;
@@ -325,13 +403,12 @@ if (existeOtraCitaEnMismaHora(fechaCita, horaCita, nombreCompletoMedico, idCitaA
         );
 
         nuevaCita.setDocumentoPaciente(pacienteActual.getNumeroDocumento());
+                nuevaCita.setDocumentoMedico(medicoSeleccionado.getNumeroDocumento());
 
         citasDAO.guardarCita(nuevaCita);
         JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
       notificarCitaAgregada(nuevaCita);
-
-// ✅ NUEVA LÍNEA: Notifica al controlador de recepcionista también
-          ControllerCitas.getInstance().notificarCitaAgregada(nuevaCita);
+ControllerCitas.getInstance().notificarCitaAgregada(nuevaCita);
 
 
 
@@ -827,5 +904,62 @@ public Medico obtenerMedicoPorNombreCompleto(String nombreCompleto) {
  public static void resetInstance() {
         instance = null;
     }
+public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
+    if (table == null || fila < 0 || fila >= table.getRowCount()) {
+        JOptionPane.showMessageDialog(null, "Seleccione una cita válida", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+    // Cargar datos en combos antes de seleccionar el item
+    ControllerCitasPaciente controller = ControllerCitasPaciente.getInstance();
+    controller.cargarSalasEnComboBox(cboConsultorio2);
+    controller.cargarSedesEnComboBox(cboSede2);
+
+    // Datos del paciente
+    lblDocumentoPaciente2.setText(model.getValueAt(fila, 0).toString());
+    lblNombrePaciente2.setText(model.getValueAt(fila, 1).toString());
+    lblApellidoPaciente2.setText(model.getValueAt(fila, 2).toString());
+    lblEps2.setText(model.getValueAt(fila, 3).toString());
+    lblEmail2.setText(model.getValueAt(fila, 4).toString());
+
+    // ID Cita
+    txtIdCita2.setText(model.getValueAt(fila, 5).toString());
+
+    // Hora y motivo
+    cboHoraCita2.setSelectedItem(model.getValueAt(fila, 6).toString());
+    cboMotivoCita2.setSelectedItem(model.getValueAt(fila, 7).toString());
+
+    // Fecha
+    Object fechaObj = model.getValueAt(fila, 8);
+    if (fechaObj instanceof LocalDate fechaLocal) {
+        Date fecha = Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        jDateChooserCita.setDate(fecha);
+    } else if (fechaObj instanceof Date fecha) {
+        jDateChooserCita.setDate(fecha);
+    } else {
+        jDateChooserCita.setDate(null);
+    }
+
+    // Tipo de cita
+    cboTipoCita2.setSelectedItem(model.getValueAt(fila, 9).toString());
+
+    // Consultorio (ya cargado)
+    cboConsultorio2.setSelectedItem(model.getValueAt(fila, 10).toString());
+
+    // Estado - debe ser JComboBox
+    lblEstadoCita2.setSelectedItem(model.getValueAt(fila, 11).toString());
+
+    // Médico
+    String nombreMedico = model.getValueAt(fila, 12).toString() + " " + model.getValueAt(fila, 13).toString();
+    cboMedico2.setSelectedItem(nombreMedico.trim());
+
+    // Especialidad
+    lblEspecialidadMedico2.setText(model.getValueAt(fila, 14).toString());
+
+    // Sede (ya cargada)
+    cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
+}
 
 }
