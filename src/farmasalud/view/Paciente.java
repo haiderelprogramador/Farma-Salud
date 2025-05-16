@@ -15,20 +15,29 @@ import javax.swing.SwingUtilities;
  * @author Maria liz
  */
 public class Paciente extends javax.swing.JFrame {
+  private String documentoPaciente;
+      private final ControllerCitasPaciente controller;
+    private ConsultarCita dialogConsulta;
 
 
-    public Paciente() {
+
+    public Paciente( ) {
         initComponents();
+ this.controller = ControllerCitasPaciente.getInstance();
         ImageIcon iconoOriginal = new ImageIcon("C:\\Users\\Maria liz\\Documents\\atencion.jpeg");
         Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(
                 jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
         jLabel1.setIcon(new ImageIcon(imagenEscalada));
-    
     }
-   
-    
+     
+    public void inicializarConPaciente(String documento) {
+        this.documentoPaciente = documento;
+        actualizarInterfaz();
+    }
 
-
+    private void actualizarInterfaz() {
+        jLabel2.setText("BIENVENIDO PACIENTE");
+    }
 
  
     @SuppressWarnings("unchecked")
@@ -162,15 +171,56 @@ public class Paciente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarModificarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
- ConsultarCita dialogConsulta = new ConsultarCita(this, true);
+   if (documentoPaciente == null || documentoPaciente.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "No se ha cargado el documento del paciente", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        dialogConsulta.setVisible(true);         // TODO add your handling code here:
+    if (dialogConsulta == null) {
+        dialogConsulta = new ConsultarCita(this, true);
+        dialogConsulta.setDocumentoPaciente(documentoPaciente);
+    } else {
+        dialogConsulta.actualizarTablaCitas(); // Asegúrate que la tabla esté al día
+    }
+
+    dialogConsulta.setVisible(true);   // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
- DialogAgendarCita dialogAgendar = new DialogAgendarCita(this, true);
+     if (documentoPaciente == null || documentoPaciente.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "No se ha cargado el documento del paciente", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        dialogAgendar.setVisible(true);           // TODO add your handling code here:
+    try {
+        // Reutilizar instancia
+        if (dialogConsulta == null) {
+            dialogConsulta = new ConsultarCita(this, true);
+            dialogConsulta.setDocumentoPaciente(documentoPaciente);
+        }
+
+        DialogAgendarCita dialogAgendar = new DialogAgendarCita(this, true);
+        dialogAgendar.setDialogConsultarCitas(dialogConsulta);
+        dialogAgendar.setDocumentoPaciente(documentoPaciente);
+        dialogAgendar.setVisible(true);
+
+        // Ahora actualiza y muestra
+        dialogConsulta.actualizarTablaCitas();
+        dialogConsulta.setVisible(true);
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, 
+            "Error abriendo agenda de citas: " + ex.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
     }//GEN-LAST:event_btnAgendarActionPerformed
 
     /**

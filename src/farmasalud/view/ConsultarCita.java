@@ -9,6 +9,7 @@ import dao.CitasDAO;
 import java.awt.Button;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 import model.Cita;
@@ -17,9 +18,13 @@ import model.Cita;
  *
  * @author Maria liz
  */
-public class ConsultarCita extends javax.swing.JDialog {
-    ControllerCitasPaciente controllerCitasPaciente=new ControllerCitasPaciente();
+public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
+    private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
+    private boolean isTableInitialized = false;
     CitasDAO citasDAO=new CitasDAO();
+        private String documentoPaciente;
+    private final ControllerCitasPaciente controller;
+
 
     /**
      * Creates new form ConsultarCita
@@ -27,17 +32,50 @@ public class ConsultarCita extends javax.swing.JDialog {
     public ConsultarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        controllerCitasPaciente.setJDateFechaCita(dateCita);
-        controllerCitasPaciente.setTablaCitas(tableCitas);
-        controllerCitasPaciente.initTableModelCita(); 
-
-controllerCitasPaciente.cargarCitasPacienteEnTabla();
-this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
- 
-
+        this.controller = ControllerCitasPaciente.getInstance();
+        this.controller.addCitaListener(this);
+        configurarControlador();
     }
-   
 
+    private void configurarControlador() {
+        controller.setJDateFechaCita(dateCita);
+        controller.setTablaCitas(tableCitas);
+        controller.initTableModelCita();
+        
+        if (documentoPaciente != null) {
+            controller.cargarCitasPorPaciente(documentoPaciente);
+        }
+    }
+
+    @Override
+    public void citaAgregada(Cita cita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+
+    @Override
+    public void dispose() {
+        controller.removeCitaListener(this);
+        super.dispose();
+    }
+
+  public void setDocumentoPaciente(String documento) {
+    this.documentoPaciente = documento;
+    if (documento != null && !documento.trim().isEmpty()) {
+        controller.setTablaCitas(tableCitas);         // 🔁 REGISTRAR la tabla
+        controller.initTableModelCita();              // ✅ Inicializa el modelo
+        controller.cargarCitasPorPaciente(documento); // 📥 Carga las citas del paciente
+    }
+}
+
+    public JTable getTableCitas() {
+        return tableCitas;
+    }
+
+    public void actualizarTablaCitas() {
+        if (documentoPaciente != null) {
+            controller.cargarCitasPorPaciente(documentoPaciente);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +94,7 @@ this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         tableCitas = new javax.swing.JTable();
         btnRefrescar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
+        AgendarCita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -124,6 +163,13 @@ this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
             }
         });
 
+        AgendarCita.setText("Agendar Cita");
+        AgendarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgendarCitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,21 +185,28 @@ this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRefrescar)
-                        .addGap(62, 62, 62))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAtras)
-                        .addGap(17, 17, 17))))
+                .addComponent(btnRefrescar)
+                .addGap(62, 62, 62))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(AgendarCita)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAtras)
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(btnAtras)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(btnAtras)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(AgendarCita)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,12 +223,16 @@ controllerCitasPaciente.buscarCitasPorFecha();
     }//GEN-LAST:event_btnBuscarCitaActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
- controllerCitasPaciente.cargarCitasPacienteEnTabla();        // TODO add your handling code here:
+ controllerCitasPaciente.cargarCitasPorPaciente(documentoPaciente);        // TODO add your handling code here:
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
     this.dispose();     // TODO add your handling code here:
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void AgendarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendarCitaActionPerformed
+    
+    }//GEN-LAST:event_AgendarCitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +277,7 @@ controllerCitasPaciente.buscarCitasPorFecha();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AgendarCita;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBuscarCita;
     private javax.swing.JButton btnRefrescar;

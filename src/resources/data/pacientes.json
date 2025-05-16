@@ -25,6 +25,20 @@
     "eps": "Coosalud",
     "email": "ine@gmail.com",
     "celular": "43899339",
+    "contraseña": "34"
+  },
+  {
+    "tipoSangre": "A+",
+    "tipoDocumento": "CC",
+    "antecedentes": "alergica a las hormigas",
+    "numeroDocumento": "123456789",
+    "nombres": "karen",
+    "apellidos": "mier",
+    "fechaNacimiento": "2025-05-21",
+    "sexo": "M",
+    "eps": "Coosalud",
+    "email": "karen@gmail.com",
+    "celular": "234567890",
     "contraseña": ""
   }
 ]

@@ -198,6 +198,16 @@ public class MedicoDAO {
         }
     }
     
+    public Medico buscarPorNombreYApellido(String nombre, String apellido) {
+    List<Medico> medicos = cargarTodos();
+    for (Medico medico : medicos) {
+        if (medico.getNombres().equalsIgnoreCase(nombre) && 
+            medico.getApellidos().equalsIgnoreCase(apellido)) {
+            return medico;
+        }
+    }
+    return null;
+}
     public boolean existeMedico(String numeroDocumento) {
     if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
         throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");

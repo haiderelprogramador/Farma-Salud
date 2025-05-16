@@ -192,13 +192,12 @@ public class login_ extends javax.swing.JFrame {
                 abrirVista(new recepcionista(), "Bienvenida Recepcionista");
                 break;
             case "Paciente":
-    Paciente pacienteLogueado = (Paciente) usuario;
-    DialogAgendarCita dialog = new DialogAgendarCita(this, true);
-    dialog.setDocumentoPaciente(pacienteLogueado.getNumeroDocumento());
-    dialog.setVisible(true); // ¡Faltaba esta línea crucial!
+      model.Paciente pacienteLogueado = (model.Paciente) usuario;
+    farmasalud.view.Paciente framePaciente = new farmasalud.view.Paciente();
+    framePaciente.inicializarConPaciente(pacienteLogueado.getNumeroDocumento());
+    framePaciente.setVisible(true);
     this.dispose();
-    break;
-        }
+    break;        }
         
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, 

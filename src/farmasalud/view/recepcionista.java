@@ -41,7 +41,6 @@ import model.Paciente;
 public class recepcionista extends javax.swing.JFrame {
 
     ControllerCitas controllerCitas = new ControllerCitas();
-    ControllerCitasPaciente controllerPacienteCita=new ControllerCitasPaciente();
     private DefaultTableModel tableModel;
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;

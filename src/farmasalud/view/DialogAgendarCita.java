@@ -5,18 +5,26 @@
 package farmasalud.view;
 
 import Controller.ControllerCitasPaciente;
+import dao.PacienteDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import model.Cita;
 import model.Medico;
+import model.Paciente;
 
 /**
  *
  * @author Maria liz
  */
-public class DialogAgendarCita extends javax.swing.JDialog {
- ControllerCitasPaciente controllerCitasPaciente=new ControllerCitasPaciente();
-        private ControllerCitasPaciente controller;
+public class DialogAgendarCita extends javax.swing.JDialog implements CitaListener {
+    private ConsultarCita dialogConsultarCitas;
+    private final ControllerCitasPaciente controller;
+
+       private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private String documentoPaciente;
+    PacienteDAO pacienteDAO =  new PacienteDAO();
+
 
     /**
      * Creates new form AgendarCita
@@ -24,73 +32,93 @@ public class DialogAgendarCita extends javax.swing.JDialog {
     public DialogAgendarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-       configurarCitas();
-
-      
+   this.controller = ControllerCitasPaciente.getInstance();
+        this.controller.addCitaListener(this); 
+        configurarCitas();
     }
-    public void setDocumentoPaciente(String documentoPaciente) {
-    this.documentoPaciente = documentoPaciente; // Necesitarás declarar este campo
-    cargarDatosPaciente(documentoPaciente);
-}
 
-     private void configurarCitas() {
-   
-  
-    controllerCitasPaciente.setCboNombreMedico(cboNombreMedico); 
-    controllerCitasPaciente.setCboApellidoMedico(cboNombreMedico);
-    controllerCitasPaciente.setCboEspecialdadMedico(cboEspecialidad); 
-    controllerCitasPaciente.setCboHoraCita(cboHoraCita);
-    controllerCitasPaciente.setCboTipoCita(cboTipoCita);
-    controllerCitasPaciente.setLblDocumento(lblDocumentoPaciente);
-    controllerCitasPaciente.setLblEmail(lblEmailPaciente);
-    controllerCitasPaciente.setCboTipoCita(cboTipoCita);
-    controllerCitasPaciente.setCboMotivoCita(cboMotivoCita);
-    controllerCitasPaciente.cargarSalasEnComboBox(cboConsultorio);
-    controllerCitasPaciente.cargarSedesEnComboBox(cboSede);
-    controllerCitasPaciente.setCboEstado(cboEstadoCita);
-    controllerCitasPaciente.setJDateFechaCita(jDateFechaCita);
-    controllerCitasPaciente.setIdCita(txtIdCita);
-   
-}
-        public ControllerCitasPaciente getController() {
-        if (controller == null) {
-            controller = new ControllerCitasPaciente();
-            // Configurar aquí todos los componentes con el controller
-            controller.setLblDocumento(lblDocumentoPaciente);
-            controller.setLblNombre(lblNombrePaciente);
-            controller.setLblApellido(lblApellidoPaciente);
-            controller.setLblEmail(lblEmailPaciente);
-            controller.setCLblEps(lblEps);
+    @Override
+    public void citaAgregada(Cita cita) {
+        if (dialogConsultarCitas != null) {
+        System.out.println("Actualizando tabla del diálogo de consulta...");
+        dialogConsultarCitas.actualizarTablaCitas();
+    }
+    }
+
+    @Override
+    public void dispose() {
+        controller.removeCitaListener(this);
+        super.dispose();
+    }
+
+    public void setDialogConsultarCitas(ConsultarCita dialogConsultarCitas) {
+          this.dialogConsultarCitas = dialogConsultarCitas;
+    if (dialogConsultarCitas != null) {
+        controller.setTablaCitas(dialogConsultarCitas.getTableCitas());
+    }
+    }
+
+    public void setDocumentoPaciente(String documento) {
+        try {
+            if (documento == null || documento.trim().isEmpty()) {
+                throw new IllegalArgumentException("Documento de paciente no válido");
+            }
             
+            this.documentoPaciente = documento;
+            
+            if (!controller.cargarYPersistirPaciente(documento)) {
+                throw new Exception("No se pudo cargar el paciente");
+            }
+            
+            Paciente p = controller.getPacienteSeleccionado();
+            if (p != null) {
+                lblDocumentoPaciente.setText(p.getNumeroDocumento());
+                lblNombrePaciente.setText(p.getNombres());
+                lblApellidoPaciente.setText(p.getApellidos());
+                lblEmailPaciente.setText(p.getEmail());
+                lblEps.setText(p.getEps());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar paciente: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
         }
-        return controller;
     }
-       private void cargarDatosPaciente(String documentoPaciente) {
-    // Obtener el controller
-    ControllerCitasPaciente controller = getController();
-    
-    // Cargar los datos del paciente
-    controller.cargarDatosPaciente(documentoPaciente);
-    
-    // Configurar los labels manualmente (opcional, si no se actualizan automáticamente)
-    if (controller.getPacienteSeleccionado() != null) {
-        lblDocumentoPaciente.setText(controller.getPacienteSeleccionado().getNumeroDocumento());
-        lblNombrePaciente.setText(controller.getPacienteSeleccionado().getNombres());
-        lblApellidoPaciente.setText(controller.getPacienteSeleccionado().getApellidos());
-        lblEmailPaciente.setText(controller.getPacienteSeleccionado().getEmail());
-        lblEps.setText(controller.getPacienteSeleccionado().getEps());
-    } else {
-        JOptionPane.showMessageDialog(this, 
-            "No se encontró el paciente con documento: " + documentoPaciente, 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
+
+    private void configurarCitas() {
+
+        controller.setCboHoraCita(cboHoraCita);
+        controller.setCboTipoCita(cboTipoCita);
+        controller.setCboMotivoCita(cboMotivoCita);
+        controller.setCboEstado(cboEstadoCita);
+        controller.setJDateFechaCita(jDateFechaCita);
+        controller.setTxtIdCita(txtIdCita);
+        controller.setCboSede(cboSede);
+        controller.setCboConsultorio(cboConsultorio); 
+        controller.setCboMedico(cboMedico);
+        controller.setLblEspecialidadMedico(lblEspecialidadMedico);
+
+        // Cargar datos iniciales
+        controller.cargarSalasEnComboBox(cboConsultorio);
+        controller.cargarSedesEnComboBox(cboSede);
+        controller.cargarMedicosEnComboBox();
+
+        // Configurar listener para médico
+        cboMedico.addActionListener(e -> {
+            String seleccion = (String) cboMedico.getSelectedItem();
+            if (seleccion != null && !seleccion.equals("<Seleccione>")) {
+                Medico medico = controller.obtenerMedicoPorNombreCompleto(seleccion);
+                if (medico != null && lblEspecialidadMedico != null) {
+                    lblEspecialidadMedico.setText(medico.getEspecialidad());
+                }
+            }
+        });
     }
-}
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+     
+   
+   
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -120,10 +148,9 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
-        cboNombreMedico = new javax.swing.JComboBox<>();
+        cboMedico = new javax.swing.JComboBox<>();
         jSeparator10 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
-        cboEspecialidad = new javax.swing.JComboBox<>();
         jSeparator12 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         jSeparator13 = new javax.swing.JSeparator();
@@ -141,6 +168,7 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jSeparator15 = new javax.swing.JSeparator();
         lblEps = new javax.swing.JLabel();
         txtIdCita = new javax.swing.JTextField();
+        lblEspecialidadMedico = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,7 +204,6 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jSeparator3.setForeground(new java.awt.Color(28, 43, 110));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 150, 10));
 
-        cboConsultorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(cboConsultorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 150, 50));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -191,7 +218,11 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jLabel2.setText("Sede");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 90, 30));
 
-        cboSede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboSede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboSedeActionPerformed(evt);
+            }
+        });
         jPanel2.add(cboSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 150, 40));
 
         jSeparator5.setBackground(new java.awt.Color(28, 43, 110));
@@ -209,7 +240,7 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jLabel6.setText("Motivo Cita ");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 100, 30));
 
-        cboMotivoCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>", "Control", "Seguimiento", "Prevencion", "Sintomas Agudos", "Enfermedad Cronica", "Problemas Especificos" }));
+        cboMotivoCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>", "Control", "Seguimiento", "Prevencion", "Sintomas Agudos", "Enfermedad Cronica", "Problemas Especificos" }));
         jPanel2.add(cboMotivoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 150, 40));
 
         jSeparator6.setBackground(new java.awt.Color(28, 43, 110));
@@ -240,8 +271,8 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jLabel10.setText("Medico");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
 
-        cboNombreMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>" }));
-        jPanel2.add(cboNombreMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 160, 40));
+        cboMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>" }));
+        jPanel2.add(cboMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 160, 40));
 
         jSeparator10.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator10.setForeground(new java.awt.Color(28, 43, 110));
@@ -250,9 +281,6 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Especialidad M");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 130, 30));
-
-        cboEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cboEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 160, 30));
 
         jSeparator12.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator12.setForeground(new java.awt.Color(28, 43, 110));
@@ -283,18 +311,10 @@ public class DialogAgendarCita extends javax.swing.JDialog {
                 btnAgendarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnAgendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, -1, -1));
-
-        lblNombrePaciente.setText("jLabel15");
+        jPanel2.add(btnAgendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, -1, -1));
         jPanel2.add(lblNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 150, 40));
-
-        lblApellidoPaciente.setText("jLabel16");
         jPanel2.add(lblApellidoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 150, 40));
-
-        lblDocumentoPaciente.setText("jLabel17");
         jPanel2.add(lblDocumentoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 150, 40));
-
-        lblEmailPaciente.setText("jLabel18");
         jPanel2.add(lblEmailPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 140, 40));
         jPanel2.add(jDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 150, 40));
 
@@ -308,12 +328,16 @@ public class DialogAgendarCita extends javax.swing.JDialog {
         jSeparator15.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator15.setForeground(new java.awt.Color(28, 43, 110));
         jPanel2.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, 150, 10));
-
-        lblEps.setText("jLabel16");
         jPanel2.add(lblEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 150, 50));
 
-        txtIdCita.setText("jTextField1");
-        jPanel2.add(txtIdCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, -1, -1));
+        txtIdCita.setText("dffghm");
+        txtIdCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdCitaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtIdCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 422, 160, 40));
+        jPanel2.add(lblEspecialidadMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 170, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 640, 510));
 
@@ -323,8 +347,20 @@ public class DialogAgendarCita extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-controllerCitasPaciente.guardarCitaDesdeFormulario();        // TODO add your handling code here:
+controller.guardarCitaDesdeFormulario();
+if (dialogConsultarCitas != null) {
+    dialogConsultarCitas.actualizarTablaCitas();
+}
+        
     }//GEN-LAST:event_btnAgendarActionPerformed
+
+    private void cboSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSedeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboSedeActionPerformed
+
+    private void txtIdCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdCitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdCitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -372,11 +408,10 @@ controllerCitasPaciente.guardarCitaDesdeFormulario();        // TODO add your ha
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendar;
     private javax.swing.JComboBox<String> cboConsultorio;
-    private javax.swing.JComboBox<String> cboEspecialidad;
     private javax.swing.JComboBox<String> cboEstadoCita;
     private javax.swing.JComboBox<String> cboHoraCita;
+    private javax.swing.JComboBox<String> cboMedico;
     private javax.swing.JComboBox<String> cboMotivoCita;
-    private javax.swing.JComboBox<String> cboNombreMedico;
     private javax.swing.JComboBox<String> cboSede;
     private javax.swing.JComboBox<String> cboTipoCita;
     private com.toedter.calendar.JDateChooser jDateFechaCita;
@@ -414,6 +449,7 @@ controllerCitasPaciente.guardarCitaDesdeFormulario();        // TODO add your ha
     private javax.swing.JLabel lblDocumentoPaciente;
     private javax.swing.JLabel lblEmailPaciente;
     private javax.swing.JLabel lblEps;
+    private javax.swing.JLabel lblEspecialidadMedico;
     private javax.swing.JLabel lblNombrePaciente;
     private javax.swing.JTextField txtIdCita;
     // End of variables declaration//GEN-END:variables

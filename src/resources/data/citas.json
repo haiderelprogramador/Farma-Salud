@@ -412,5 +412,1111 @@
       "direccion": "Calle 128 #48-67, Borotá",
       "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
     }
+  },
+  {
+    "IdCita": "jTextField1",
+    "fechaCita": "2025-05-29",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Control",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "4",
+    "fechaCita": "2025-05-29",
+    "hora": "08:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Control",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "074",
+    "fechaCita": "2025-05-30",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "965",
+    "fechaCita": "2025-05-30",
+    "hora": "09:00",
+    "tipoCita": "Control",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "fghmknn",
+      "codigoSala": "456789",
+      "tipoSala": "Sala de Pediatría",
+      "capacidadSala": "3"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "7543",
+    "fechaCita": "2025-05-23",
+    "hora": "09:30",
+    "tipoCita": "Regular",
+    "motivo": "Control",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XD",
+      "codigoSala": "SAL.001",
+      "tipoSala": "Sala de Medicina General",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "847",
+    "fechaCita": "2025-05-30",
+    "hora": "09:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "555",
+    "fechaCita": "2025-05-23",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "47",
+    "fechaCita": "2025-05-22",
+    "hora": "10:00",
+    "tipoCita": "Control",
+    "motivo": "Seguimiento",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "8384354545",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "95457",
+    "fechaCita": "2025-05-30",
+    "hora": "10:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "64",
+    "fechaCita": "2025-05-29",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Control",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "744",
+    "fechaCita": "2025-05-30",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Sintomas Agudos",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "336",
+    "fechaCita": "2025-05-30",
+    "hora": "05:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "53",
+    "fechaCita": "2025-05-22",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "3923923",
+    "fechaCita": "2025-05-23",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "XD",
+      "codigoSala": "SAL.001",
+      "tipoSala": "Sala de Medicina General",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "74744",
+    "fechaCita": "2025-05-23",
+    "hora": "09:00",
+    "tipoCita": "Regular",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "58",
+    "fechaCita": "2025-05-16",
+    "hora": "07:00",
+    "tipoCita": "Regular",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Medico general",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Lunes-miercoles-viernes",
+      "numeroDocumento": "1048456789",
+      "nombres": "Sharlok",
+      "apellidos": "Maia",
+      "fechaNacimiento": "2004-05-19",
+      "sexo": "F",
+      "email": "imsharlok@gmail.com",
+      "celular": "3164419082",
+      "contraseña": "WnKi\u003c:z1!,"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "4343",
+    "fechaCita": "2025-05-30",
+    "hora": "08:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Control",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "98765",
+    "fechaCita": "2025-05-30",
+    "hora": "08:30",
+    "tipoCita": "Control",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "832",
+    "fechaCita": "2025-05-15",
+    "hora": "07:30",
+    "tipoCita": "Control",
+    "motivo": "Control",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "685",
+    "fechaCita": "2025-05-30",
+    "hora": "08:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "7344",
+    "fechaCita": "2025-05-30",
+    "hora": "05:00",
+    "tipoCita": "Regular",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "5451",
+    "fechaCita": "2025-05-30",
+    "hora": "01:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "528",
+    "fechaCita": "2025-05-29",
+    "hora": "04:00",
+    "tipoCita": "Regular",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "874",
+    "fechaCita": "2025-05-30",
+    "hora": "03:00",
+    "tipoCita": "Control",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "fghmknn",
+      "codigoSala": "456789",
+      "tipoSala": "Sala de Pediatría",
+      "capacidadSala": "3"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "eld1",
+    "fechaCita": "2025-05-24",
+    "hora": "07:30",
+    "tipoCita": "Regular",
+    "motivo": "Control",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "fghmknn",
+      "codigoSala": "456789",
+      "tipoSala": "Sala de Pediatría",
+      "capacidadSala": "3"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "5158",
+    "fechaCita": "2025-05-24",
+    "hora": "04:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "789",
+    "fechaCita": "2025-05-30",
+    "hora": "04:30",
+    "tipoCita": "Regular",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Medico general",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Lunes-miercoles-viernes",
+      "numeroDocumento": "1048456789",
+      "nombres": "Sharlok",
+      "apellidos": "Maia",
+      "fechaNacimiento": "2004-05-19",
+      "sexo": "F",
+      "email": "imsharlok@gmail.com",
+      "celular": "3164419082",
+      "contraseña": "WnKi\u003c:z1!,"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "jText",
+    "fechaCita": "2025-05-29",
+    "hora": "05:00",
+    "tipoCita": "Regular",
+    "motivo": "Seguimiento",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Medico general",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Lunes-miercoles-viernes",
+      "numeroDocumento": "1048456789",
+      "nombres": "Sharlok",
+      "apellidos": "Maia",
+      "fechaNacimiento": "2004-05-19",
+      "sexo": "F",
+      "email": "imsharlok@gmail.com",
+      "celular": "3164419082",
+      "contraseña": "WnKi\u003c:z1!,"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "75479",
+    "fechaCita": "2025-05-15",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "7841",
+    "fechaCita": "2026-05-15",
+    "hora": "07:30",
+    "tipoCita": "Control",
+    "motivo": "Control",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "5415151",
+    "fechaCita": "2029-05-25",
+    "hora": "08:30",
+    "tipoCita": "Regular",
+    "motivo": "Sintomas Agudos",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "XD",
+      "codigoSala": "SAL.001",
+      "tipoSala": "Sala de Medicina General",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "4567899",
+    "fechaCita": "2025-05-29",
+    "hora": "02:30",
+    "tipoCita": "Prioritaria",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "861484",
+    "fechaCita": "2025-05-15",
+    "hora": "09:30",
+    "tipoCita": "Regular",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12342534",
+      "nombres": "adsfg",
+      "apellidos": "dsfghfds",
+      "fechaNacimiento": "2022-03-12",
+      "sexo": "F",
+      "eps": "Item 2",
+      "email": "sfdfds@gmail.com",
+      "celular": "23345"
+    },
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
   }
 ]

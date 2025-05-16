@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  * @author Maria liz
  */
 public class DialogCancelar extends javax.swing.JDialog {
-ControllerCitasPaciente controllerPacienteCita=new ControllerCitasPaciente();
     /**
      * Creates new form DialogCancelar
      */
@@ -263,24 +262,7 @@ ControllerCitasPaciente controllerPacienteCita=new ControllerCitasPaciente();
     }//GEN-LAST:event_cboEpsActionPerformed
 
     private void btnbuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarCitaActionPerformed
-   try {
-
-        Date fechaSeleccionada = jDateChooserCita.getDate();
-        String documento = lblDocumento.getText().trim();
-
-        if (fechaSeleccionada != null && !documento.isEmpty()) {
-            LocalDate fechaLocal = fechaSeleccionada.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-
-            controllerPacienteCita.buscarCitaPorFecha(fechaLocal, documento);
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fecha válida.");
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error al obtener la fecha: " + e.getMessage());
-        e.printStackTrace();
-    }
+ 
 
     }//GEN-LAST:event_btnbuscarCitaActionPerformed
 
