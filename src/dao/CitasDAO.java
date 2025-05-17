@@ -45,16 +45,13 @@ public class CitasDAO {
    
      public List<Cita> cargarTodos() {
         try (Reader reader = new FileReader(ARCHIVO_JSON)) {
-            // Primero verifica si el archivo está vacío
             if (new File(ARCHIVO_JSON).length() == 0) {
                 return new ArrayList<>();
             }
             
-            // Intenta leer como array primero
             try {
                 return gson.fromJson(reader, new TypeToken<List<Cita>>() {}.getType());
             } catch (JsonSyntaxException e) {
-                // Si falla, intenta leer como objeto individual
                 reader.close();
                 try (Reader newReader = new FileReader(ARCHIVO_JSON)) {
                     Cita cita = gson.fromJson(newReader, Cita.class);
@@ -122,7 +119,7 @@ public class CitasDAO {
     }
     return citasMedico;
 }public Cita obtenerCitaPorId(String idCita) {
-    List<Cita> citas = cargarTodos(); // Tu método que carga citas desde JSON o DB
+    List<Cita> citas = cargarTodos(); 
     for (Cita cita : citas) {
         if (cita.getIdCita().equals(idCita)) {
             return cita;
@@ -130,7 +127,7 @@ public class CitasDAO {
     }
     return null;
 }public Cita buscarPorId(String idCita) {
-    return obtenerCitaPorId(idCita); // Simplemente llama al método existente
+    return obtenerCitaPorId(idCita);
 }
 
      public boolean eliminarCita(String IdCita) {

@@ -26,13 +26,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Maria liz
  */
-public class DialogCancelar extends javax.swing.JDialog {
+public class DialogModificar extends javax.swing.JDialog {
 private JTable tablaCitasPacienteExterna;
 
-    /**
-     * Creates new form DialogCancelar
-     */
-    public DialogCancelar(java.awt.Frame parent, boolean modal) {
+  
+    public DialogModificar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
                 initComponents();
          
@@ -66,11 +64,9 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     ControllerCitasPaciente controller = ControllerCitasPaciente.getInstance();
 
-    // ✅ Cargar el paciente actual (esto es CLAVE para actualizar correctamente)
     String documentoPaciente = model.getValueAt(fila, 0).toString();
     controller.cargarYPersistirPaciente(documentoPaciente); // ← ESSENCIAL
 
-    // ✅ Recargar combos por si no estaban cargados
     controller.cargarSalasEnComboBox(cboConsultorio2);
     controller.cargarSedesEnComboBox(cboSede2);
 
@@ -351,7 +347,7 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
         this.dispose(); // cierra el diálogo después de actualizar
     } else {
         JOptionPane.showMessageDialog(this, "No se vinculó correctamente la tabla de citas", "Error", JOptionPane.ERROR_MESSAGE);
-    } // TODO add your handling code here:
+    } 
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
@@ -371,20 +367,21 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogCancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogCancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogCancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogCancelar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogModificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogCancelar dialog = new DialogCancelar(new javax.swing.JFrame(), true);
+                DialogModificar dialog = new DialogModificar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

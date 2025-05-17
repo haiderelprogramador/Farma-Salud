@@ -40,5 +40,33 @@
     "email": "karen@gmail.com",
     "celular": "234567890",
     "contraseña": ""
+  },
+  {
+    "tipoSangre": "\u003cSeleccione\u003e",
+    "tipoDocumento": "CC",
+    "antecedentes": "38948943",
+    "numeroDocumento": "1234567893",
+    "nombres": "sofia",
+    "apellidos": "fell",
+    "fechaNacimiento": "2025-05-21",
+    "sexo": "M",
+    "eps": "Sanistas",
+    "email": "sofia@gmail.com",
+    "celular": "4362332328",
+    "contraseña": ""
+  },
+  {
+    "tipoSangre": "O-",
+    "tipoDocumento": "TI",
+    "antecedentes": "sufre de la rodilla",
+    "numeroDocumento": "1234567894",
+    "nombres": "tobias",
+    "apellidos": "Castro",
+    "fechaNacimiento": "2025-05-22",
+    "sexo": "M",
+    "eps": "Sanistas",
+    "email": "to@gmail.com",
+    "celular": "3114321678",
+    "contraseña": "8373"
   }
 ]

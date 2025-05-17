@@ -31,7 +31,6 @@ public class PacienteDAO {
             .create();
     }
     
-    // Método para asegurar que el archivo exista
     private void asegurarArchivoExiste() {
         File archivo = new File(ARCHIVO_JSON);
         if (!archivo.exists()) {
@@ -92,7 +91,6 @@ public class PacienteDAO {
         .orElse(null);
 }
     
-    // Guardar todos los pacientes en el archivo JSON
     public void guardarTodos(List<Paciente> pacientes) {
         if (pacientes == null) {
             throw new IllegalArgumentException("La lista de pacientes no puede ser nula");
@@ -106,7 +104,6 @@ public class PacienteDAO {
         }
     }
     
-    // Eliminar un paciente por número de documento
     public boolean eliminarPaciente(String numeroDocumento) {
         if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
             throw new IllegalArgumentException("Número de documento no puede ser nulo o vacío");
@@ -129,7 +126,6 @@ public class PacienteDAO {
         }
     }
 
-    // Buscar paciente por número de documento
     public Paciente buscarPorDocumento(String documento) {
         if (documento == null || documento.trim().isEmpty()) {
             return null;
@@ -143,7 +139,6 @@ public class PacienteDAO {
             .orElse(null);
     }
     
-    // Actualizar información de un paciente
     public boolean actualizarPaciente(String documentoOriginal, Paciente pacienteActualizado) {
         if (documentoOriginal == null || pacienteActualizado == null) {
             return false;
@@ -167,7 +162,6 @@ public class PacienteDAO {
         }
     }
     
-    // Clase adaptadora para manejar LocalDate en Gson
     private static class LocalDateAdapter extends TypeAdapter<LocalDate> {
         private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         

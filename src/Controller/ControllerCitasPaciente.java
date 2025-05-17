@@ -66,7 +66,7 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
-private CitasDAO citasDAO = ControllerCitas.getInstance().getCitasDAO();
+    private CitasDAO citasDAO = new CitasDAO();
     private PacienteDAO pacienteDAO=new PacienteDAO();
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
@@ -821,7 +821,6 @@ public Paciente getPacienteSeleccionado() {
 public void configurarComboMedico() {
     if (cboMedico == null) return;
 
-    // Evitar múltiples listeners
     for (ActionListener al : cboMedico.getActionListeners()) {
         cboMedico.removeActionListener(al);
     }
@@ -890,7 +889,6 @@ public Medico obtenerMedicoPorNombreCompleto(String nombreCompleto) {
         return null;
     }
     
-    // Normalización del nombre
     nombreCompleto = nombreCompleto.trim().replaceAll("\\s+", " ");
     
     List<Medico> medicos = medicoDAO.cargarTodos();
@@ -918,26 +916,21 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
 
     DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-    // Cargar datos en combos antes de seleccionar el item
     ControllerCitasPaciente controller = ControllerCitasPaciente.getInstance();
     controller.cargarSalasEnComboBox(cboConsultorio2);
     controller.cargarSedesEnComboBox(cboSede2);
 
-    // Datos del paciente
     lblDocumentoPaciente2.setText(model.getValueAt(fila, 0).toString());
     lblNombrePaciente2.setText(model.getValueAt(fila, 1).toString());
     lblApellidoPaciente2.setText(model.getValueAt(fila, 2).toString());
     lblEps2.setText(model.getValueAt(fila, 3).toString());
     lblEmail2.setText(model.getValueAt(fila, 4).toString());
 
-    // ID Cita
     txtIdCita2.setText(model.getValueAt(fila, 5).toString());
 
-    // Hora y motivo
     cboHoraCita2.setSelectedItem(model.getValueAt(fila, 6).toString());
     cboMotivoCita2.setSelectedItem(model.getValueAt(fila, 7).toString());
 
-    // Fecha
     Object fechaObj = model.getValueAt(fila, 8);
     if (fechaObj instanceof LocalDate fechaLocal) {
         Date fecha = Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -948,23 +941,17 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
         jDateChooserCita.setDate(null);
     }
 
-    // Tipo de cita
     cboTipoCita2.setSelectedItem(model.getValueAt(fila, 9).toString());
 
-    // Consultorio (ya cargado)
     cboConsultorio2.setSelectedItem(model.getValueAt(fila, 10).toString());
 
-    // Estado - debe ser JComboBox
     lblEstadoCita2.setSelectedItem(model.getValueAt(fila, 11).toString());
 
-    // Médico
     String nombreMedico = model.getValueAt(fila, 12).toString() + " " + model.getValueAt(fila, 13).toString();
     cboMedico2.setSelectedItem(nombreMedico.trim());
 
-    // Especialidad
     lblEspecialidadMedico2.setText(model.getValueAt(fila, 14).toString());
 
-    // Sede (ya cargada)
     cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
 }
 public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
@@ -983,7 +970,7 @@ public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
         EstadoCita estado = EstadoCita.valueOf(cboEstado.getSelectedItem().toString());
         cboEstado.removeAllItems();
         cboEstado.addItem("PROGRAMADA");
-        cboEstado.setEnabled(false); // si no deseas que el usuario lo cambie
+        cboEstado.setEnabled(false); 
 
         String nombreSede = (String) cboSede.getSelectedItem();
         String nombreConsultorio = (String) cboConsultorio.getSelectedItem();
@@ -1004,7 +991,6 @@ public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
             return;
         }
 
-        // Crear nueva cita actualizada
         Cita citaActualizada = new Cita(
             idCitaNueva,
             fechaLocal,
@@ -1026,7 +1012,6 @@ public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
         if (exito) {
             JOptionPane.showMessageDialog(null, "Cita actualizada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            // 👇 Recargar la tabla actualizada
             cargarCitasPacienteEnTabla();
 
         } else {
@@ -1045,8 +1030,8 @@ public boolean cancelarCitaPorId(String idCita) {
         for (Cita cita : citas) {
             if (cita.getIdCita().equals(idCita)) {
                 cita.setEstado(Cita.EstadoCita.CANCELADA);
-                citasDAO.guardarTodos(citas);  // sobrescribe el archivo con cambios
-                notificarCitaAgregada(cita);  // para actualizar observadores
+                citasDAO.guardarTodos(citas); 
+                notificarCitaAgregada(cita);  
                 return true;
             }
         }

@@ -16,9 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class DialogCancelar2 extends javax.swing.JDialog {
 private JTable tablaCitasPacienteExterna;
 
-    /**
-     * Creates new form DialogCancelar2
-     */
+    
     public DialogCancelar2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -40,7 +38,7 @@ private JTable tablaCitasPacienteExterna;
     lblIdCita3.setText(model.getValueAt(fila, 5).toString());
     lblHoraCita3.setText(model.getValueAt(fila, 6).toString());
     lblMotivoCita3.setText(model.getValueAt(fila, 7).toString());
-    lblFechaCita3.setText(model.getValueAt(fila, 8).toString());  // Si quieres formato bonito, conviértelo
+    lblFechaCita3.setText(model.getValueAt(fila, 8).toString());  
     lblTipoCita3.setText(model.getValueAt(fila, 9).toString());
 
     lblConsultorio3.setText(model.getValueAt(fila, 10).toString());
@@ -72,15 +70,14 @@ private JTable tablaCitasPacienteExterna;
         if (exito) {
             JOptionPane.showMessageDialog(this, "Cita cancelada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            // Actualiza el valor en la tabla visual directamente si se requiere
             if (tablaCitasPacienteExterna != null) {
                 int fila = tablaCitasPacienteExterna.getSelectedRow();
                 if (fila != -1) {
-                    tablaCitasPacienteExterna.setValueAt("CANCELADA", fila, 11); // Columna estado
+                    tablaCitasPacienteExterna.setValueAt("CANCELADA", fila, 11); 
                 }
             }
 
-            dispose(); // Cierra el diálogo
+            dispose(); 
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo cancelar la cita", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -129,6 +126,7 @@ private JTable tablaCitasPacienteExterna;
         lblSede3 = new javax.swing.JLabel();
         btnCancelar2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -144,6 +142,7 @@ private JTable tablaCitasPacienteExterna;
         jSeparator13 = new javax.swing.JSeparator();
         lblEstado3 = new javax.swing.JLabel();
         jSeparator14 = new javax.swing.JSeparator();
+        jSeparator15 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -153,17 +152,13 @@ private JTable tablaCitasPacienteExterna;
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Nombre  ");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 90, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 90, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Apellido ");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 90, 30));
-
-        lblFechaCita3.setText("jLabel3");
         jPanel1.add(lblFechaCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 140, 40));
-
-        lblNombrePaciente3.setText("jLabel4");
-        jPanel1.add(lblNombrePaciente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
+        jPanel1.add(lblNombrePaciente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 150, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Documento ");
@@ -183,73 +178,50 @@ private JTable tablaCitasPacienteExterna;
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Id Cita ");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 365, 70, 30));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 70, 30));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Consultorio");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, -1, -1));
-
-        lblApellidoPaciente3.setText("jLabel12");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
         jPanel1.add(lblApellidoPaciente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 120, 40));
-
-        lblDocumento3.setText("jLabel13");
         jPanel1.add(lblDocumento3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 130, 40));
-
-        lblTelefono.setText("jLabel14");
         jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 140, 30));
 
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setText("Estado Cita");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 90, 30));
-
-        lblEps.setText("jLabel16");
-        jPanel1.add(lblEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 150, 40));
-
-        lblIdCita3.setText("jLabel17");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 100, 30));
+        jPanel1.add(lblEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 150, 30));
         jPanel1.add(lblIdCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 140, 40));
-
-        lblConsultorio3.setText("jLabel18");
-        jPanel1.add(lblConsultorio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 100, 30));
+        jPanel1.add(lblConsultorio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 130, 30));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel19.setText("Tipo Cita ");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, -1, -1));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 400, 90, -1));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel20.setText("Motivo Cita ");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
-
-        lblTipoCita3.setText("jLabel21");
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, -1, -1));
         jPanel1.add(lblTipoCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 140, 50));
-
-        lblMotivoCita3.setText("jLabel22");
-        jPanel1.add(lblMotivoCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 106, 130, 40));
-
-        lblMedico3.setText("jLabel23");
+        jPanel1.add(lblMotivoCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 106, 160, 40));
         jPanel1.add(lblMedico3, new org.netbeans.lib.awtextra.AbsoluteConstraints(385, 146, 130, 50));
-
-        lblEspecialidad3.setText("jLabel24");
-        jPanel1.add(lblEspecialidad3, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 206, 120, 50));
+        jPanel1.add(lblEspecialidad3, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 206, 140, 50));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel25.setText("Medico");
-        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
+        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel26.setText("Especialidad");
-        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 230, 120, -1));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel27.setText("Hora Cita");
-        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
-
-        lblHoraCita3.setText("jLabel28");
+        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 290, 90, -1));
         jPanel1.add(lblHoraCita3, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 276, 150, 40));
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel29.setText("Sede");
-        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, -1, -1));
-
-        lblSede3.setText("jLabel30");
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 60, -1));
         jPanel1.add(lblSede3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 150, 40));
 
         btnCancelar2.setText("Cancelar ");
@@ -258,53 +230,94 @@ private JTable tablaCitasPacienteExterna;
                 btnCancelar2ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 510, -1, 30));
+        jPanel1.add(btnCancelar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 120, 40));
 
         jPanel2.setBackground(new java.awt.Color(28, 43, 110));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Cancelar Cita");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(183, 183, 183)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 70));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 70));
 
         jSeparator1.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator1.setForeground(new java.awt.Color(28, 43, 110));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 140, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 150, 10));
 
         jSeparator2.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator2.setForeground(new java.awt.Color(28, 43, 110));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 140, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 150, 10));
 
         jSeparator3.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator3.setForeground(new java.awt.Color(28, 43, 110));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 130, 10));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 140, 10));
 
         jSeparator4.setBackground(new java.awt.Color(28, 43, 110));
         jSeparator4.setForeground(new java.awt.Color(28, 43, 110));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 150, 10));
-        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 333, 150, 10));
-        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 143, 130, 10));
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 130, 20));
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 130, 20));
-        jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 150, 10));
-        jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 150, 10));
-        jPanel1.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 140, 10));
-        jPanel1.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 393, 160, 10));
-        jPanel1.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 150, 10));
 
-        lblEstado3.setText("jLabel3");
+        jSeparator5.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator5.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 333, 160, 10));
+
+        jSeparator6.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator6.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 143, 150, 10));
+
+        jSeparator7.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator7.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 150, 20));
+
+        jSeparator8.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator8.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 150, 20));
+
+        jSeparator9.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator9.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 150, 10));
+
+        jSeparator10.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator10.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 150, 10));
+
+        jSeparator11.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator11.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 150, 10));
+
+        jSeparator12.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator12.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 393, 160, 10));
+
+        jSeparator13.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator13.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, 140, 10));
         jPanel1.add(lblEstado3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 150, 40));
+
+        jSeparator14.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator14.setForeground(new java.awt.Color(28, 43, 110));
         jPanel1.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, 160, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 560));
+        jSeparator15.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel1.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 520, 130, 20));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -367,6 +380,7 @@ private JTable tablaCitasPacienteExterna;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -380,6 +394,7 @@ private JTable tablaCitasPacienteExterna;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;

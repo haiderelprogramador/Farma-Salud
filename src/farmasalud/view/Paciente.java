@@ -52,7 +52,6 @@ public class Paciente extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
-        btnCancelarModificar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnAgendar = new javax.swing.JButton();
 
@@ -78,6 +77,7 @@ public class Paciente extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maria liz\\Documents\\atencion.jpeg")); // NOI18N
 
+        jTextPane1.setEditable(false);
         jTextPane1.setBorder(null);
         jTextPane1.setContentType("Aqui podras Solicitar, consultar o modificar  tu citas para realizar  tramites de oficina  de Atencion"); // NOI18N
         jTextPane1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -92,13 +92,6 @@ public class Paciente extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(28, 43, 110));
         jLabel2.setText("BIENVENIDO");
 
-        btnCancelarModificar.setText("Cncelar o Modificar");
-        btnCancelarModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarModificarActionPerformed(evt);
-            }
-        });
-
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,7 +99,7 @@ public class Paciente extends javax.swing.JFrame {
             }
         });
 
-        btnAgendar.setText("jButton1");
+        btnAgendar.setText("Agendar Cita ");
         btnAgendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgendarActionPerformed(evt);
@@ -126,16 +119,14 @@ public class Paciente extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(btnCancelarModificar)
-                        .addGap(63, 63, 63)
-                        .addComponent(btnConsultar)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnAgendar))
+                        .addGap(82, 82, 82)
+                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,28 +138,21 @@ public class Paciente extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCancelarModificar)
-                            .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgendar))
-                        .addGap(121, 121, 121))))
+                            .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(97, 97, 97))))
         );
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1350, 770));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCancelarModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarModificarActionPerformed
- DialogCancelar dialogCancelar = new DialogCancelar(this, true);
-
-        dialogCancelar.setVisible(true);         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarModificarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
    if (documentoPaciente == null || documentoPaciente.isEmpty()) {
@@ -183,10 +167,10 @@ public class Paciente extends javax.swing.JFrame {
         dialogConsulta = new ConsultarCita(this, true);
         dialogConsulta.setDocumentoPaciente(documentoPaciente);
     } else {
-        dialogConsulta.actualizarTablaCitas(); // Asegúrate que la tabla esté al día
+        dialogConsulta.actualizarTablaCitas(); 
     }
 
-    dialogConsulta.setVisible(true);   // TODO add your handling code here:
+    dialogConsulta.setVisible(true);   
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
@@ -199,7 +183,7 @@ public class Paciente extends javax.swing.JFrame {
     }
 
     try {
-        // Reutilizar instancia
+        
         if (dialogConsulta == null) {
             dialogConsulta = new ConsultarCita(this, true);
             dialogConsulta.setDocumentoPaciente(documentoPaciente);
@@ -210,9 +194,7 @@ public class Paciente extends javax.swing.JFrame {
         dialogAgendar.setDocumentoPaciente(documentoPaciente);
         dialogAgendar.setVisible(true);
 
-        // Ahora actualiza y muestra
         dialogConsulta.actualizarTablaCitas();
-       // dialogConsulta.setVisible(true);
 
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, 
@@ -261,7 +243,6 @@ public class Paciente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendar;
-    private javax.swing.JButton btnCancelarModificar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

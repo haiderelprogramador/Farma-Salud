@@ -63,7 +63,7 @@ private ControllerFarmaceutica controller;
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            controller.cargarDatosEnTablaMedicamentos(); // Nombre correcto
+            controller.cargarDatosEnTablaMedicamentos();
         }
     }
        });
