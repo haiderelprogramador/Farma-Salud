@@ -324,7 +324,13 @@ medicoSeleccionado = obtenerMedicoPorNombreCompleto(nombreCompleto);
         String motivo = cboMotivoCita.getSelectedItem().toString();
         String tipoCita = cboTipoCita.getSelectedItem().toString();
         EstadoCita estado = EstadoCita.valueOf(cboEstado.getSelectedItem().toString());
- 
+       if (!estado.equals(EstadoCita.PROGRAMADA)) {
+    JOptionPane.showMessageDialog(null,
+        "Solo se permite agendar citas con estado PROGRAMADA.",
+        "Estado inválido",
+        JOptionPane.WARNING_MESSAGE);
+    return;
+}
 if (cboTipoCita.getSelectedIndex() <= 0 || 
     cboMotivoCita.getSelectedIndex() <= 0 || 
     cboHoraCita.getSelectedIndex() <= 0) {
@@ -961,5 +967,96 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
     // Sede (ya cargada)
     cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
 }
+public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
+    int filaSeleccionada = tablaCitas.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(null, "Seleccione una cita para modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        String idCitaOriginal = tablaCitas.getValueAt(filaSeleccionada, 5).toString();
+        String idCitaNueva = txtIdCita.getText().trim();
+        String hora = (String) cboHoraCita.getSelectedItem();
+        String motivo = (String) cboMotivoCita.getSelectedItem();
+        String tipo = (String) cboTipoCita.getSelectedItem();
+        EstadoCita estado = EstadoCita.valueOf(cboEstado.getSelectedItem().toString());
+        cboEstado.removeAllItems();
+        cboEstado.addItem("PROGRAMADA");
+        cboEstado.setEnabled(false); // si no deseas que el usuario lo cambie
+
+        String nombreSede = (String) cboSede.getSelectedItem();
+        String nombreConsultorio = (String) cboConsultorio.getSelectedItem();
+        Date fecha = JDateFechaCita.getDate();
+
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fecha válida", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Sede sede = sedesDAO.buscarPorNombre(nombreSede);
+        Salas sala = salasDAO.buscarPorNombre(nombreConsultorio);
+        LocalDate fechaLocal = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Medico medico = obtenerMedicoPorNombreCompleto((String) cboMedico.getSelectedItem());
+        if (medico == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione un médico válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Crear nueva cita actualizada
+        Cita citaActualizada = new Cita(
+            idCitaNueva,
+            fechaLocal,
+            hora,
+            motivo,
+            tipo,
+            sala,
+            estado,
+            pacienteActual,
+            medico,
+            sede
+        );
+
+        citaActualizada.setDocumentoPaciente(pacienteActual.getNumeroDocumento());
+        citaActualizada.setDocumentoMedico(medico.getNumeroDocumento());
+
+        boolean exito = citasDAO.actualizarCita(idCitaOriginal, citaActualizada);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(null, "Cita actualizada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // 👇 Recargar la tabla actualizada
+            cargarCitasPacienteEnTabla();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la cita", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al actualizar cita: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
+public boolean cancelarCitaPorId(String idCita) {
+    try {
+        List<Cita> citas = citasDAO.cargarTodos();
+
+        for (Cita cita : citas) {
+            if (cita.getIdCita().equals(idCita)) {
+                cita.setEstado(Cita.EstadoCita.CANCELADA);
+                citasDAO.guardarTodos(citas);  // sobrescribe el archivo con cambios
+                notificarCitaAgregada(cita);  // para actualizar observadores
+                return true;
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
 
 }
+
+

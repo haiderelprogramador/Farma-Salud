@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Maria liz
  */
 public class DialogCancelar extends javax.swing.JDialog {
+private JTable tablaCitasPacienteExterna;
 
     /**
      * Creates new form DialogCancelar
@@ -53,49 +54,62 @@ public class DialogCancelar extends javax.swing.JDialog {
         controller.setLblEmail(lblEmail2);
         controller.setLblDocumento(lblDocumentoPaciente2);
         controller.setCLblEps(lblEps2);
+        controller.setCboConsultorio(cboConsultorio2);
     }
 
-    // Método clave para cargar datos directos de la fila seleccionada
-    public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
-        if (table == null || fila < 0 || fila >= table.getRowCount()) {
-            JOptionPane.showMessageDialog(this, "Seleccione una cita válida", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-        // Paciente
-        lblDocumentoPaciente2.setText(model.getValueAt(fila, 0).toString());
-        lblNombrePaciente2.setText(model.getValueAt(fila, 1).toString());
-        lblApellidoPaciente2.setText(model.getValueAt(fila, 2).toString());
-        lblEps2.setText(model.getValueAt(fila, 3).toString());
-        lblEmail2.setText(model.getValueAt(fila, 4).toString());
-
-        // Cita
-        txtIdCita2.setText(model.getValueAt(fila, 5).toString());
-        cboHoraCita2.setSelectedItem(model.getValueAt(fila, 6).toString());
-        cboMotivoCita2.setSelectedItem(model.getValueAt(fila, 7).toString());
-
-        Object fechaObj = model.getValueAt(fila, 8);
-        if (fechaObj instanceof LocalDate fechaLocal) {
-            Date fecha = Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            jDateChooserCita.setDate(fecha);
-        } else if (fechaObj instanceof Date fechaDate) {
-            jDateChooserCita.setDate(fechaDate);
-        } else {
-            jDateChooserCita.setDate(null);
-        }
-
-        cboTipoCita2.setSelectedItem(model.getValueAt(fila, 9).toString());
-        cboConsultorio2.setSelectedItem(model.getValueAt(fila, 10).toString());
-        lblEstadoCita2.setSelectedItem(model.getValueAt(fila, 11).toString());
-
-        String nombreMedico = model.getValueAt(fila, 12).toString() + " " + model.getValueAt(fila, 13).toString();
-        cboMedico2.setSelectedItem(nombreMedico.trim());
-
-        lblEspecialidadMedico2.setText(model.getValueAt(fila, 14).toString());
-        cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
+public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
+    if (table == null || fila < 0 || fila >= table.getRowCount()) {
+        JOptionPane.showMessageDialog(this, "Seleccione una cita válida", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    ControllerCitasPaciente controller = ControllerCitasPaciente.getInstance();
+
+    // ✅ Cargar el paciente actual (esto es CLAVE para actualizar correctamente)
+    String documentoPaciente = model.getValueAt(fila, 0).toString();
+    controller.cargarYPersistirPaciente(documentoPaciente); // ← ESSENCIAL
+
+    // ✅ Recargar combos por si no estaban cargados
+    controller.cargarSalasEnComboBox(cboConsultorio2);
+    controller.cargarSedesEnComboBox(cboSede2);
+
+    // Datos visibles del paciente
+    lblDocumentoPaciente2.setText(documentoPaciente);
+    lblNombrePaciente2.setText(model.getValueAt(fila, 1).toString());
+    lblApellidoPaciente2.setText(model.getValueAt(fila, 2).toString());
+    lblEps2.setText(model.getValueAt(fila, 3).toString());
+    lblEmail2.setText(model.getValueAt(fila, 4).toString());
+
+    // Cita
+    txtIdCita2.setText(model.getValueAt(fila, 5).toString());
+    cboHoraCita2.setSelectedItem(model.getValueAt(fila, 6).toString());
+    cboMotivoCita2.setSelectedItem(model.getValueAt(fila, 7).toString());
+
+    Object fechaObj = model.getValueAt(fila, 8);
+    if (fechaObj instanceof LocalDate fechaLocal) {
+        Date fecha = Date.from(fechaLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        jDateChooserCita.setDate(fecha);
+    } else if (fechaObj instanceof Date fechaDate) {
+        jDateChooserCita.setDate(fechaDate);
+    } else {
+        jDateChooserCita.setDate(null);
+    }
+
+    cboTipoCita2.setSelectedItem(model.getValueAt(fila, 9).toString());
+    cboConsultorio2.setSelectedItem(model.getValueAt(fila, 10).toString());
+    lblEstadoCita2.setSelectedItem(model.getValueAt(fila, 11).toString());
+
+    String nombreMedico = model.getValueAt(fila, 12).toString() + " " + model.getValueAt(fila, 13).toString();
+    cboMedico2.setSelectedItem(nombreMedico.trim());
+
+    lblEspecialidadMedico2.setText(model.getValueAt(fila, 14).toString());
+    cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
+}
+
+    public void setTablaCitasPaciente(JTable tabla) {
+    this.tablaCitasPacienteExterna = tabla;
+}
 
 
 
@@ -155,6 +169,7 @@ public class DialogCancelar extends javax.swing.JDialog {
         txtIdCita2 = new javax.swing.JTextField();
         lblEps2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -226,7 +241,7 @@ public class DialogCancelar extends javax.swing.JDialog {
         jPanel2.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 423, 170, 10));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setText("Email");
+        jLabel11.setText("Telefono");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
         jPanel2.add(lblEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 160, 30));
 
@@ -311,6 +326,14 @@ public class DialogCancelar extends javax.swing.JDialog {
         jLabel15.setText("Id Cita");
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 70, -1));
 
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, -1, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 590, 520));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 640));
@@ -321,6 +344,15 @@ public class DialogCancelar extends javax.swing.JDialog {
     private void cboSede2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSede2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSede2ActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    if (tablaCitasPacienteExterna != null) {
+        ControllerCitasPaciente.getInstance().actualizarCitaDesdeFormulario(tablaCitasPacienteExterna);
+        this.dispose(); // cierra el diálogo después de actualizar
+    } else {
+        JOptionPane.showMessageDialog(this, "No se vinculó correctamente la tabla de citas", "Error", JOptionPane.ERROR_MESSAGE);
+    } // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,6 +397,7 @@ public class DialogCancelar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cboConsultorio2;
     private javax.swing.JComboBox<String> cboHoraCita2;
     private javax.swing.JComboBox<String> cboMedico2;

@@ -86,7 +86,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
 }
    private void configurarPopupMenu() {
     JPopupMenu popupMenu = new JPopupMenu();
-    JMenuItem itemCancelar = new JMenuItem("Cancelar o Modificar Cita");
+    JMenuItem itemCancelar = new JMenuItem("Cancelar ");
     popupMenu.add(itemCancelar);
 
    itemCancelar.addActionListener(new ActionListener() {
@@ -97,12 +97,31 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
                     DialogCancelar dialog = new DialogCancelar(null, true);
                     dialog.cargarDatosDesdeFilaSeleccionada(tableCitas, filaSeleccionada);  // Carga directa desde tabla
                     dialog.setLocationRelativeTo(null);
+                    dialog.setTablaCitasPaciente(tableCitas); 
                     dialog.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
                 }
             }
         });
+     JMenuItem itemModificarAvanzado = new JMenuItem("Modificar (Avanzado)");
+    popupMenu.add(itemModificarAvanzado);
+
+    itemModificarAvanzado.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            int filaSeleccionada = tableCitas.getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                DialogCancelar2 dialog2 = new DialogCancelar2(null, true); // Asegúrate de que exista esta clase
+                dialog2.mostrarDatosCitaEnLabels(tableCitas, filaSeleccionada);
+                dialog2.setTablaCitasPaciente(tableCitas); // Si lo necesita
+                dialog2.setLocationRelativeTo(null);
+                dialog2.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
+            }
+        }
+    });
 
     // Mantener el resto del código del popup menu igual
     tableCitas.addMouseListener(new MouseAdapter() {

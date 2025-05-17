@@ -92,6 +92,11 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
         controller.setCboTipoCita(cboTipoCita);
         controller.setCboMotivoCita(cboMotivoCita);
         controller.setCboEstado(cboEstadoCita);
+        // Solo permitir estado PROGRAMADA al agendar
+        cboEstadoCita.removeAllItems();
+        cboEstadoCita.addItem("PROGRAMADA");
+         cboEstadoCita.setEnabled(false); // opcional: deshabilita para evitar cambios
+
         controller.setJDateFechaCita(jDateFechaCita);
         controller.setTxtIdCita(txtIdCita);
         controller.setCboSede(cboSede);
