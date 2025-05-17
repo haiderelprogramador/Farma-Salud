@@ -262,7 +262,7 @@ public class ControllerRecepcionista {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }    
-    }*/
+    }
     
     // Verificar si existe un recepcionista
     private boolean existeRecepcionista(String documento, String codigoEmpleado) {
@@ -324,12 +324,8 @@ public class ControllerRecepcionista {
         }
     }
     
-<<<<<<< HEAD
-    /*public void actualizarRecepcionista() {
-=======
     // Actualizar recepcionista
     public void actualizarRecepcionista() {
->>>>>>> b52e1702bc40d4a1e954f56cb12f223118ad7fd8
         try {
             int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
             if (filaSeleccionada == -1) {
@@ -418,7 +414,7 @@ public class ControllerRecepcionista {
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }*/
+    }
     
     // Cargar datos del recepcionista seleccionado en el formulario
     public void cargarDatosRecepcionistaEnFormulario() {

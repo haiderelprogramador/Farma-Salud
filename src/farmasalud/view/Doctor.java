@@ -4,16 +4,28 @@
  */
 package farmasalud.view;
 
+import Controller.ControllerEnfermedades;
+import Controller.ControllerMedicamento;
 import Controller.ControllerOrdenMedica;
 import Controller.ControllerPaciente;
 import dao.PacienteDAO;
 import java.awt.Color;
+import java.util.Arrays;
+import javax.swing.JTextField;
+
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import model.Medicamento;
 import model.OrdenMedica;
 
 /**
@@ -22,84 +34,112 @@ import model.OrdenMedica;
  */
 public class Doctor extends javax.swing.JFrame {
     
-   
+    private ControllerEnfermedades controllerEnfermedades = new ControllerEnfermedades();
+    private ControllerMedicamento controllerMedicamento = new ControllerMedicamento(this);
+    private ControllerOrdenMedica controllerOrdenMedica = new ControllerOrdenMedica();
+    private Medicamento medicamentoSeleccionado; // Asegúrate de que esté declarado al inicio de tu clase
+   private ControllerPaciente controllerPaciente = new ControllerPaciente();
+
     
     
     public Doctor() {
       
     initComponents();
-   
+        configurarControllerEnfermedades();
+        configurarControllerMedicamento();
+        configurarOrdenMedica();
+    }
+    
+    private void controllerPacientes(){
+    controllerPaciente.setTablaPacientes(jTable3);
+    controllerPaciente.setTxtNombre(jTextField1);
+    controllerPaciente.setTxtApellido(jTextField1);
+    controllerPaciente.setTxtDocumento(jTextField1);
+    controllerPaciente.setTxtEmail(jTextField1);
+   // controllerPaciente.setDateChooserNacimiento(dateChooserNacimiento);
+    controllerPaciente.setTxtCelular(jTextField1);
+    //controllerPaciente.setCbSexo(cbSexo);
+    //controllerPaciente.setCbTipoDocumento(cbTipoDocumento);
+    //controllerPaciente.setCbTipoSangre(cbTipoSangre);
+    controllerPaciente.setTxtAreaAntecedentes(jTextArea1);
+    controllerPaciente.setTxtContraseña(jTextField1);
+    
+    controllerPaciente.initTablePaciente();
+    controllerPaciente.cargarDatosEnTablaPaciente();
+    
+    
+    }
+    
+    private void configurarOrdenMedica(){
+        controllerOrdenMedica.setjTextField2(jTextField2);
+  controllerOrdenMedica.setjTextField1(jTextField1);
+    controllerOrdenMedica.setjTextField5(jTextField5);
+    controllerOrdenMedica.setjTextField4(jTextField4);
+    controllerOrdenMedica.setjTextField3(jTextField3);
+    controllerOrdenMedica.setjTextArea1(jTextArea1);
+    }
+    
+    private void configurarControllerMedicamento() {
+     controllerMedicamento.setTabladeMedicamentos(jTable2);
+     
+     controllerMedicamento.setTxtCodMedicamento(jTextField1);
+     controllerMedicamento.setTxtMedicamento(jTextField1);
+     controllerMedicamento.setTxtDescripcion(jTextField1);
+     controllerMedicamento.setTxtLaboratorio(jTextField1);
+     controllerMedicamento.setTxtCantidad(jTextField1);
+     controllerMedicamento.setTxtLote(jTextField1);
+     controllerMedicamento.setTxtFechaVencimiento(jTextField1);
+     //controllerMedicamento.setCbDisponible(cbDisponible);
+     controllerMedicamento.setTxtPrecio(jTextField1);
+     
+          controllerMedicamento.setupTableModelMedicamentos();
 
+        try {
+            controllerMedicamento.cargarDatosMedicamentos();
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar medicamentos: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    
+        
         
     }
-    private void configurarPacientes() {
-        try {
-            controller = new ControllerPaciente();
-
-            controller.setTablaPacientes(tablaPacientes);
-            controller.setTxtNombre(jcantidad);
-            controller.setTxtApellido(jcantidad);
-            controller.setTxtDocumento(jcantidad);
-            controller.setTxtEmail(jcantidad);
-          //  controller.setTxtFechaNacimiento(jcantidad);
-            controller.setTxtCelular(jcantidad);
-            controller.setCbSexo(jComboBox2);
-            controller.setCbEps(jComboBox2);
-            controller.setCbTipoDocumento(jComboBox2);
-            controller.setCbTipoSangre(jComboBox2);
-            //.setTxtAreaAntecedente(jdiansotico);
-
-            controller.initTablePaciente();
-            controller.cargarDatosEnTablaPaciente();
-
+  
+     private void configurarControllerEnfermedades() {
+    controllerEnfermedades.setTablaEnfermedades(jTable1); // Asigna la tabla de enfermedades
+    controllerEnfermedades.setTxtIdEnfermedad(jTextField1); // ID Enfermedad
+    controllerEnfermedades.setTxtNombre(jTextField1); // Nombre
+    controllerEnfermedades.setTxtTipo(jTextField1); // Tipo
+    controllerEnfermedades.setTxtSintomas(jTextArea1);// Síntomas (necesitarías cambiar a JTextArea en el controller)
+    controllerEnfermedades.setTxtCausas(jTextArea1); // Causas (necesitarías cambiar a JTextArea en el controller)
+    
+    controllerEnfermedades.initTableEnfermedades();
+    controllerEnfermedades.cargarDatosEnTabla();
+    
+     jTable1.getSelectionModel().addListSelectionListener(e -> {
+    if (!e.getValueIsAdjusting()) {
+        int fila = jTable1.getSelectedRow();
+        if (fila >= 0) {
+            String id = jTable1.getValueAt(fila, 0).toString();
+            String nombre = jTable1.getValueAt(fila, 1).toString();
+            String tipo = jTable1.getValueAt(fila, 2).toString();
+            String sintomasStr = jTable1.getValueAt(fila, 3).toString(); // Columna de síntomas
+            String causasStr = jTable1.getValueAt(fila, 4).toString();  // Columna de causas
             
-
-        } catch (Exception e) {
-            mostrarError("Error configurando pacientes: " + e.getMessage());
-            e.printStackTrace();
+            // Convertir a List<String> si es necesario
+            List<String> sintomas = Arrays.asList(sintomasStr.split(","));
+            List<String> causas = Arrays.asList(causasStr.split(","));
+            
+            controllerOrdenMedica.setEnfermedadSeleccionada(id, nombre, tipo, sintomas, causas);
         }
     }
-    
-   
-    
-
-     private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this,
-                mensaje,
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-    }
-     
-   private void cargarDatosDelPacienteSeleccionado() {
-    int filaSeleccionada = tablaPacientes.getSelectedRow();
-    
-    if (filaSeleccionada >= 0) {  
-        DefaultTableModel model = (DefaultTableModel) tablaPacientes.getModel();
-        
-        jLabel7.setText(model.getValueAt(filaSeleccionada, 1).toString());      
-        jLabel19.setText(model.getValueAt(filaSeleccionada, 2).toString());   
-        jLabel11.setText((String) model.getValueAt(filaSeleccionada, 9));     
-        jLabel15.setText((String) model.getValueAt(filaSeleccionada, 4));           
-        jLabel18.setText((String) model.getValueAt(filaSeleccionada, 5));          
-        jLabel21.setText(model.getValueAt(filaSeleccionada, 0).toString()); 
-    }
+});
 }
-   
-   private void configurarContollerOrden(){
-   controllerorden.setjLabel21(jLabel21);
-   controllerorden.setjLabel7(jLabel7);
-   controllerorden.setjLabel19(jLabel19);
-   controllerorden.setjLabel11(jLabel11);
-   controllerorden.setjLabel18(jLabel18);
-   controllerorden.setjLabel15(jLabel15);
-   controllerorden.setjTextField1(jTextField1);
-   controllerorden.setJcantidad(jcantidad);
-   controllerorden.setJnombre(jnombre);
-   
-   
-   controllerorden.guardarDiagnostico();
-   }
-   
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,15 +168,27 @@ public class Doctor extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jTextField5 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -261,9 +313,51 @@ public class Doctor extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Enfermedad:");
-        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, 30));
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, 40));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 440, 110));
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+        jPanel6.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 230, -1));
+
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, 20));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setText("Tratamiento:");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Diagnostico:");
+        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("Medicamento:");
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, -1, 20));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -274,41 +368,74 @@ public class Doctor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane3.setViewportView(jTable2);
 
-        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 390, 110));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 210, 460, 80));
 
-        jButton1.setText("Mostar Seleccion");
-        jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 120, -1));
-        jPanel6.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 230, -1));
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
+        });
+        jPanel6.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 250, -1));
 
-        jButton2.setText("Buscar");
-        jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Tratamiento:");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Diagnostico:");
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 400, 150));
-
-        jLabel9.setText("Medicamento:");
-        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, -1, -1));
-
-        jButton3.setText("Mostrar Tabla");
+        jButton3.setText("Buscar ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
+        jPanel6.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 170, 80, 20));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane4.setViewportView(jTextArea1);
+
+        jPanel6.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 370, 70));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setText("Medicamentos asignados:");
+        jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setText("Dosis:");
+        jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, -1, -1));
+        jPanel6.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 360, 30));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setText("Fecha:");
+        jPanel6.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
+        jPanel6.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 120, -1));
+
+        jButton1.setBackground(new java.awt.Color(10, 92, 184));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Terminar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 530, -1, 40));
+        jPanel6.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 450, 40));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable3);
+
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 420, 200));
+
+        jLabel14.setText("Pacientes Asignados:");
+        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
 
         jTabbedPane1.addTab("tab1", jPanel6);
 
@@ -385,9 +512,38 @@ public class Doctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         String criterio = jTextField1.getText().trim();
+        controllerEnfermedades.buscarEnfermedades(criterio);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        String criterio = jTextField1.getText().trim();
+        controllerEnfermedades.buscarEnfermedades(criterio);
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        String criterio = jTextField2.getText().trim();
+        controllerMedicamento.buscarMedicamentos(criterio);
+    }
+    }//GEN-LAST:event_jTextField2KeyPressed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         String criterio = jButton3.getText().trim();
+        controllerMedicamento.buscarMedicamentos(criterio);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        controllerOrdenMedica.guardarOrdenMedica();
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -432,7 +588,11 @@ public class Doctor extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -449,11 +609,19 @@ public class Doctor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblIconRecepcion;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,7 +29,7 @@ import model.Sede;
  * @author usuario
  */
 public class SalasDAO {
-     private static final String JSON_BASE_PATH = System.getProperty("user.dir") + "/src/resources/data/";
+     private static final String JSON_BASE_PATH = System.getProperty("user.dir") + "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\salas.json";
 private static final String ARCHIVO_JSON = JSON_BASE_PATH + "salas.json";
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
     .create();

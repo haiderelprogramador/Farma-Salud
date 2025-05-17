@@ -2177,17 +2177,12 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_TabladeRecepcionistasMouseClicked
 
     private void jPanel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel20MouseClicked
-       /* if (TabladeRecepcionistas.getSelectedRow() == -1) {
+        if (TabladeRecepcionistas.getSelectedRow() == -1) {
             controllerRecepcionista.cargarDatosRecepcionistaEnFormulario();
         } else {
             controllerRecepcionista.actualizarRecepcionista();
-<<<<<<< HEAD
-            controllerRecepcionista.limpiarRecepcionista();
-        }*/
-=======
             controllerRecepcionista.limpiarFormulario();
         }
->>>>>>> b52e1702bc40d4a1e954f56cb12f223118ad7fd8
                                      
     
     }//GEN-LAST:event_jPanel20MouseClicked
@@ -2214,62 +2209,6 @@ public class admin extends javax.swing.JFrame {
         controllerSalas.eliminarSalaSeleccionada();
     }//GEN-LAST:event_jPanel27MouseClicked
 
-<<<<<<< HEAD
-    private void Jtexfieldnombre_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldnombre_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtexfieldnombre_farmaceuticaKeyTyped
-
-    private void jtextfieldApellido_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfieldApellido_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextfieldApellido_farmaceuticaKeyTyped
-
-    private void Jtextfield_correo_farmaceuticaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Jtextfield_correo_farmaceuticaFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtextfield_correo_farmaceuticaFocusLost
-
-    private void jtextfielID_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfielID_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextfielID_farmaceuticaKeyTyped
-
-    private void jtextfieldTelefono_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfieldTelefono_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextfieldTelefono_farmaceuticaKeyTyped
-
-    private void panel_eliminarFarmaceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_eliminarFarmaceuticaMouseClicked
-        controllerFarmaceutica.eliminarFarmaceuticaSeleccionado();
-
-    }//GEN-LAST:event_panel_eliminarFarmaceuticaMouseClicked
-
-    private void panel_agregarFarmaceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_agregarFarmaceuticaMouseClicked
-       //  controllerFarmaceutica.guardarFarmaceuticaDesdeFormulario();
-    }//GEN-LAST:event_panel_agregarFarmaceuticaMouseClicked
-
-    private void panel_modificarFarmaceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_modificarFarmaceuticaMouseClicked
-       /*  if (TabladeFarmaceuticas.getSelectedRow() == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un farmacéutico para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    } else {
-        controllerFarmaceutica.actualizarFarmaceutica();
-    }*/
-    }//GEN-LAST:event_panel_modificarFarmaceuticaMouseClicked
-
-    private void JtexfieldCodigo_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtexfieldCodigo_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JtexfieldCodigo_farmaceuticaKeyTyped
-
-    private void Jtexfieldfechacontratacion_farmaceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldfechacontratacion_farmaceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtexfieldfechacontratacion_farmaceuticaKeyTyped
-
-    private void Jtexfieldfechanacimiento_farmeceuticaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldfechanacimiento_farmeceuticaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Jtexfieldfechanacimiento_farmeceuticaKeyTyped
-
-    private void TabladeFarmaceuticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabladeFarmaceuticasMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TabladeFarmaceuticasMouseClicked
-
-=======
->>>>>>> 0ba25f5c8962d2566cb8a64ec234af454ebe9615
     private void Panel_salas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Panel_salas1MouseClicked
         Paneles_jtablepane.setSelectedIndex(3);
     }//GEN-LAST:event_Panel_salas1MouseClicked

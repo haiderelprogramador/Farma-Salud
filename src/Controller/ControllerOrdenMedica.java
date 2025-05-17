@@ -5,134 +5,148 @@
 package Controller;
 
 import dao.OrdenMedicaDAO;
-import java.util.List;
+import java.util.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import model.Enfermedad;
+import model.Medicamento;
 import model.OrdenMedica;
+import java.time.LocalDate;
+
 
 /**
  *
  * @author HP
  */
 public class ControllerOrdenMedica {
+    private DefaultTableModel tablaModelenfermedades;
+    private DefaultTableModel tablaModelMedicamento;
+    private OrdenMedicaDAO ordenmedicaDAO= new OrdenMedicaDAO();
+    private int idOrden;
+    private JTable jTable1;
+    private JTable jTable2;
+    private JTextField jTextField1;
+    private JTextField jTextField2;
+    private JTextField jTextField5;
+    private JTextArea jTextArea1;
+    private JTextField jTextField3;
+    private JTextField jTextField4;
+    private Enfermedad enfermedadSeleccionada;
     
-     private final javax.swing.JFrame view; // Referencia a la vista
+    public void setjTable1(JTable jTable1){
+       this.jTable1=jTable1;
+       this.tablaModelenfermedades=(DefaultTableModel) jTable1.getModel();
+    }
     
-    public ControllerOrdenMedica(javax.swing.JFrame view) {
-        this.view = view;
-    }
-    private OrdenMedicaDAO ordenmedicaDAO =new OrdenMedicaDAO();
-private JLabel jLabel21;
-private JLabel jLabel7;
-private JLabel jLabel19;
-private JLabel jLabel11;
-private JLabel jLabel15;
-private JLabel jLabel18;
-private JTextField jTextField1;
-private JTextField jcantidad;
-private JTextField jnombre;
-
-    public void setjLabel21(JLabel jLabel21) {
-        this.jLabel21 = jLabel21;
+    public void setjTable2(JTable jTable2){
+      this.jTable2=jTable2;
+      this.tablaModelMedicamento=(DefaultTableModel) jTable2.getModel();
     }
 
-    public void setjLabel7(JLabel jLabel7) {
-        this.jLabel7 = jLabel7;
+    public void setIdOrden(int idOrden) {
+        this.idOrden = idOrden;
     }
+
+    public void setjTextField5(JTextField jTextField5) {
+        this.jTextField5 = jTextField5;
+    }
+
    
-    public void setjLabel19(JLabel jLabel19) {
-        this.jLabel19 = jLabel19;
+
+    public void setjTextArea1(JTextArea jTextArea1) {
+        this.jTextArea1 = jTextArea1;
     }
 
-    public void setjLabel11(JLabel jLabel11) {
-        this.jLabel11 = jLabel11;
+    public void setjTextField3(JTextField jTextField3) {
+        this.jTextField3 = jTextField3;
     }
 
-    public void setjLabel15(JLabel jLabel15) {
-        this.jLabel15 = jLabel15;
+    public void setjTextField4(JTextField jTextField4) {
+        this.jTextField4 = jTextField4;
     }
-    
 
-    public void setjLabel18(JLabel jLabel18) {
-        this.jLabel18 = jLabel18;
+    public void setjTextField2(JTextField jTextField2) {
+        this.jTextField2 = jTextField2;
     }
 
     public void setjTextField1(JTextField jTextField1) {
         this.jTextField1 = jTextField1;
     }
-
-    public void setJcantidad(JTextField jcantidad) {
-        this.jcantidad = jcantidad;
-    }
-
-    public void setJnombre(JTextField jnombre) {
-        this.jnombre = jnombre;
-    }
-
-
-/*public void guardarDiagnostico(){
     
-try{
-String documentoPaciente = jLabel21.getText().trim();
-String nombre = jLabel7.getText().trim();
-String apellido = jLabel19.getText().trim();
-String tipoSangre = jLabel11.getText().trim();
-String sexo= jLabel15.getText().trim();
-String eps = jLabel18.getText().trim();
-String diagnostico = jTextField1.getText().trim();
-String cantidad = jcantidad.getText().trim();
-String medicamentos = jnombre.getText().trim();
+    
+    public void setEnfermedadSeleccionada(String id, String nombre, String tipo, List<String> sintomas, List<String> causas) {
+    this.enfermedadSeleccionada = new Enfermedad(
+        Integer.parseInt(id), // Convertir String a int si es necesario
+        nombre,
+        tipo,
+        sintomas,
+        causas
+    );
+}
+    
 
+   public void guardarOrdenMedica() {
+    try {
+        String idOrden = ordenmedicaDAO.generarCodigoUnico();
+        String diagnostico = jTextField5.getText().trim();
+        String fechaTexto = jTextField4.getText().trim();
+        String medicamentos = jTextArea1.getText().trim();
+        String dosis = jTextField3.getText().trim();
 
-    if (documentoPaciente.isEmpty() || nombre.isEmpty() || apellido.isEmpty()
-        || tipoSangre.isEmpty() || sexo.isEmpty() || eps.isEmpty() || diagnostico.isEmpty() || cantidad.isEmpty() || medicamentos.isEmpty()) {
-         
-                return ;
+        if (diagnostico.isEmpty() || fechaTexto.isEmpty() || medicamentos.isEmpty() || dosis.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                "Todos los campos deben estar completos",
+                "Error de validación",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        LocalDate fecha = LocalDate.parse(fechaTexto); // CONVERSIÓN SEGURA
+
+        OrdenMedica nuevaOrden = new OrdenMedica(
+            idOrden,
+            diagnostico,
+            dosis,
+            fecha,
+            medicamentos
+        );
+
+        if (ordenmedicaDAO.guardarOrdenMedica(nuevaOrden)) {
+            JOptionPane.showMessageDialog(null,
+                "Orden guardada exitosamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+        } else {
+            JOptionPane.showMessageDialog(null,
+                "No se pudo guardar la orden",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+            "Error al guardar orden: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
 
    
- 
-    OrdenMedica nuevaorden = new OrdenMedica(
-    documentoPaciente,
-    nombre,
-    apellido,
-            tipoSangre,
-            sexo,
-            eps,
-    diagnostico,
-            cantidad,
-            medicamentos
-    );
-    
-    ordenmedicaDAO.guardarOrdenMedica(nuevaorden);
-    JOptionPane.showMessageDialog(view,
-                    "Orden Medica guardada exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            limpiarFormulario();
-    
-}catch(Exception e){
- JOptionPane.showMessageDialog(view,
-                    "Error al guardar orden: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-    
-}
-}   */
-public void limpiarFormulario(){
-jLabel21.setText("");
-jLabel7.setText("");
-jLabel19.setText("");
-jTextField1.setText("");
-jcantidad.setText("");
-jnombre.setText("");
-jLabel11.setText("");
-jLabel15.setText("");
-jLabel18.setText("");
-}
-
-
+   
+   
+   public void limpiarFormulario(){
+       jTextField2.setText("");
+       jTextField1.setText("");
+     jTextField5.setText("");
+     jTextField4.setText("");
+     jTextArea1.setText("");
+     jTextField3.setText("");
+   }
 
 }

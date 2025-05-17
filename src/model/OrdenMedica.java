@@ -5,36 +5,35 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-/**
- *
- * @author Maria liz
- */
-public class OrdenMedica  {
- private int idOrden;
- private String dosis;
- private String descripcion;
- private Medico medico;
- private String fecha;
- private Paciente paciente;
- private List<Medicamento> medicamentos;
- 
- public OrdenMedica(int idOrden,String dosis,String descripcion,Medico medico,String fecha,Paciente paciente,List<Medicamento> medicamentos){
-    this.idOrden=idOrden;
-    this.dosis=dosis;
-    this.descripcion=descripcion;
-    this.medico=medico;
-    this.fecha=fecha;
-    this.paciente=paciente;
- }
+public class OrdenMedica {
+    private String idOrden;
+    private String dosis;
+    private String diagnostico;
+    private LocalDate fecha; // CAMBIADO: ahora es LocalDate
+    private String medicamentos;
 
-    public int getIdOrden() {
+    // Puedes agregar paciente y médico si los usas
+    // private Paciente paciente;
+    // private Medico medico;
+
+    private List<Enfermedad> enfermedades;
+
+    public OrdenMedica(String idOrden, String diagnostico, String dosis, LocalDate fecha, String medicamentos) {
+        this.idOrden = idOrden;
+        this.diagnostico = diagnostico;
+        this.dosis = dosis;
+        this.fecha = fecha;
+        this.medicamentos = medicamentos;
+    }
+
+    // Getters y setters
+    public String getIdOrden() {
         return idOrden;
     }
 
-    public void setIdOrden(int idOrden) {
+    public void setIdOrden(String idOrden) {
         this.idOrden = idOrden;
     }
 
@@ -46,44 +45,36 @@ public class OrdenMedica  {
         this.dosis = dosis;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDiagnostico() {
+        return diagnostico;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
     }
 
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public String getMedicamentos() {
+        return medicamentos;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setMedicamentos(String medicamentos) {
+        this.medicamentos = medicamentos;
     }
- 
- 
- 
-    
-    
+
+    public List<Enfermedad> getEnfermedades() {
+        return enfermedades;
+    }
+
+    public void setEnfermedades(List<Enfermedad> enfermedades) {
+        this.enfermedades = enfermedades;
+    }
 }
-  
-    
-  
 

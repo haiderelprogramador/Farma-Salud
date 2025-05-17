@@ -21,7 +21,7 @@ import java.util.Objects;
 import model.Paciente;
 
 public class PacienteDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\pacientes.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\pacientes.json";
     private final Gson gson;
     
     public PacienteDAO() {
