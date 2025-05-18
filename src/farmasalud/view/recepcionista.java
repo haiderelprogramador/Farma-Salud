@@ -1119,7 +1119,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel22.setText("Apellido");
+        jLabel22.setText("Medico");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
