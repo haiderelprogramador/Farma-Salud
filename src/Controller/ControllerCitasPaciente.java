@@ -224,14 +224,7 @@ public class ControllerCitasPaciente {
     }
    public void setJDateFechaCita(JDateChooser JDateFechaCita) {
     this.JDateFechaCita = JDateFechaCita;
-    if (this.JDateFechaCita != null) {
-        // Configura la fecha mínima como hoy
-        this.JDateFechaCita.setMinSelectableDate(new Date());
-        // Establece un formato de fecha claro
-        this.JDateFechaCita.setDateFormatString("yyyy-MM-dd");
-        // Opcional: Establece la fecha actual por defecto
-        this.JDateFechaCita.setDate(new Date());
-    }
+
 }
     public void LblEspecialidad(JLabel lblEspecialidadMedico) {
         this.lblEspecialidadMedico = lblEspecialidadMedico;
@@ -263,8 +256,8 @@ public class ControllerCitasPaciente {
 
    public void setCboMedico(JComboBox cboMedico) {
     this.cboMedico = cboMedico;
-    cargarMedicosEnComboBox();           // <- debe cargarse aquí
-    configurarComboMedico();             // <- y luego configurar el listener
+    cargarMedicosEnComboBox();          
+    configurarComboMedico();             
 }
      public boolean cargarYPersistirPaciente(String documento) {
         try {
@@ -1012,7 +1005,7 @@ public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
         if (exito) {
             JOptionPane.showMessageDialog(null, "Cita actualizada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            cargarCitasPacienteEnTabla();
+            cargarCitasPorPaciente(pacienteActual.getNumeroDocumento());
 
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo actualizar la cita", "Error", JOptionPane.ERROR_MESSAGE);

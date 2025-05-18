@@ -396,6 +396,7 @@ public class ControllerPaciente {
                 cbTipoDocumento.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 8).toString());
                 cbTipoSangre.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 9).toString());
                 txtAreaAntecedentes.setText(tableModelPaciente.getValueAt(filaSeleccionada, 10).toString());
+                txtContraseña.setText(tableModelPaciente.getValueAt(filaSeleccionada, 11).toString());
                 
                 this.documentoOriginal = txtDocumento.getText();
             } catch (Exception e) {

@@ -68,5 +68,47 @@
     "email": "to@gmail.com",
     "celular": "3114321678",
     "contraseña": "8373"
+  },
+  {
+    "tipoSangre": "B-",
+    "tipoDocumento": "CC",
+    "antecedentes": "suffre del corazon",
+    "numeroDocumento": "1102229464",
+    "nombres": "juan",
+    "apellidos": "castro",
+    "fechaNacimiento": "2029-05-12",
+    "sexo": "M",
+    "eps": "Comfamiliar",
+    "email": "juan@gmail.com",
+    "celular": "323485678",
+    "contraseña": "347998"
+  },
+  {
+    "tipoSangre": "B-",
+    "tipoDocumento": "CC",
+    "antecedentes": "sufre de alergias constantes",
+    "numeroDocumento": "1102222265",
+    "nombres": "pedro",
+    "apellidos": "leon",
+    "fechaNacimiento": "2009-05-13",
+    "sexo": "M",
+    "eps": "Nueva Eps",
+    "email": "pedro@gmail.com",
+    "celular": "3114221897",
+    "contraseña": "348"
+  },
+  {
+    "tipoSangre": "B-",
+    "tipoDocumento": "CC",
+    "antecedentes": "sufre de rinitis",
+    "numeroDocumento": "1234567890",
+    "nombres": "ines",
+    "apellidos": "viena",
+    "fechaNacimiento": "2017-05-18",
+    "sexo": "F",
+    "eps": "Sanistas",
+    "email": "ine@gmail.com",
+    "celular": "123456789",
+    "contraseña": "357"
   }
 ]

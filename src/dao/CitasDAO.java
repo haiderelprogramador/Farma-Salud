@@ -130,6 +130,8 @@ public class CitasDAO {
     return obtenerCitaPorId(idCita);
 }
 
+
+
      public boolean eliminarCita(String IdCita) {
     try {
         if (IdCita == null || IdCita.trim().isEmpty()) {
@@ -169,6 +171,21 @@ public class CitasDAO {
         return false;
     }
 }
+public int contarCitasPorMedicoYFecha(String documentoMedico, LocalDate fecha) {
+    int contador = 0;
+    List<Cita> todasLasCitas = cargarTodos();
+
+    for (Cita cita : todasLasCitas) {
+        if (cita.getDocumentoMedico() != null && cita.getFechaCita() != null) {
+            if (cita.getDocumentoMedico().equals(documentoMedico) && cita.getFechaCita().equals(fecha)) {
+                contador++;
+            }
+        }
+    }
+
+    return contador;
+}
+
    
   public class LocalDateAdapter extends TypeAdapter<LocalDate> {
         private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;

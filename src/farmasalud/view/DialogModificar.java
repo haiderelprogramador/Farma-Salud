@@ -42,6 +42,10 @@ private JTable tablaCitasPacienteExterna;
         controller.setCboMotivoCita(cboMotivoCita2);
         controller.setCboTipoCita(cboTipoCita2);
         controller.setCboEstado(lblEstadoCita2);
+            lblEstadoCita2.removeAllItems();
+    lblEstadoCita2.addItem("PROGRAMADA");
+    lblEstadoCita2.setSelectedIndex(0);
+    lblEstadoCita2.setEnabled(false);
         controller.cargarSalasEnComboBox(cboConsultorio2);
         controller.cargarSedesEnComboBox(cboSede2);
         controller.setCboSede(cboSede2);
@@ -65,19 +69,19 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
     ControllerCitasPaciente controller = ControllerCitasPaciente.getInstance();
 
     String documentoPaciente = model.getValueAt(fila, 0).toString();
-    controller.cargarYPersistirPaciente(documentoPaciente); // ← ESSENCIAL
+    controller.cargarYPersistirPaciente(documentoPaciente); 
 
     controller.cargarSalasEnComboBox(cboConsultorio2);
     controller.cargarSedesEnComboBox(cboSede2);
 
-    // Datos visibles del paciente
+  
     lblDocumentoPaciente2.setText(documentoPaciente);
     lblNombrePaciente2.setText(model.getValueAt(fila, 1).toString());
     lblApellidoPaciente2.setText(model.getValueAt(fila, 2).toString());
     lblEps2.setText(model.getValueAt(fila, 3).toString());
     lblEmail2.setText(model.getValueAt(fila, 4).toString());
 
-    // Cita
+
     txtIdCita2.setText(model.getValueAt(fila, 5).toString());
     cboHoraCita2.setSelectedItem(model.getValueAt(fila, 6).toString());
     cboMotivoCita2.setSelectedItem(model.getValueAt(fila, 7).toString());

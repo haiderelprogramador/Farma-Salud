@@ -46,6 +46,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
     private DefaultTableModel tableModel;
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;
+    private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO = new PacienteDAO();
         ControllerCitas controllerCitas = ControllerCitas.getInstance();
@@ -63,6 +64,8 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
                 jLabel29.getWidth(), jLabel29.getHeight(), Image.SCALE_SMOOTH);
         jLabel29.setIcon(new ImageIcon(imagenEscalada));
          controller = new ControllerPaciente(); 
+         controllerCitas.setTableConsultarMedico(tableConsultarMedico);
+         controllerCitas.initTableModelConsultarCitaMedico();
          if (tablePaciente == null) {
         throw new IllegalStateException("La tabla tablePaciente no está inicializada en el diseño");
     }
@@ -162,6 +165,15 @@ private void configurarCitas(){
     controllerCitas.setCboMotivoCita2(cboMotivoCita2);
     controllerCitas.setCboTipoCita2(cboTipoCita2);
     controllerCitas.setCboEstadoCita2(cboEstadoCita2);
+        cboEstadoCita.removeAllItems();
+    cboEstadoCita.addItem("PROGRAMADA");
+    cboEstadoCita.setSelectedIndex(0);
+    cboEstadoCita.setEnabled(false);
+     cboEstadoCita2.removeAllItems();
+    cboEstadoCita2.addItem("PROGRAMADA");
+    cboEstadoCita2.addItem("CANCELADA");
+    cboEstadoCita2.setSelectedIndex(0); // Selecciona por defecto PROGRAMADA
+    cboEstadoCita2.setEnabled(true);  
     controllerCitas.cargarSalasEnComboBox(cboConsultorio2);
     controllerCitas.setLblNombreMedico(lblNombreMedico); 
     controllerCitas.setLblApellidoMedico(lblApellidoMedico);
@@ -310,6 +322,8 @@ public void verificarDisponibilidadHoraActualizacion() {
         panelBtnInformes1 = new javax.swing.JPanel();
         jLabel73 = new javax.swing.JLabel();
         jLabel74 = new javax.swing.JLabel();
+        panelCitasMedico = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel77 = new javax.swing.JLabel();
         TabbetCitas = new javax.swing.JTabbedPane();
@@ -452,8 +466,18 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8 = new javax.swing.JLabel();
         JDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtContraseña = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPacientes = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableConsultarMedico = new javax.swing.JTable();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        txtMedico = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jDateConsultarCitaMedico = new com.toedter.calendar.JDateChooser();
+        btnConsultarCitaMedico = new javax.swing.JButton();
         jLabel79 = new javax.swing.JLabel();
 
         jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -607,6 +631,43 @@ public void verificarDisponibilidadHoraActualizacion() {
 
         jPanel3.add(panelBtnInformes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 300, 60));
 
+        panelCitasMedico.setBackground(new java.awt.Color(28, 43, 110));
+        panelCitasMedico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelCitasMedicoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelCitasMedicoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelCitasMedicoMouseExited(evt);
+            }
+        });
+
+        jLabel31.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("Citas Por Medico");
+
+        javax.swing.GroupLayout panelCitasMedicoLayout = new javax.swing.GroupLayout(panelCitasMedico);
+        panelCitasMedico.setLayout(panelCitasMedicoLayout);
+        panelCitasMedicoLayout.setHorizontalGroup(
+            panelCitasMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCitasMedicoLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+        panelCitasMedicoLayout.setVerticalGroup(
+            panelCitasMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCitasMedicoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel31)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(panelCitasMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 300, 60));
+
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 770));
 
         jPanel9.setBackground(new java.awt.Color(10, 92, 184));
@@ -617,7 +678,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel77.setText("CITAS ");
         jPanel9.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 530, 40));
 
-        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 1000, 170));
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 1000, 120));
 
         TabbetCitas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -778,7 +839,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnActualizarCitaActionPerformed(evt);
             }
         });
-        jPanel5.add(btnActualizarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(796, 196, 134, -1));
+        jPanel5.add(btnActualizarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 190, 134, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Motivo Cita");
@@ -902,7 +963,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 40, -1));
 
         cboSede2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(cboSede2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
+        jPanel5.add(cboSede2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 80, 30));
 
         panelModificarCita.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 930, 240));
 
@@ -932,7 +993,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jPanel8.add(cboTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 100, 40));
 
         cboHoraCita.setBackground(new java.awt.Color(0, 0, 0, 0));
-        cboHoraCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00" }));
+        cboHoraCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>", "07:00 am", "07:30am", "08:00am", "08:30am", "09:00am", "09:30am", "10:00am", "10:30am", "11:00am", "11:30am", "12:00pm", "01:30pm", "02:00pm", "02:30pm", "03:00pm", "03:30pm", "04:00pm", "04:30pm" }));
         cboHoraCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboHoraCitaActionPerformed(evt);
@@ -1072,6 +1133,11 @@ public void verificarDisponibilidadHoraActualizacion() {
                 txtDocumentoPacienteActionPerformed(evt);
             }
         });
+        txtDocumentoPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocumentoPacienteKeyTyped(evt);
+            }
+        });
 
         jLabel70.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel70.setText("Documento*");
@@ -1136,6 +1202,11 @@ public void verificarDisponibilidadHoraActualizacion() {
         txtApellidoBMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoBMedicoActionPerformed(evt);
+            }
+        });
+        txtApellidoBMedico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoBMedicoKeyTyped(evt);
             }
         });
 
@@ -1406,7 +1477,8 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
         jPanel13.add(cbEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 152, -1, 40));
 
-        jLabel4.setText("Tipo De Sangre");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Grupo Sangre");
         jPanel13.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 156, -1, -1));
 
         jSeparator24.setBackground(new java.awt.Color(0, 0, 0));
@@ -1423,10 +1495,10 @@ public void verificarDisponibilidadHoraActualizacion() {
                 cboTipoSangreActionPerformed(evt);
             }
         });
-        jPanel13.add(cboTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 153, -1, 30));
+        jPanel13.add(cboTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(537, 150, 120, 30));
 
         jSeparator1.setForeground(new java.awt.Color(10, 92, 184));
-        jPanel13.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 183, 107, 10));
+        jPanel13.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 107, 10));
 
         btnguardar.setBackground(new java.awt.Color(10, 92, 184));
         btnguardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1452,7 +1524,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnguardarKeyTyped(evt);
             }
         });
-        jPanel13.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 206, -1, 34));
+        jPanel13.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, 34));
 
         btnModificar.setBackground(new java.awt.Color(10, 92, 184));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1463,7 +1535,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel13.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 205, -1, 35));
+        jPanel13.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, -1, 35));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -1471,14 +1543,19 @@ public void verificarDisponibilidadHoraActualizacion() {
 
         jPanel13.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 149, -1, 65));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Antecedentes");
-        jPanel13.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(773, 120, 74, 29));
+        jPanel13.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 120, 140, 29));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Documento*");
         jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 12, -1, -1));
-        jPanel13.add(JDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 73, 156, -1));
-        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 212, 71, -1));
+        jPanel13.add(JDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 65, 156, 30));
+        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 212, 100, 20));
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel30.setText("Contraseña");
+        jPanel13.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
 
         panelGuardarPaciente.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 940, 260));
 
@@ -1504,6 +1581,86 @@ public void verificarDisponibilidadHoraActualizacion() {
         panelGuardarPaciente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 302, 940, 230));
 
         TabbetCitas.addTab("AgendarPacientes", panelGuardarPaciente);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableConsultarMedico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableConsultarMedico.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        tableConsultarMedico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableConsultarMedico.setRowSelectionAllowed(false);
+        tableConsultarMedico.setSelectionBackground(new java.awt.Color(0, 102, 204));
+        jScrollPane1.setViewportView(tableConsultarMedico);
+
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 950, -1));
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel32.setText("Medico");
+
+        txtMedico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMedicoKeyTyped(evt);
+            }
+        });
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel33.setText("Fecha Consultar  ");
+
+        btnConsultarCitaMedico.setText("Buscar");
+        btnConsultarCitaMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarCitaMedicoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jDateConsultarCitaMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(btnConsultarCitaMedico)
+                .addGap(40, 40, 40))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnConsultarCitaMedico)
+                            .addComponent(jDateConsultarCitaMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+
+        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 930, 60));
+
+        TabbetCitas.addTab("Citas Por Medico", jPanel6);
 
         jPanel1.add(TabbetCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 970, 600));
 
@@ -1870,6 +2027,65 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSedeActionPerformed
 
+    private void btnConsultarCitaMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCitaMedicoActionPerformed
+       String nombreApellido = txtMedico.getText();
+    Date fechaSeleccionada = jDateConsultarCitaMedico.getDate();
+
+    if (nombreApellido == null || nombreApellido.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese el nombre o apellido del médico", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    if (fechaSeleccionada == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fecha válida", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    tableModelConsultarMedico.setRowCount(0);
+
+    controllerCitas.cargarCitasPorMedicoYFecha(nombreApellido, fechaSeleccionada);
+
+    }//GEN-LAST:event_btnConsultarCitaMedicoActionPerformed
+
+    private void txtMedicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedicoKeyTyped
+char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+            evt.consume(); 
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Entrada inválida", JOptionPane.WARNING_MESSAGE);
+        }      
+    }//GEN-LAST:event_txtMedicoKeyTyped
+
+    private void txtApellidoBMedicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoBMedicoKeyTyped
+     char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+            evt.consume(); 
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Entrada inválida", JOptionPane.WARNING_MESSAGE);
+        }  
+    }//GEN-LAST:event_txtApellidoBMedicoKeyTyped
+
+    private void txtDocumentoPacienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocumentoPacienteKeyTyped
+  char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten números", "Entrada inválida", JOptionPane.WARNING_MESSAGE);
+        }       
+    }//GEN-LAST:event_txtDocumentoPacienteKeyTyped
+
+    private void panelCitasMedicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCitasMedicoMouseEntered
+    panelCitasMedico.setBackground(new Color(10,92,184));       // TODO add your handling code here:
+    }//GEN-LAST:event_panelCitasMedicoMouseEntered
+
+    private void panelCitasMedicoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCitasMedicoMouseExited
+panelCitasMedico.setBackground(new Color(28,43,110));   
+    }//GEN-LAST:event_panelCitasMedicoMouseExited
+
+    private void panelCitasMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCitasMedicoMouseClicked
+TabbetCitas.setSelectedIndex(4);       // TODO add your handling code here:
+    }//GEN-LAST:event_panelCitasMedicoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1918,6 +2134,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JButton btnBuscarCita;
     private javax.swing.JButton btnBuscarMedico;
     private javax.swing.JButton btnBuscarPaciente;
+    private javax.swing.JButton btnConsultarCitaMedico;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnguardar;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1939,6 +2156,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JComboBox<String> cboTipoCita2;
     private javax.swing.JComboBox<String> cboTipoSangre;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDateConsultarCitaMedico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1962,6 +2180,10 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
@@ -1994,6 +2216,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -2002,9 +2225,11 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2048,12 +2273,14 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JPanel panelBtnAgendar1;
     private javax.swing.JPanel panelBtnInformes1;
     private javax.swing.JPanel panelBtnInicio1;
+    private javax.swing.JPanel panelCitasMedico;
     private javax.swing.JPanel panelGuardarPaciente;
     private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel panelModificarCita;
     private javax.swing.JButton refrecarTablaPaciente;
     private javax.swing.JTable tablaCitas;
     private javax.swing.JTable tablaPacientes;
+    private javax.swing.JTable tableConsultarMedico;
     private javax.swing.JTable tableMedico;
     private javax.swing.JTable tablePaciente;
     private javax.swing.JTextField txtApellido2;
@@ -2067,6 +2294,7 @@ for (int i = 0; i < TabbetCitas.getTabCount(); i++) {
     private javax.swing.JTextField txtEmailR;
     private javax.swing.JTextField txtIdCita;
     private javax.swing.JTextField txtIdCita2;
+    private javax.swing.JTextField txtMedico;
     private javax.swing.JLabel txtNombre2;
     private javax.swing.JLabel txtNumeroDocumento2;
     private javax.swing.JTextField txtPriApellidoR;
