@@ -1194,7 +1194,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 {null, null, null, null}
             },
             new String [] {
-                "ID Medico", "Nombre Medico", "Apellido Medico", "Especialidad"
+                "ID Medico", " NombreMedico", "Apellido", "Especialidad"
             }
         ));
         jScrollPane5.setViewportView(tableMedico);
