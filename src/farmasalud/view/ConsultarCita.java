@@ -4,7 +4,7 @@
  */
 package farmasalud.view;
 
-import model.CitaListener;
+import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
 import dao.CitasDAO;
 import java.awt.Button;
@@ -32,8 +32,8 @@ import model.Cita;
 public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private boolean isTableInitialized = false;
-    CitasDAO citasDAO=new CitasDAO();
-        private String documentoPaciente;
+    CitasDAO citasDAO;
+    private String documentoPaciente;
     private final ControllerCitasPaciente controller;
 
 
@@ -152,11 +152,26 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
 
     }
 
-    public void actualizarTablaCitas() {
-        if (documentoPaciente != null) {
-            controller.cargarCitasPorPaciente(documentoPaciente);
-        }
+   public void actualizarTablaCitas() {
+    if (documentoPaciente != null && !documentoPaciente.trim().isEmpty()) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    } else {
+        System.out.println("No hay documentoPaciente para actualizar la tabla.");
     }
+    }
+   
+    @Override
+    public void citaEliminada(String idCita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+     @Override
+    public void citaActualizada(Cita cita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+     
+
+    
+
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

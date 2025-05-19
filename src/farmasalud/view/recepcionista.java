@@ -4,7 +4,7 @@
  */
 package farmasalud.view;
 
-import model.CitaListener;
+import Listener.CitaListener;
 import Controller.ControllerCitas;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
@@ -49,7 +49,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
     private DefaultTableModel tableModelCita;
     private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
     private MedicoDAO medicoDAO = new MedicoDAO();
-    private PacienteDAO pacienteDAO = new PacienteDAO();
+    private final ControllerCitas controlllercitas=ControllerCitas.getInstance();
         ControllerCitas controllerCitas = ControllerCitas.getInstance();
 
      
@@ -60,11 +60,8 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
         this.controllerCitas = ControllerCitas.getInstance();
         ControllerCitas.getInstance().addCitaListener(this);
    ControllerCitasPaciente.getInstance().addCitaListener(this);
-   ImageIcon iconoOriginal = new ImageIcon("C:\\Users\\Maria liz\\Documents\\imagenE.jpg");
-        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(
-                jLabel29.getWidth(), jLabel29.getHeight(), Image.SCALE_SMOOTH);
-        jLabel29.setIcon(new ImageIcon(imagenEscalada));
-         controller = new ControllerPaciente(); 
+   
+         controller =ControllerPaciente.getInstance(); 
          controllerCitas.setTableConsultarMedico(tableConsultarMedico);
          controllerCitas.initTableModelConsultarCitaMedico();
          if (tablePaciente == null) {
@@ -95,6 +92,16 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
 public void citaAgregada(Cita cita) {
     System.out.println("Listener recibido en recepcionista, recargando tabla...");
      controllerCitas.cargarCitasEnTabla();
+}
+@Override
+public void citaEliminada(String idCita) {
+    System.out.println("Listener recibido en recepcionista: cita eliminada con id " + idCita);
+    controllerCitas.cargarCitasEnTabla(); // o alguna acción para refrescar la tabla
+}
+@Override
+public void citaActualizada(Cita cita) {
+    System.out.println("Listener recibido en recepcionista: cita actualizada " + cita);
+    controllerCitas.cargarCitasEnTabla();  // refrescar tabla con los datos actualizados
 }
 
 
@@ -335,7 +342,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         panelModificarCita = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaCitas = new javax.swing.JTable();
@@ -467,7 +473,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8 = new javax.swing.JLabel();
         JDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtContraseña = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPacientes = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
@@ -646,7 +651,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
 
         jLabel31.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Citas Por Medico");
 
@@ -706,9 +711,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel27.setText("Citas Completadas");
         panelInicio.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
-
-        jLabel29.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maria liz\\Documents\\imagenE.jpg")); // NOI18N
-        panelInicio.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 530, 220));
 
         TabbetCitas.addTab("Inicio", panelInicio);
 
@@ -1265,7 +1267,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 .addGroup(panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         panelAgendarLayout.setVerticalGroup(
             panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1552,11 +1554,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8.setText("Documento*");
         jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 12, -1, -1));
         jPanel13.add(JDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 65, 156, 30));
-        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 212, 100, 20));
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel30.setText("Contraseña");
-        jPanel13.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
+        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(569, 232, -1, 0));
 
         panelGuardarPaciente.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 940, 260));
 
@@ -1663,7 +1661,7 @@ public void verificarDisponibilidadHoraActualizacion() {
 
         TabbetCitas.addTab("Citas Por Medico", jPanel6);
 
-        jPanel1.add(TabbetCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 970, 600));
+        jPanel1.add(TabbetCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 970, 600));
 
         jLabel79.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel79.setText("X");
@@ -2179,9 +2177,7 @@ TabbetCitas.setSelectedIndex(4);       // TODO add your handling code here:
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;

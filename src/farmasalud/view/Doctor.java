@@ -24,7 +24,7 @@ public class Doctor extends javax.swing.JFrame {
     
     private ControllerPaciente controller;
     private DefaultTableModel tableModelPaciente;
-    private PacienteDAO pacienteDAO = new PacienteDAO();
+//    private PacienteDAO pacienteDAO = new PacienteDAO();
     private ControllerOrdenMedica controllerorden;
 
     

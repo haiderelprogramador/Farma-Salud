@@ -1,14 +1,14 @@
 
 package Controller;
 
+import Listener.CitaListener;
+import model.Cita;
 import com.toedter.calendar.JDateChooser;
 import dao.CitasDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import model.CitaListener;
-import model.CitaListener;
 import farmasalud.view.ConsultarCita;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,12 +29,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Paciente;
 import model.Salas;
 import model.Sede;
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
 import Controller.ControllerCitas;
 
 
@@ -55,7 +56,6 @@ public class ControllerCitasPaciente {
     private JLabel lblEps;
     private Medico medicoSeleccionado;
     private Paciente pacienteActual;
-    private Sede sedeSeleccionada;
     private JComboBox cboConsultorio;
     private  Salas salaSeleccinada;
     private JComboBox cboSede;
@@ -66,8 +66,8 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
-    private CitasDAO citasDAO = new CitasDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+    private CitasDAO citasDAO ;
+    private PacienteDAO pacienteDAO;
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
     SalasDAO salasDAO=new SalasDAO();
@@ -86,17 +86,14 @@ public class ControllerCitasPaciente {
     private JLabel lblEmail2;
     private JLabel lblDocumentoPaciente2;
     private JLabel lblEps2;
-
     private static ControllerCitasPaciente instance;
     
     // Listeners
     private List<CitaListener> listeners = new ArrayList<>();
 
-    // Constructor privado
-    private ControllerCitasPaciente() {
-        // Inicialización de DAOs
-        this.citasDAO = new CitasDAO();
-        this.pacienteDAO = new PacienteDAO();
+  public ControllerCitasPaciente() {
+       this.citasDAO = new CitaDAOImpl();
+        this.pacienteDAO = new PacienteDAOImpl();
         this.medicoDAO = new MedicoDAO();
         this.sedesDAO = new SedeDAO();
         this.salasDAO = new SalasDAO();

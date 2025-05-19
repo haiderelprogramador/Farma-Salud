@@ -1,5 +1,6 @@
 package Controller;
 
+import DAOImpl.PacienteDAOImpl;
 import com.toedter.calendar.JDateChooser;
 import dao.PacienteDAO;
 import java.time.LocalDate;
@@ -25,10 +26,8 @@ public class ControllerPaciente {
 
   
     private DefaultTableModel tableModelPaciente;
-    private PacienteDAO pacienteDAO = new PacienteDAO();
     private String documentoOriginal;
-    
-    // Componentes de la vista
+    private  static ControllerPaciente instance;
     private JTable tablaPacientes;
     private JTextField txtNombre;
     private JTextField txtApellido;
@@ -37,13 +36,22 @@ public class ControllerPaciente {
     private JTextField txtCelular;
     private JTextField txtContraseña;
     private JDateChooser dateChooserNacimiento;
+    private final PacienteDAO pacienteDAO;
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbEps;
     private JComboBox<String> cbTipoDocumento;
     private JComboBox<String> cbTipoSangre;
     private JTextArea txtAreaAntecedentes;
     
-    // Setters para los componentes
+    public static ControllerPaciente getInstance() {
+        if (instance == null) {
+            instance = new ControllerPaciente();
+        }
+        return instance;
+    }
+       public  ControllerPaciente() {
+        this.pacienteDAO = new PacienteDAOImpl();
+    }
     public void setTablaPacientes(JTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
         this.tableModelPaciente = (DefaultTableModel) tablaPacientes.getModel();
@@ -101,7 +109,7 @@ public class ControllerPaciente {
     public void initTablePaciente() {
         tableModelPaciente = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
-                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes","Contraseña"}, 0) {
+                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -314,7 +322,7 @@ public class ControllerPaciente {
 
             // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
+                email.isEmpty() || celular.isEmpty()  || 
                 dateChooserNacimiento.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",
