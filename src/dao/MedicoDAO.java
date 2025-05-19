@@ -19,7 +19,7 @@ import java.util.Objects;
 public class MedicoDAO {
     
     private static MedicoDAO instancia;
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\medico.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\medico.json";
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
@@ -198,6 +198,16 @@ public class MedicoDAO {
         }
     }
     
+    public Medico buscarPorNombreYApellido(String nombre, String apellido) {
+    List<Medico> medicos = cargarTodos();
+    for (Medico medico : medicos) {
+        if (medico.getNombres().equalsIgnoreCase(nombre) && 
+            medico.getApellidos().equalsIgnoreCase(apellido)) {
+            return medico;
+        }
+    }
+    return null;
+}
     public boolean existeMedico(String numeroDocumento) {
     if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
         throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");

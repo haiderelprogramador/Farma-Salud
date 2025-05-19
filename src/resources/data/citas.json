@@ -1,196 +1,199 @@
 [
   {
-    "IdCita": "j0980TextField2",
-    "fechaCita": "2000-09-09",
-    "hora": "08:30",
-    "tipoCita": "\u003cTipo de cita\u003e",
-    "consultorio": "Consultorio 4",
-    "motivo": "Seguimiento",
-    "estado": "CANCELADA",
-    "documentoPaciente": "20000"
-  },
-  {
-    "IdCita": "984",
-    "fechaCita": "2000-09-09",
+    "IdCita": "5264",
+    "fechaCita": "2025-05-21",
     "hora": "08:00",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Enfermedad Cronica",
-    "estado": "CANCELADA",
-    "documentoPaciente": "20000"
-  },
-  {
-    "IdCita": "2345",
-    "fechaCita": "2000-09-08",
-    "hora": "08:00",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Prevencion",
-    "estado": "CANCELADA",
-    "documentoPaciente": "0997367373"
-  },
-  {
-    "IdCita": "07",
-    "fechaCita": "2000-09-09",
-    "hora": "07:30",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 4",
-    "motivo": "Prevencion",
-    "estado": "CANCELADA",
-    "documentoPaciente": "0987654321"
-  },
-  {
-    "IdCita": "5678",
-    "fechaCita": "2000-09-09",
-    "hora": "08:30",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Seguimiento",
-    "estado": "COMPLETADA",
-    "documentoPaciente": "0997367373"
-  },
-  {
-    "IdCita": "356532",
-    "fechaCita": "2001-09-06",
-    "hora": "10:00",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Seguimiento",
-    "estado": "PROGRAMADA",
-    "documentoPaciente": "0987654321",
-    "documentoMedico": "1234567890"
-  },
-  {
-    "IdCita": "24545",
-    "fechaCita": "2022-05-12",
-    "hora": "07:30",
     "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 2",
-    "motivo": "Prevencion",
-    "estado": "COMPLETADA",
-    "documentoPaciente": "1234567890",
-    "documentoMedico": "12345889900"
-  },
-  {
-    "IdCita": "688",
-    "fechaCita": "2025-05-15",
-    "hora": "07:30",
-    "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
-    "motivo": "Prevencion",
-    "estado": "CANCELADA",
-    "documentoPaciente": "098642468",
-    "documentoMedico": "1234567890"
-  },
-  {
-    "IdCita": "78898",
-    "fechaCita": "2022-05-15",
-    "hora": "08:30",
-    "tipoCita": "Control",
-    "consultorio": "Consultorio 4",
-    "motivo": "Enfermedad Cronica",
-    "estado": "PROGRAMADA",
-    "documentoPaciente": "0876578484",
-    "medico": {
-      "especialidad": "Cardilogo",
-      "numeroDocumento": "1234567890",
-      "nombres": "nicoller",
-      "apellidos": "lopez",
-      "fechaNacimiento": "2000-09-09",
-      "sexo": "F",
-      "eps": "Item 1",
-      "email": "nicolle@gmail.com",
-      "celular": "1234567890"
-    },
-    "documentoMedico": "12345889900"
-  },
-  {
-    "IdCita": "2345678",
-    "fechaCita": "2022-05-13",
-    "hora": "07:30",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Prevencion",
-    "estado": "PROGRAMADA",
-    "documentoPaciente": "0987654321",
-    "medico": {
-      "especialidad": "Cardilogo",
-      "numeroDocumento": "12345889900",
-      "nombres": "juan",
-      "apellidos": "perez",
-      "fechaNacimiento": "2003-09-09",
-      "sexo": "F",
-      "eps": "Item 3",
-      "email": "juan@gmail.com",
-      "celular": "1234567890"
-    },
-    "documentoMedico": "12345889900"
-  },
-  {
-    "IdCita": "345678",
-    "fechaCita": "2022-05-15",
-    "hora": "08:30",
-    "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 2",
-    "motivo": "Seguimiento",
-    "estado": "CANCELADA",
-    "documentoPaciente": "1234567895",
-    "medico": {
-      "especialidad": "Cardilogo",
-      "numeroDocumento": "1234567890",
-      "nombres": "nicoller",
-      "apellidos": "lopez",
-      "fechaNacimiento": "2000-09-09",
-      "sexo": "F",
-      "eps": "Item 1",
-      "email": "nicolle@gmail.com",
-      "celular": "1234567890"
-    },
-    "documentoMedico": "12345889900"
-  },
-  {
-    "IdCita": "34567890",
-    "fechaCita": "2022-05-15",
-    "hora": "07:30",
-    "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
-    "motivo": "Enfermedad Cronica",
-    "estado": "PROGRAMADA",
-    "documentoPaciente": "0987654321",
-    "medico": {
-      "especialidad": "Cardilogo",
-      "numeroDocumento": "12345889900",
-      "nombres": "juan",
-      "apellidos": "perez",
-      "fechaNacimiento": "2003-09-09",
-      "sexo": "F",
-      "eps": "Item 3",
-      "email": "juan@gmail.com",
-      "celular": "1234567890"
-    },
-    "documentoMedico": "12345889900"
-  },
-  {
-    "IdCita": "54",
-    "fechaCita": "2025-05-16",
-    "hora": "07:30",
-    "tipoCita": "Prioritaria",
-    "consultorio": "Consultorio 3",
     "motivo": "Problemas Especificos",
     "estado": "PROGRAMADA",
-    "documentoPaciente": "1234567895",
+    "documentoPaciente": "2134567890",
     "medico": {
       "especialidad": "terapeusta",
       "fechaContratacion": "2025-05-08",
       "horario": "Martes-jueves-sabado",
-      "numeroDocumento": "12345678902",
-      "nombres": "jgkf",
-      "apellidos": "djknkd",
-      "fechaNacimiento": "2025-05-16",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
       "sexo": "F",
-      "email": "kjvknfvj@gmail.com",
-      "celular": "9038949093"
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
     },
-    "documentoMedico": "12345678902"
+    "documentoMedico": "1014662612",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "4382",
+    "fechaCita": "2025-05-23",
+    "hora": "08:30",
+    "tipoCita": "Control",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Medico general",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Lunes-miercoles-viernes",
+      "numeroDocumento": "1048456789",
+      "nombres": "Sharlok",
+      "apellidos": "Maia",
+      "fechaNacimiento": "2004-05-19",
+      "sexo": "F",
+      "email": "imsharlok@gmail.com",
+      "celular": "3164419082",
+      "contraseña": "WnKi\u003c:z1!,"
+    },
+    "documentoMedico": "1048456789",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
+  },
+  {
+    "IdCita": "32u3",
+    "fechaCita": "2025-05-16",
+    "hora": "03:30",
+    "tipoCita": "Control",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "documentoMedico": "63525192",
+    "sala": {
+      "nombreSala": "XDN",
+      "codigoSala": "SAL.003",
+      "tipoSala": "Sala de Rayos X",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "9274",
+    "fechaCita": "2025-05-30",
+    "hora": "09:00",
+    "tipoCita": "Regular",
+    "motivo": "Sintomas Agudos",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2134567890",
+    "documentoMedico": "1014662612",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "3348347",
+    "fechaCita": "2025-05-29",
+    "hora": "08:00",
+    "tipoCita": "Prioritaria",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "8384354545",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "63525192",
+      "nombres": "Haider",
+      "apellidos": "Stiven",
+      "fechaNacimiento": "2001-05-21",
+      "sexo": "F",
+      "email": "thejh0nl3n0n@gmail.com",
+      "celular": "3001164785",
+      "contraseña": ".P}z7Q]@3a"
+    },
+    "documentoMedico": "63525192",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    },
+    "sede": {
+      "idSede": "SEDE002",
+      "nombreSede": "Sede Norte",
+      "direccion": "Avenida 5 #23-45, Barrio Norte",
+      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+    }
+  },
+  {
+    "IdCita": "48434",
+    "fechaCita": "2025-05-30",
+    "hora": "10:00am",
+    "tipoCita": "Regular",
+    "motivo": "Enfermedad Cronica",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "1234567893",
+    "medico": {
+      "especialidad": "terapeusta",
+      "fechaContratacion": "2025-05-08",
+      "horario": "Martes-jueves-sabado",
+      "numeroDocumento": "1014662612",
+      "nombres": "Maria",
+      "apellidos": "Liz",
+      "fechaNacimiento": "2004-05-20",
+      "sexo": "F",
+      "email": "leonmiermarializ@gmail.com",
+      "celular": "3186476452",
+      "contraseña": "Evk\u003e^1b.,U"
+    },
+    "documentoMedico": "1014662612",
+    "sala": {
+      "nombreSala": "XD",
+      "codigoSala": "SAL.001",
+      "tipoSala": "Sala de Medicina General",
+      "capacidadSala": "4"
+    },
+    "sede": {
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
+    }
   }
 ]
