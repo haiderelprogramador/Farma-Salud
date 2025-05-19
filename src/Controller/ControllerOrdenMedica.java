@@ -5,6 +5,8 @@
 package Controller;
 
 import dao.OrdenMedicaDAO;
+import com.toedter.calendar.JDateChooser;
+
 import java.util.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,6 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import model.Enfermedad;
+import java.time.ZoneId;
+
 import model.Medicamento;
 import model.OrdenMedica;
 import java.time.LocalDate;
@@ -34,7 +38,7 @@ public class ControllerOrdenMedica {
     private JTextField jTextField5;
     private JTextArea jTextArea1;
     private JTextField jTextField3;
-    private JTextField jTextField4;
+    private JDateChooser jDateChooser1 ;
     private Enfermedad enfermedadSeleccionada;
     
     public void setjTable1(JTable jTable1){
@@ -65,10 +69,11 @@ public class ControllerOrdenMedica {
         this.jTextField3 = jTextField3;
     }
 
-    public void setjTextField4(JTextField jTextField4) {
-        this.jTextField4 = jTextField4;
+    public void setjDateChooser1(JDateChooser jDateChooser1) {
+        this.jDateChooser1 = jDateChooser1;
     }
 
+   
     public void setjTextField2(JTextField jTextField2) {
         this.jTextField2 = jTextField2;
     }
@@ -93,11 +98,10 @@ public class ControllerOrdenMedica {
     try {
         String idOrden = ordenmedicaDAO.generarCodigoUnico();
         String diagnostico = jTextField5.getText().trim();
-        String fechaTexto = jTextField4.getText().trim();
         String medicamentos = jTextArea1.getText().trim();
         String dosis = jTextField3.getText().trim();
 
-        if (diagnostico.isEmpty() || fechaTexto.isEmpty() || medicamentos.isEmpty() || dosis.isEmpty()) {
+        if (diagnostico.isEmpty() ||  medicamentos.isEmpty() || dosis.isEmpty() || jDateChooser1.getDate() == null ) {
             JOptionPane.showMessageDialog(null,
                 "Todos los campos deben estar completos",
                 "Error de validación",
@@ -105,7 +109,7 @@ public class ControllerOrdenMedica {
             return;
         }
 
-        LocalDate fecha = LocalDate.parse(fechaTexto); // CONVERSIÓN SEGURA
+       LocalDate fecha = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         OrdenMedica nuevaOrden = new OrdenMedica(
             idOrden,
@@ -115,18 +119,8 @@ public class ControllerOrdenMedica {
             medicamentos
         );
 
-        if (ordenmedicaDAO.guardarOrdenMedica(nuevaOrden)) {
-            JOptionPane.showMessageDialog(null,
-                "Orden guardada exitosamente",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
-            limpiarFormulario();
-        } else {
-            JOptionPane.showMessageDialog(null,
-                "No se pudo guardar la orden",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
+       ordenmedicaDAO.guardarOrdenMedica(nuevaOrden);
+       JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null,
@@ -144,7 +138,7 @@ public class ControllerOrdenMedica {
        jTextField2.setText("");
        jTextField1.setText("");
      jTextField5.setText("");
-     jTextField4.setText("");
+     jDateChooser1.setDate(null);
      jTextArea1.setText("");
      jTextField3.setText("");
    }

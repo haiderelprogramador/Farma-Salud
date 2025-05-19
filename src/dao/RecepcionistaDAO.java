@@ -22,7 +22,7 @@ import model.Recepcionista;
 
 public class RecepcionistaDAO {
 
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\recepcionista.json";
     private static RecepcionistaDAO instancia;
 
 

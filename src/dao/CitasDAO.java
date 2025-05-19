@@ -31,7 +31,7 @@ import model.Cita;
  * @author Maria liz
  */
 public class CitasDAO {
-     private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\citas.json";
+     private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\citas.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
         private List<Cita> citas = new ArrayList<>();
 

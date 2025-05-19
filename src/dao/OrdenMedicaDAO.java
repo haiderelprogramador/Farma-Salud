@@ -15,37 +15,9 @@ import java.util.stream.Collectors;
 import model.OrdenMedica;
 
 public class OrdenMedicaDAO {
-    private final String ARCHIVO_JSON;
-    private final Gson gson;
-    
-    public OrdenMedicaDAO() {
-        this("C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\ordenmedica.json"); // Default path, can be changed
-    }
-    
-    public OrdenMedicaDAO(String filePath) {
-        this.ARCHIVO_JSON = filePath;
-        this.gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .create();
-        ensureFileExists();
-    }
-    
-    private void ensureFileExists() {
-        File file = new File(ARCHIVO_JSON);
-        if (!file.exists()) {
-            try {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-                // Initialize with empty array if file is new
-                try (FileWriter writer = new FileWriter(file)) {
-                    writer.write("[]");
-                }
-            } catch (IOException e) {
-                System.err.println("Error creating file: " + e.getMessage());
-            }
-        }
-    }
-    
+ private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Desktop\\Farma-Salud\\src\\resources\\data\\ordenmedica.json";
+ private Gson gson= new GsonBuilder().setPrettyPrinting().create();
+ 
     public List<OrdenMedica> cargarTodas() {
         try (Reader reader = new FileReader(ARCHIVO_JSON)) {
             Type tipoLista = new TypeToken<ArrayList<OrdenMedica>>(){}.getType();
@@ -56,42 +28,20 @@ public class OrdenMedicaDAO {
             return new ArrayList<>();
         }
     }
-   public boolean guardarOrdenMedica(OrdenMedica ordenMedica) {
-    if (ordenMedica == null || ordenMedica.getIdOrden() == null) {
-        System.err.println("Orden nula o sin ID. No se guarda.");
-        return false;
-    }
-
-    List<OrdenMedica> ordenesMedicas = cargarTodas();
-
-    // Elimina cualquier orden existente con el mismo ID
-    ordenesMedicas = ordenesMedicas.stream()
-        .filter(om -> !om.getIdOrden().equals(ordenMedica.getIdOrden()))
-        .collect(Collectors.toList());
-
-    // Agrega la nueva orden
-    ordenesMedicas.add(ordenMedica);
-
-    System.out.println("Guardando orden. Total en lista: " + ordenesMedicas.size());
-
-    return guardarTodas(ordenesMedicas);
+   public void guardarOrdenMedica(OrdenMedica ordenMedica) {
+   List<OrdenMedica>ordenesmedicas= cargarTodas();
+   ordenesmedicas.add(ordenMedica);
+   guardarTodas(ordenesmedicas);
 }
 
     
-    public boolean guardarTodas(List<OrdenMedica> ordenesMedicas) {
-        if (ordenesMedicas == null) {
-            return false;
-        }
-        
-        try (FileWriter writer = new FileWriter(ARCHIVO_JSON)) {
-    gson.toJson(ordenesMedicas, writer);
-    System.out.println("Orden guardada en JSON");
-    return true;
-} catch (Exception e) {
-    System.err.println("Error al guardar órdenes médicas: " + e.getMessage());
-    e.printStackTrace();
-    return false;
-}
+    public void guardarTodas(List<OrdenMedica> ordenesMedicas) {
+       try(FileWriter writer = new FileWriter(ARCHIVO_JSON)){
+        gson.toJson(ordenesMedicas, writer);
+     }catch(IOException e){
+           System.out.println("Error al guaradar Cita: " + e.getMessage());
+     }
+    
 
     }
     
@@ -127,19 +77,24 @@ public class OrdenMedicaDAO {
     
     // Additional useful methods
     public boolean eliminarOrden(String idOrden) {
-        if (idOrden == null) return false;
-        
-        List<OrdenMedica> ordenesMedicas = cargarTodas().stream()
-            .filter(om -> !om.getIdOrden().equals(idOrden))
-            .collect(Collectors.toList());
-            
-        return guardarTodas(ordenesMedicas);
-    }
+        try{
+         if(idOrden == null || idOrden.trim().isEmpty()){
+          throw new IllegalArgumentException("id orden no puede ser nulo o vacio");
+         }
+         List<OrdenMedica> ordenesmedicas= cargarTodas();
+         boolean removed = ordenesmedicas.removeIf(m -> idOrden.equals(m.getIdOrden()));
+         if(removed){
+         guardarTodas(ordenesmedicas);
+             System.out.println("Orden medica con id"+idOrden+"eliminada.");
+         }
+         
+         return removed;
+        }catch(Exception e){
+            System.out.println("Error :"+e.getMessage());
+     return false;
+
+        }
     
-    public OrdenMedica buscarPorId(String idOrden) {
-        return cargarTodas().stream()
-            .filter(om -> om.getIdOrden().equals(idOrden))
-            .findFirst()
-            .orElse(null);
     }
 }
+
