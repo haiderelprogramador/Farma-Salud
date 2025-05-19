@@ -41,6 +41,8 @@ public class admin extends javax.swing.JFrame {
     private void limpiarDoctor() {controllerDoctor.limpiarFormulario();}
     private ControllerSede controllerSede = new ControllerSede();
     private ControllerEnfermedades controllerEnfermedades = new ControllerEnfermedades();
+    private JPasswordField pwdContraseña = new JPasswordField();
+
     
 
     /**
@@ -74,6 +76,7 @@ public class admin extends javax.swing.JFrame {
     controllerDoctor.setCbSexo(cbSexo2);
     controllerDoctor.setCbHorario(Jcombo_horario);
     controllerDoctor.setCbEspecialidad(cbEspecialidad);
+    pwdContraseña.setEchoChar('•');
     controllerDoctor.setDateChooserNacimiento(Fecha_nacimiento);
     controllerDoctor.setDateChooserContratacion(Fecha_contratacion_doctor);
     
@@ -1180,9 +1183,9 @@ public class admin extends javax.swing.JFrame {
         Fecha_Nacimiento_Recep.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Fecha de Nacimiento"));
         jPanel13.add(Fecha_Nacimiento_Recep, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 340, 50));
 
-        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 620));
+        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 680));
 
-        TabladeRecepcionistas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "RECEPCIONISTAS DISPONIBLES", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        TabladeRecepcionistas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         TabladeRecepcionistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null},
@@ -1201,7 +1204,7 @@ public class admin extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(TabladeRecepcionistas);
 
-        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 630, 620));
+        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 630, 680));
 
         Paneles_jtablepane.addTab("Gestion_Recep", jPanel11);
 
@@ -1629,6 +1632,8 @@ public class admin extends javax.swing.JFrame {
         jPanel31.add(jButton_MostrarTodosMedicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 620, 600, -1));
 
         Paneles_jtablepane.addTab("Gestion_medicamento", jPanel31);
+
+        jPanel37.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel44.setBackground(new java.awt.Color(255, 255, 255));
         jPanel44.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "DATOS DE LA SEDE", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));

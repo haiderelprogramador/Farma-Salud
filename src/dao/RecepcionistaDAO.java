@@ -22,10 +22,9 @@ import model.Recepcionista;
 
 public class RecepcionistaDAO {
     private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
-    private static RecepcionistaDAO instancia; // Instancia única del Singleton
+    private static RecepcionistaDAO instancia;
     private final Gson gson;
     
-    // Constructor privado para evitar instanciación externa
     private RecepcionistaDAO() {
         this.gson = new GsonBuilder()
             .setPrettyPrinting()
@@ -34,7 +33,6 @@ public class RecepcionistaDAO {
         verificarYEstructurarArchivo();
     }
     
-    // Método público para obtener la instancia única
     public static synchronized RecepcionistaDAO getInstancia() {
         if (instancia == null) {
             instancia = new RecepcionistaDAO();
@@ -45,7 +43,6 @@ public class RecepcionistaDAO {
     private void verificarYEstructurarArchivo() {
         try {
             File archivo = new File(ARCHIVO_JSON);
-            
             File directorioPadre = archivo.getParentFile();
             
             if (directorioPadre != null && !directorioPadre.exists()) {
@@ -87,11 +84,16 @@ public class RecepcionistaDAO {
             throw new IllegalArgumentException("El recepcionista no puede ser nulo");
         }
         
+        if (recepcionista.getNumeroDocumento() == null) {
+            throw new IllegalArgumentException("El número de documento no puede ser nulo");
+        }
+        
         try {
             List<Recepcionista> recepcionistas = cargarTodos();
             
             boolean existe = recepcionistas.stream()
-                .anyMatch(r -> r.getNumeroDocumento().equals(recepcionista.getNumeroDocumento()));
+                .filter(Objects::nonNull)
+                .anyMatch(r -> recepcionista.getNumeroDocumento().equals(r.getNumeroDocumento()));
             
             if (existe) {
                 return false;
@@ -141,7 +143,7 @@ public class RecepcionistaDAO {
         }
     }
     
-    public Recepcionista buscarPorDocumento(String documento) {
+    public Recepcionista obtenerPorDocumento(String documento) {
         if (documento == null || documento.trim().isEmpty()) {
             return null;
         }
@@ -159,9 +161,25 @@ public class RecepcionistaDAO {
             return false;
         }
 
+        if (recepcionistaActualizado.getNumeroDocumento() == null) {
+            throw new IllegalArgumentException("El número de documento actualizado no puede ser nulo");
+        }
+
         try {
             List<Recepcionista> recepcionistas = cargarTodos();
             
+            // Verificar si el nuevo documento ya existe (si es diferente al original)
+            if (!documentoOriginal.equals(recepcionistaActualizado.getNumeroDocumento())) {
+                boolean existeNuevoDocumento = recepcionistas.stream()
+                    .filter(Objects::nonNull)
+                    .anyMatch(r -> recepcionistaActualizado.getNumeroDocumento().equals(r.getNumeroDocumento()));
+                
+                if (existeNuevoDocumento) {
+                    return false;
+                }
+            }
+            
+            // Buscar y actualizar el recepcionista
             for (int i = 0; i < recepcionistas.size(); i++) {
                 Recepcionista r = recepcionistas.get(i);
                 if (r != null && documentoOriginal.equals(r.getNumeroDocumento())) {
