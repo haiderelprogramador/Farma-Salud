@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import model.CitaListener;
 import Controller.ControllerCitas;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;

@@ -10,7 +10,7 @@ import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
+import model.CitaListener;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;

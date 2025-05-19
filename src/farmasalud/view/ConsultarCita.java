@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import model.CitaListener;
 import Controller.ControllerCitasPaciente;
 import dao.CitasDAO;
 import java.awt.Button;
