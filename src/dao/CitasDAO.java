@@ -45,16 +45,13 @@ public class CitasDAO {
    
      public List<Cita> cargarTodos() {
         try (Reader reader = new FileReader(ARCHIVO_JSON)) {
-            // Primero verifica si el archivo está vacío
             if (new File(ARCHIVO_JSON).length() == 0) {
                 return new ArrayList<>();
             }
             
-            // Intenta leer como array primero
             try {
                 return gson.fromJson(reader, new TypeToken<List<Cita>>() {}.getType());
             } catch (JsonSyntaxException e) {
-                // Si falla, intenta leer como objeto individual
                 reader.close();
                 try (Reader newReader = new FileReader(ARCHIVO_JSON)) {
                     Cita cita = gson.fromJson(newReader, Cita.class);
@@ -89,6 +86,7 @@ public class CitasDAO {
             System.err.println("Error al guardar Cita : " + e.getMessage());
         }
     }
+       
      public List<Cita> obtenerCitasPorPaciente(String documentoPaciente) {
     List<Cita> todasLasCitas = cargarTodos();
     List<Cita> citasPaciente = new ArrayList<>();
@@ -120,7 +118,20 @@ public class CitasDAO {
         }
     }
     return citasMedico;
+}public Cita obtenerCitaPorId(String idCita) {
+    List<Cita> citas = cargarTodos(); 
+    for (Cita cita : citas) {
+        if (cita.getIdCita().equals(idCita)) {
+            return cita;
+        }
+    }
+    return null;
+}public Cita buscarPorId(String idCita) {
+    return obtenerCitaPorId(idCita);
 }
+
+
+
      public boolean eliminarCita(String IdCita) {
     try {
         if (IdCita == null || IdCita.trim().isEmpty()) {
@@ -160,6 +171,21 @@ public class CitasDAO {
         return false;
     }
 }
+public int contarCitasPorMedicoYFecha(String documentoMedico, LocalDate fecha) {
+    int contador = 0;
+    List<Cita> todasLasCitas = cargarTodos();
+
+    for (Cita cita : todasLasCitas) {
+        if (cita.getDocumentoMedico() != null && cita.getFechaCita() != null) {
+            if (cita.getDocumentoMedico().equals(documentoMedico) && cita.getFechaCita().equals(fecha)) {
+                contador++;
+            }
+        }
+    }
+
+    return contador;
+}
+
    
   public class LocalDateAdapter extends TypeAdapter<LocalDate> {
         private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;

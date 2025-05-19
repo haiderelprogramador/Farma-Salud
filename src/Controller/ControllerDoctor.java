@@ -301,98 +301,121 @@ public class ControllerDoctor {
         }
     }
     
-    public void actualizarDoctor() {
-        try {
-            int filaSeleccionada = tablaDoctores.getSelectedRow();
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(null, 
-                    "Seleccione un doctor de la tabla para actualizar", 
-                    "Error", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+   public void actualizarDoctor() {
+    try {
+        // 1. Validar selección en la tabla
+        int filaSeleccionada = tablaDoctores.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, 
+                "Seleccione un doctor de la tabla para actualizar", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            String documentoOriginal = tableModelDoctor.getValueAt(filaSeleccionada, 2).toString();
-
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellidos.getText().trim();
-            String cedula = txtCedula.getText().trim();
-            String correo = txtCorreo.getText().trim();
-            String telefono = txtTelefono.getText().trim();
-            String contraseña = txtContraseña.getText().trim();
-            String sexo = cbSexo.getSelectedItem().toString();
-            String horario = cbHorario.getSelectedItem().toString();
-            String especialidad = cbEspecialidad.getSelectedItem().toString();
-
-            if (nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || 
-                correo.isEmpty() || telefono.isEmpty() || contraseña.isEmpty() ||
-                dateChooserNacimiento.getDate() == null || 
-                dateChooserContratacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null,
-                    "Todos los campos son obligatorios",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaContratacion = dateChooserContratacion.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-            if (!documentoOriginal.equals(cedula)) {
-                boolean existe = false;
-                for (Medico m : medicoDAO.cargarTodos()) {
-                    if (m.getNumeroDocumento().equals(cedula)) {
-                        existe = true;
-                        break;
-                    }
-                }
-                
-                if (existe) {
-                    JOptionPane.showMessageDialog(null,
-                        "Ya existe un doctor con esta cédula",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-
-            Medico medicoActualizado = new Medico(
-                cedula,
-                nombres,
-                apellidos,
-                fechaNacimiento,
-                sexo,
-                correo,
-                telefono,
-                contraseña,
-                especialidad,
-                fechaContratacion,
-                horario
-            );
-
-            if (medicoDAO.actualizarMedico(documentoOriginal, medicoActualizado)) {
-                JOptionPane.showMessageDialog(null,
-                    "Doctor actualizado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                cargarDatosEnTablaDoctor();
-                limpiarFormulario();
-            } else {
-                JOptionPane.showMessageDialog(null,
-                    "No se pudo actualizar el doctor",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
+        // 2. Obtener documento original y datos actuales
+        String documentoOriginal = tableModelDoctor.getValueAt(filaSeleccionada, 2).toString();
+        Medico medicoActual = medicoDAO.buscarMedicoPorIdentificacion(documentoOriginal);
+        
+        if (medicoActual == null) {
             JOptionPane.showMessageDialog(null,
-                "Error al actualizar doctor: " + e.getMessage(),
+                "No se encontró el doctor seleccionado en la base de datos",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            return;
         }
+
+        // 3. Obtener valores del formulario
+        String nombres = txtNombre.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String cedula = txtCedula.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String sexo = cbSexo.getSelectedItem().toString();
+        String horario = cbHorario.getSelectedItem().toString();
+        String especialidad = cbEspecialidad.getSelectedItem().toString();
+
+        // 4. Validar campos obligatorios (excepto contraseña)
+        if (nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || 
+            correo.isEmpty() || telefono.isEmpty() ||
+            dateChooserNacimiento.getDate() == null || 
+            dateChooserContratacion.getDate() == null) {
+            
+            JOptionPane.showMessageDialog(null,
+                "Todos los campos son obligatorios",
+                "Validación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 5. Validar formato de correo
+        if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            JOptionPane.showMessageDialog(null,
+                "El correo electrónico no tiene un formato válido",
+                "Validación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 6. Convertir fechas
+        LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
+            .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaContratacion = dateChooserContratacion.getDate()
+            .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // 7. Validar si cambió la cédula y si ya existe
+        if (!documentoOriginal.equals(cedula)) {
+            if (medicoDAO.existeMedico(cedula)) {
+                JOptionPane.showMessageDialog(null,
+                    "Ya existe un doctor con esta cédula",
+                    "Validación",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // 8. Manejo de contraseña (mantener la original)
+        String contraseña = medicoActual.getContraseña();
+
+        // 9. Crear objeto médico actualizado
+        Medico medicoActualizado = new Medico(
+            cedula,
+            nombres,
+            apellidos,
+            fechaNacimiento,
+            sexo,
+            correo,
+            telefono,
+            contraseña, // Se mantiene la contraseña original
+            especialidad,
+            fechaContratacion,
+            horario
+        );
+
+        // 10. Ejecutar actualización
+        if (medicoDAO.actualizarMedico(documentoOriginal, medicoActualizado)) {
+            JOptionPane.showMessageDialog(null,
+                "Doctor actualizado exitosamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            // 11. Actualizar vista
+            cargarDatosEnTablaDoctor();
+            limpiarFormulario();
+        } else {
+            JOptionPane.showMessageDialog(null,
+                "No se pudo actualizar el doctor. Verifique los datos.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+            "Error al actualizar doctor: " + e.getMessage(),
+            "Error del Sistema",
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
     
     public void cargarDatosDoctorEnFormulario() {
         int filaSeleccionada = tablaDoctores.getSelectedRow();
