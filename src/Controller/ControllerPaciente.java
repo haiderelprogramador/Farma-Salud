@@ -107,7 +107,7 @@ public class ControllerPaciente {
     public void initTablePaciente() {
         tableModelPaciente = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
-                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes","Contraseña"}, 0) {
+                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -320,7 +320,7 @@ public class ControllerPaciente {
 
             // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
+                email.isEmpty() || celular.isEmpty()  || 
                 dateChooserNacimiento.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",

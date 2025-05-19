@@ -11,7 +11,12 @@ import model.Cita;
  * @author Maria liz
  */
 public interface CitaListener {
+<<<<<<< HEAD
  void citaAgregada(Cita cita);
+=======
+   
+   void citaAgregada(Cita cita);
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     void citaActualizada(Cita cita);
     void citaEliminada(String idCita);
 

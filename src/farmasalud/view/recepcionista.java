@@ -341,7 +341,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         panelModificarCita = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaCitas = new javax.swing.JTable();
@@ -473,7 +472,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8 = new javax.swing.JLabel();
         JDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtContraseña = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPacientes = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
@@ -652,7 +650,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
 
         jLabel31.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Citas Por Medico");
 
@@ -712,9 +710,6 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel27.setText("Citas Completadas");
         panelInicio.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
-
-        jLabel29.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maria liz\\Documents\\imagenE.jpg")); // NOI18N
-        panelInicio.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 530, 220));
 
         TabbetCitas.addTab("Inicio", panelInicio);
 
@@ -1271,7 +1266,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 .addGroup(panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         panelAgendarLayout.setVerticalGroup(
             panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1558,11 +1553,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel8.setText("Documento*");
         jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 12, -1, -1));
         jPanel13.add(JDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 65, 156, 30));
-        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 212, 100, 20));
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel30.setText("Contraseña");
-        jPanel13.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
+        jPanel13.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(569, 232, -1, 0));
 
         panelGuardarPaciente.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 940, 260));
 
@@ -1669,7 +1660,7 @@ public void verificarDisponibilidadHoraActualizacion() {
 
         TabbetCitas.addTab("Citas Por Medico", jPanel6);
 
-        jPanel1.add(TabbetCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 970, 600));
+        jPanel1.add(TabbetCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 970, 600));
 
         jLabel79.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel79.setText("X");
@@ -2185,9 +2176,7 @@ TabbetCitas.setSelectedIndex(4);       // TODO add your handling code here:
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;

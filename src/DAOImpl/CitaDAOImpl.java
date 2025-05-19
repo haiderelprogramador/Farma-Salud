@@ -11,7 +11,11 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+<<<<<<< HEAD
 import dao.CitaDAO;
+=======
+import dao.CitasDAO;
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,8 +33,13 @@ import model.Cita;
  *
  * @author Maria liz
  */
+<<<<<<< HEAD
 public class CitaDAOImpl implements CitaDAO{
      private static final String JSON_BASE_PATH = "src/resources/data/";
+=======
+public class CitaDAOImpl implements CitasDAO{
+    private static final String JSON_BASE_PATH = "src/resources/data/";
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     private static final String ARCHIVO_JSON = JSON_BASE_PATH+"citas.json";
     private final Gson gson;
     private List<Cita> citas = new ArrayList<>();
@@ -227,5 +236,9 @@ public class CitaDAOImpl implements CitaDAO{
                 return null;
             }
         }
+<<<<<<< HEAD
     } 
+=======
+    }  
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
 }

@@ -32,8 +32,13 @@ import model.Cita;
 public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private boolean isTableInitialized = false;
+<<<<<<< HEAD
     CitaDAO citasDAO;
         private String documentoPaciente;
+=======
+    CitasDAO citasDAO;
+    private String documentoPaciente;
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     private final ControllerCitasPaciente controller;
 
 
@@ -157,6 +162,19 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
         controller.cargarCitasPorPaciente(documentoPaciente);
     } else {
         System.out.println("No hay documentoPaciente para actualizar la tabla.");
+<<<<<<< HEAD
+    }
+    }
+   
+    @Override
+    public void citaEliminada(String idCita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+     @Override
+    public void citaActualizada(Cita cita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+=======
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     }
     }
    
@@ -168,6 +186,10 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     public void citaActualizada(Cita cita) {
         controller.cargarCitasPorPaciente(documentoPaciente);
     }
+     
+
+    
+
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

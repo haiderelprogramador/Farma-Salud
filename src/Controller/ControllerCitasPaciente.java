@@ -1,14 +1,19 @@
 
 package Controller;
 
+import Listener.CitaListener;
+import model.Cita;
 import com.toedter.calendar.JDateChooser;
 import dao.CitaDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
+<<<<<<< HEAD
 import Listener.CitaListener;
 import Listener.CitaListener;
+=======
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
 import farmasalud.view.ConsultarCita;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,12 +34,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Paciente;
 import model.Salas;
 import model.Sede;
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
 import Controller.ControllerCitas;
 import DAOImpl.CitaDAOImpl;
 import DAOImpl.PacienteDAOImpl;
@@ -67,7 +73,11 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
+<<<<<<< HEAD
     private CitaDAO citasDAO ;
+=======
+    private CitasDAO citasDAO ;
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     private PacienteDAO pacienteDAO;
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();

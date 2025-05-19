@@ -24,7 +24,11 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
 
        private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private String documentoPaciente;
+<<<<<<< HEAD
     PacienteDAO pacienteDAO ;
+=======
+    PacienteDAO pacienteDAO;
+>>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
 
 
 
