@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import Listener.CitaListener;
 import Controller.ControllerCitas;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
@@ -12,6 +13,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controller.ControllerPaciente;
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
+import dao.CitaDAO;
 import dao.MedicoDAO;
 import java.awt.Component;
 import java.awt.Font;
@@ -43,27 +47,21 @@ import model.Paciente;
  */
 public class recepcionista extends javax.swing.JFrame implements CitaListener{
 
-    private DefaultTableModel tableModel;
+     private DefaultTableModel tableModel;
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;
     private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
     private MedicoDAO medicoDAO = new MedicoDAO();
-    private PacienteDAO pacienteDAO = new PacienteDAO();
+    private final ControllerCitas controlllercitas=ControllerCitas.getInstance();
         ControllerCitas controllerCitas = ControllerCitas.getInstance();
-
-     
     
     public recepcionista() {
         initComponents();
-
-        this.controllerCitas = ControllerCitas.getInstance();
+       this.controllerCitas = ControllerCitas.getInstance();
         ControllerCitas.getInstance().addCitaListener(this);
    ControllerCitasPaciente.getInstance().addCitaListener(this);
-   ImageIcon iconoOriginal = new ImageIcon("C:\\Users\\Maria liz\\Documents\\imagenE.jpg");
-        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(
-                jLabel29.getWidth(), jLabel29.getHeight(), Image.SCALE_SMOOTH);
-        jLabel29.setIcon(new ImageIcon(imagenEscalada));
-         controller = new ControllerPaciente(); 
+   
+         controller =ControllerPaciente.getInstance(); 
          controllerCitas.setTableConsultarMedico(tableConsultarMedico);
          controllerCitas.initTableModelConsultarCitaMedico();
          if (tablePaciente == null) {
@@ -94,6 +92,16 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
 public void citaAgregada(Cita cita) {
     System.out.println("Listener recibido en recepcionista, recargando tabla...");
      controllerCitas.cargarCitasEnTabla();
+}
+@Override
+public void citaEliminada(String idCita) {
+    System.out.println("Listener recibido en recepcionista: cita eliminada con id " + idCita);
+    controllerCitas.cargarCitasEnTabla(); // o alguna acción para refrescar la tabla
+}
+@Override
+public void citaActualizada(Cita cita) {
+    System.out.println("Listener recibido en recepcionista: cita actualizada " + cita);
+    controllerCitas.cargarCitasEnTabla();  // refrescar tabla con los datos actualizados
 }
 
 
@@ -296,7 +304,6 @@ public void verificarDisponibilidadHoraActualizacion() {
             JOptionPane.WARNING_MESSAGE);
     }
 }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

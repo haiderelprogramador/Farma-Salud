@@ -4,8 +4,9 @@
  */
 package farmasalud.view;
 
+import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ import model.Cita;
 public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private boolean isTableInitialized = false;
-    CitasDAO citasDAO=new CitasDAO();
+    CitaDAO citasDAO;
         private String documentoPaciente;
     private final ControllerCitasPaciente controller;
 
@@ -39,7 +40,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     public ConsultarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.controller = ControllerCitasPaciente.getInstance();
+          this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this);
         configurarControlador();
 
@@ -151,10 +152,21 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
 
     }
 
-    public void actualizarTablaCitas() {
-        if (documentoPaciente != null) {
-            controller.cargarCitasPorPaciente(documentoPaciente);
-        }
+   public void actualizarTablaCitas() {
+    if (documentoPaciente != null && !documentoPaciente.trim().isEmpty()) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    } else {
+        System.out.println("No hay documentoPaciente para actualizar la tabla.");
+    }
+    }
+   
+    @Override
+    public void citaEliminada(String idCita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+     @Override
+    public void citaActualizada(Cita cita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
     }
    
     @SuppressWarnings("unchecked")

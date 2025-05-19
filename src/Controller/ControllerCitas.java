@@ -4,13 +4,16 @@
  */
 package Controller;
 
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
+import Listener.CitaListener;
+import dao.CitaDAO;
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
@@ -41,11 +44,10 @@ import model.Sede;
  * @author Maria liz
  */
 public class ControllerCitas {
-    private DefaultTableModel tableModelCita;
-    private CitasDAO citasDAO = new CitasDAO();
+  private DefaultTableModel tableModelCita;
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+    private PacienteDAO pacienteDAO;
     private SalasDAO salasDAO = new SalasDAO();
     private SedeDAO sedeDAO=new SedeDAO();
     private Paciente pacienteSeleccionado;
@@ -84,10 +86,20 @@ public class ControllerCitas {
     private JComboBox cboSede2;
     private Sede sedeSeleccionada;
     private Salas salaSeleccionada;
-    private ControllerCitasPaciente controllerPaciente;
-
+    private ControllerPaciente controllerPaciente;
     private static ControllerCitas instance;
+    private final CitaDAO citasDAO;
 
+
+    
+    
+   public  ControllerCitas() {
+        citasDAO = new CitaDAOImpl();
+        medicoDAO = new MedicoDAO();
+        salasDAO = new SalasDAO();
+        sedeDAO = new SedeDAO();
+        pacienteDAO = new PacienteDAOImpl();
+    }
 public static ControllerCitas getInstance() {
     if (instance == null) {
         instance = new ControllerCitas();
@@ -115,14 +127,10 @@ public void notificarCitaAgregada(Cita cita) {
 public List<Cita> obtenerTodasLasCitas() {
         return citasDAO.cargarTodos();
     }
-
-
-
-   
-
-public void setControllerCitasPaciente(ControllerCitasPaciente controllerPaciente) {
+public void setControllerPaciente(ControllerPaciente controllerPaciente) {
     this.controllerPaciente = controllerPaciente;
 }
+
 
     public void setTableConsultarMedico(JTable tableConsultarMedico) {
         this.tableConsultarMedico = tableConsultarMedico;
@@ -232,7 +240,6 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
     public void setCboSede2(JComboBox cboSede2) {
         this.cboSede2 = cboSede2;
     }
-
 
 
     

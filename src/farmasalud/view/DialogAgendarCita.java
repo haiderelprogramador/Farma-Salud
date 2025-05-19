@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
 import java.util.List;
@@ -23,14 +24,14 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
 
        private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private String documentoPaciente;
-    PacienteDAO pacienteDAO =  new PacienteDAO();
+    PacienteDAO pacienteDAO ;
 
 
 
     public DialogAgendarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-   this.controller = ControllerCitasPaciente.getInstance();
+     this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this); 
         configurarCitas();
     }
@@ -116,6 +117,20 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
             }
         });
     }
+    @Override
+public void citaActualizada(Cita cita) {
+   
+    if (dialogConsultarCitas != null) {
+        dialogConsultarCitas.actualizarTablaCitas();
+    }
+}
+
+@Override
+public void citaEliminada(String idCita) {
+    if (dialogConsultarCitas != null) {
+        dialogConsultarCitas.actualizarTablaCitas();
+    }
+}
      
    
    
