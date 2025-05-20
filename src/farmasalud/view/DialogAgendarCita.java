@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
 import java.util.List;
@@ -23,25 +24,28 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
 
        private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private String documentoPaciente;
-    PacienteDAO pacienteDAO =  new PacienteDAO();
+
+ 
+    PacienteDAO pacienteDAO;
+
 
 
 
     public DialogAgendarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-   this.controller = ControllerCitasPaciente.getInstance();
+       this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this); 
         configurarCitas();
     }
 
-    @Override
+    /*@Override
     public void citaAgregada(Cita cita) {
         if (dialogConsultarCitas != null) {
         System.out.println("Actualizando tabla del diálogo de consulta...");
         dialogConsultarCitas.actualizarTablaCitas();
     }
-    }
+    }*/
 
     @Override
     public void dispose() {
@@ -49,14 +53,14 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
         super.dispose();
     }
 
-    public void setDialogConsultarCitas(ConsultarCita dialogConsultarCitas) {
+   /* public void setDialogConsultarCitas(ConsultarCita dialogConsultarCitas) {
           this.dialogConsultarCitas = dialogConsultarCitas;
     if (dialogConsultarCitas != null) {
         controller.setTablaCitas(dialogConsultarCitas.getTableCitas());
     }
-    }
+    }*/
 
-    public void setDocumentoPaciente(String documento) {
+    /*public void setDocumentoPaciente(String documento) {
         try {
             if (documento == null || documento.trim().isEmpty()) {
                 throw new IllegalArgumentException("Documento de paciente no válido");
@@ -82,7 +86,7 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }*/
 
     private void configurarCitas() {
 
@@ -116,7 +120,21 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
             }
         });
     }
-     
+    @Override
+public void citaActualizada(Cita cita) {
+   
+   /* if (dialogConsultarCitas != null) {
+        dialogConsultarCitas.actualizarTablaCitas();
+    }*/
+}
+
+@Override
+public void citaEliminada(String idCita) {
+   /* if (dialogConsultarCitas != null) {
+        dialogConsultarCitas.actualizarTablaCitas();
+    }*/
+}
+      
    
    
    
@@ -365,10 +383,10 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-controller.guardarCitaDesdeFormulario();
+/*controller.guardarCitaDesdeFormulario();
 if (dialogConsultarCitas != null) {
     dialogConsultarCitas.actualizarTablaCitas();
-}
+}*/
         
     }//GEN-LAST:event_btnAgendarActionPerformed
 
@@ -474,4 +492,9 @@ if (dialogConsultarCitas != null) {
     private javax.swing.JLabel lblNombrePaciente;
     private javax.swing.JTextField txtIdCita;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void citaAgregada(Cita cita) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

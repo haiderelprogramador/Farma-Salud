@@ -34,11 +34,11 @@ import model.OrdenMedica;
  * @author HP
  */
 public class Doctor extends javax.swing.JFrame {
-     private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
-    private ControllerEnfermedades controllerEnfermedades = new ControllerEnfermedades();
-    private ControllerMedicamento controllerMedicamento = new ControllerMedicamento(this);
-   private ControllerCitas controllercitas = new ControllerCitas();
-    private DefaultTableModel tableModelCita;
+    
+    private ControllerPaciente controller;
+    private DefaultTableModel tableModelPaciente;
+//    private PacienteDAO pacienteDAO = new PacienteDAO();
+  //  private ControllerOrdenMedica controllerorden;
 
     
     
@@ -49,13 +49,7 @@ public class Doctor extends javax.swing.JFrame {
     }
     
     private void controllerCitas(){
-    controllercitas.setTablaCitas(jTable3);
-    controllercitas.initTableModelCita();
-     controllercitas.cargarCitasEnTabla();
-           
-             controllercitas.setTablaCitas(jTable3);
-            
-             controllercitas.setTableConsultarMedico(jTable3);
+    
     
     }
     
@@ -339,12 +333,12 @@ public class Doctor extends javax.swing.JFrame {
         return;
     }
 
-    tableModelConsultarMedico.setRowCount(0);
+    /*tableModelConsultarMedico.setRowCount(0);
 
-    controllercitas.cargarCitasPorMedicoYFecha(nombreApellido, fechaSeleccionada);
+    controllercitas.cargarCitasPorMedicoYFecha(nombreApellido, fechaSeleccionada);*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
+    /*
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -353,7 +347,7 @@ public class Doctor extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+      /*  try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -372,8 +366,8 @@ public class Doctor extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+       Create and display the form */
+       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Doctor().setVisible(true);
             }

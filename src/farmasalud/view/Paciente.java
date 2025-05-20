@@ -155,7 +155,7 @@ public class Paciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-   if (documentoPaciente == null || documentoPaciente.isEmpty()) {
+   /*if (documentoPaciente == null || documentoPaciente.isEmpty()) {
         JOptionPane.showMessageDialog(this, 
             "No se ha cargado el documento del paciente", 
             "Error", 
@@ -170,11 +170,11 @@ public class Paciente extends javax.swing.JFrame {
         dialogConsulta.actualizarTablaCitas(); 
     }
 
-    dialogConsulta.setVisible(true);   
+    dialogConsulta.setVisible(true);  */ 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-     if (documentoPaciente == null || documentoPaciente.isEmpty()) {
+   /*  if (documentoPaciente == null || documentoPaciente.isEmpty()) {
         JOptionPane.showMessageDialog(this, 
             "No se ha cargado el documento del paciente", 
             "Error", 
@@ -202,7 +202,7 @@ public class Paciente extends javax.swing.JFrame {
             "Error", 
             JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
-    }
+    }*/
     }//GEN-LAST:event_btnAgendarActionPerformed
 
     /**

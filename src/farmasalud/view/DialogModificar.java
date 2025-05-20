@@ -15,7 +15,7 @@ import model.Medico;
 import model.Cita;
 import Controller.ControllerCitas;
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -59,7 +59,7 @@ private JTable tablaCitasPacienteExterna;
         controller.setCboConsultorio(cboConsultorio2);
     }
 
-public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
+/*public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
     if (table == null || fila < 0 || fila >= table.getRowCount()) {
         JOptionPane.showMessageDialog(this, "Seleccione una cita válida", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -112,8 +112,7 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
 }
 
 
-
-  
+  */
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -347,7 +346,7 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
     if (tablaCitasPacienteExterna != null) {
-        ControllerCitasPaciente.getInstance().actualizarCitaDesdeFormulario(tablaCitasPacienteExterna);
+     //   ControllerCitasPaciente.getInstance().actualizarCitaDesdeFormulario(tablaCitasPacienteExterna);
         this.dispose(); // cierra el diálogo después de actualizar
     } else {
         JOptionPane.showMessageDialog(this, "No se vinculó correctamente la tabla de citas", "Error", JOptionPane.ERROR_MESSAGE);

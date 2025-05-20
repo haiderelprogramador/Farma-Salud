@@ -1,26 +1,29 @@
 
 package Controller;
 
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
+import Listener.CitaListener;
+import model.Cita;
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
-import farmasalud.view.CitaListener;
-import farmasalud.view.ConsultarCita;
+
+
+import Listener.CitaListener;
+
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,13 +32,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Paciente;
 import model.Salas;
 import model.Sede;
-import Controller.ControllerCitas;
+import DAOImpl.CitaDAOImpl;
+
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
 
 
 /**
@@ -43,7 +48,7 @@ import Controller.ControllerCitas;
  * @author Maria liz
  */
 public class ControllerCitasPaciente {
-    private JTextField txtIdCita;
+ private JTextField txtIdCita;
     private JLabel lblDocumento;
     private JLabel lblNombre;
     private JLabel lblApellido;
@@ -55,7 +60,6 @@ public class ControllerCitasPaciente {
     private JLabel lblEps;
     private Medico medicoSeleccionado;
     private Paciente pacienteActual;
-    private Sede sedeSeleccionada;
     private JComboBox cboConsultorio;
     private  Salas salaSeleccinada;
     private JComboBox cboSede;
@@ -66,8 +70,10 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
-    private CitasDAO citasDAO = new CitasDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+
+    private CitaDAO citasDAO ;
+
+    private PacienteDAO pacienteDAO;
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
     SalasDAO salasDAO=new SalasDAO();
@@ -86,22 +92,19 @@ public class ControllerCitasPaciente {
     private JLabel lblEmail2;
     private JLabel lblDocumentoPaciente2;
     private JLabel lblEps2;
-
     private static ControllerCitasPaciente instance;
     
     // Listeners
     private List<CitaListener> listeners = new ArrayList<>();
 
-    // Constructor privado
-    private ControllerCitasPaciente() {
-        // Inicialización de DAOs
-        this.citasDAO = new CitasDAO();
-        this.pacienteDAO = new PacienteDAO();
+ /* public ControllerCitasPaciente() {
+       this.citasDAO = new CitaDAOImpl();
+        this.pacienteDAO = new PacienteDAOImpl();
         this.medicoDAO = new MedicoDAO();
         this.sedesDAO = new SedeDAO();
         this.salasDAO = new SalasDAO();
     }
-    
+    */
 
     public static synchronized ControllerCitasPaciente getInstance() {
         if (instance == null) {
@@ -259,7 +262,7 @@ public class ControllerCitasPaciente {
     cargarMedicosEnComboBox();          
     configurarComboMedico();             
 }
-     public boolean cargarYPersistirPaciente(String documento) {
+     /*public boolean cargarYPersistirPaciente(String documento) {
         try {
             this.pacienteActual = pacienteDAO.buscarPorDocumento(documento);
             if (this.pacienteActual == null) {
@@ -279,10 +282,10 @@ public class ControllerCitasPaciente {
             e.printStackTrace();
             return false;
         }
-    }
+    }*/
 
    
-public void guardarCitaDesdeFormulario() {
+/*public void guardarCitaDesdeFormulario() {
     if (pacienteActual == null || pacienteActual.getNumeroDocumento() == null) {
         JOptionPane.showMessageDialog(null, 
             "Error: No se ha cargado correctamente el paciente", 
@@ -418,11 +421,11 @@ ControllerCitas.getInstance().notificarCitaAgregada(nuevaCita);
             "ERROR", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     } 
-}
+}*/
 
 
 
-   public void setTablaCitas(JTable tableCitas) {
+   /*public void setTablaCitas(JTable tableCitas) {
         this.tableCitas = tableCitas;
         this.tableModelCitas = (DefaultTableModel) tableCitas.getModel();
     }
@@ -611,7 +614,7 @@ public void buscarCitasPorFecha() {
             JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
-}
+}*/
 
 public void configurarDateChooser() {
     Date fechaActual = new Date();
@@ -679,7 +682,7 @@ public void configurarColoresTablaCitas() {
    }
 
  
- public void cargarCitasPorPaciente(String documentoPaciente) {
+ /*public void cargarCitasPorPaciente(String documentoPaciente) {
     if (tableCitas == null || tableModelCitas == null) {
         return;
     }
@@ -718,7 +721,7 @@ public void configurarColoresTablaCitas() {
             }
         }
     }
-}
+}*/
 
 
   public void cargarSalasEnComboBox(JComboBox<String> comboBox) {
@@ -779,13 +782,13 @@ public void configurarColoresTablaCitas() {
     }
 
 
-public void inicializarInterfazPaciente(String documentoPaciente) {
+/*public void inicializarInterfazPaciente(String documentoPaciente) {
     
         cargarDatosPaciente(documentoPaciente);
     }
 
 
-public void cargarDatosPaciente(String documento) {
+/*public void cargarDatosPaciente(String documento) {
   
     try {
         this.pacienteActual = pacienteDAO.buscarPorDocumento(documento);
@@ -807,7 +810,7 @@ public void cargarDatosPaciente(String documento) {
         e.printStackTrace();
         throw new RuntimeException("Error al cargar paciente", e);
     }
-}
+}*/
 public Paciente getPacienteSeleccionado() {
     return pacienteActual;
 }
@@ -947,7 +950,7 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
 
     cboSede2.setSelectedItem(model.getValueAt(fila, 15).toString());
 }
-public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
+/*public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
     int filaSeleccionada = tablaCitas.getSelectedRow();
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(null, "Seleccione una cita para modificar", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1015,7 +1018,7 @@ public void actualizarCitaDesdeFormulario(JTable tablaCitas) {
         JOptionPane.showMessageDialog(null, "Error al actualizar cita: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
-}
+}*/
 public boolean cancelarCitaPorId(String idCita) {
     try {
         List<Cita> citas = citasDAO.cargarTodos();

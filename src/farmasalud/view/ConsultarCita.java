@@ -4,8 +4,9 @@
  */
 package farmasalud.view;
 
+import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,17 +32,20 @@ import model.Cita;
 public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private boolean isTableInitialized = false;
-    CitasDAO citasDAO=new CitasDAO();
+    CitaDAO citasDAO;
         private String documentoPaciente;
+
+  
+
     private final ControllerCitasPaciente controller;
 
 
     public ConsultarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.controller = ControllerCitasPaciente.getInstance();
+         this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this);
-        configurarControlador();
+        //configurarControlador();
 
       
         
@@ -51,7 +55,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
         tableCitas.add(dialogCancelar);
     }
 
-    private void configurarControlador() {
+   /* private void configurarControlador() {
         controller.setJDateFechaCita(dateCita);
         controller.setTablaCitas(tableCitas);
         controller.initTableModelCita();
@@ -83,8 +87,8 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
 
            configurarPopupMenu(); 
     }
-}
-   private void configurarPopupMenu() {
+}*/
+  /* private void configurarPopupMenu() {
     JPopupMenu popupMenu = new JPopupMenu();
     JMenuItem itemCancelar = new JMenuItem("Reprogramar");
     popupMenu.add(itemCancelar);
@@ -144,18 +148,34 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
         }
     });
 }
-
+*/
 
     public JTable getTableCitas() {
         return tableCitas;
 
     }
 
-    public void actualizarTablaCitas() {
-        if (documentoPaciente != null) {
-            controller.cargarCitasPorPaciente(documentoPaciente);
-        }
+   /*public void actualizarTablaCitas() {
+    if (documentoPaciente != null && !documentoPaciente.trim().isEmpty()) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    } else {
+        System.out.println("No hay documentoPaciente para actualizar la tabla.");
     }
+    }
+   
+    @Override
+    public void citaEliminada(String idCita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }
+     @Override
+    public void citaActualizada(Cita cita) {
+        controller.cargarCitasPorPaciente(documentoPaciente);
+    }*/
+  
+     
+
+    
+
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -266,11 +286,11 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCitaActionPerformed
-controllerCitasPaciente.buscarCitasPorFecha(); 
+//controllerCitasPaciente.buscarCitasPorFecha(); 
     }//GEN-LAST:event_btnBuscarCitaActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
- controllerCitasPaciente.cargarCitasPorPaciente(documentoPaciente);        // TODO add your handling code here:
+ //controllerCitasPaciente.cargarCitasPorPaciente(documentoPaciente);        // TODO add your handling code here:
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     /**
@@ -326,4 +346,19 @@ controllerCitasPaciente.buscarCitasPorFecha();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableCitas;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void citaAgregada(Cita cita) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void citaActualizada(Cita cita) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void citaEliminada(String idCita) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

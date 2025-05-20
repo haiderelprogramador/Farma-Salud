@@ -4,13 +4,20 @@
  */
 package Controller;
 
+
+
+
+import model.Cita;
+
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import dao.MedicoDAO;
-import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
+
+import Listener.CitaListener;
+
+
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
@@ -27,11 +34,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Salas;
+import dao.PacienteDAO;
+import DAOImpl.PacienteDAOImpl;
 import model.Sede;
+import DAOImpl.CitaDAOImpl;
+//import dao.CitasDAO;
 
 
 
@@ -41,11 +51,10 @@ import model.Sede;
  * @author Maria liz
  */
 public class ControllerCitas {
-    private DefaultTableModel tableModelCita;
-    private CitasDAO citasDAO = new CitasDAO();
+  private DefaultTableModel tableModelCita;
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+    private PacienteDAO pacienteDAO;
     private SalasDAO salasDAO = new SalasDAO();
     private SedeDAO sedeDAO=new SedeDAO();
     private Paciente pacienteSeleccionado;
@@ -84,10 +93,20 @@ public class ControllerCitas {
     private JComboBox cboSede2;
     private Sede sedeSeleccionada;
     private Salas salaSeleccionada;
-    private ControllerCitasPaciente controllerPaciente;
-
+    private ControllerPaciente controllerPaciente;
     private static ControllerCitas instance;
+    private final CitaDAO citasDAO;
 
+
+    
+    
+   public  ControllerCitas() {
+        citasDAO = new CitaDAOImpl();
+        medicoDAO = new MedicoDAO();
+        salasDAO = new SalasDAO();
+        sedeDAO = new SedeDAO();
+      //  pacienteDAO = new PacienteDAOImpl();
+    }
 public static ControllerCitas getInstance() {
     if (instance == null) {
         instance = new ControllerCitas();
@@ -115,14 +134,10 @@ public void notificarCitaAgregada(Cita cita) {
 public List<Cita> obtenerTodasLasCitas() {
         return citasDAO.cargarTodos();
     }
-
-
-
-   
-
-public void setControllerCitasPaciente(ControllerCitasPaciente controllerPaciente) {
+public void setControllerPaciente(ControllerPaciente controllerPaciente) {
     this.controllerPaciente = controllerPaciente;
 }
+
 
     public void setTableConsultarMedico(JTable tableConsultarMedico) {
         this.tableConsultarMedico = tableConsultarMedico;
@@ -233,13 +248,11 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
         this.cboSede2 = cboSede2;
     }
 
-
-
     
     
 
     
-    public void guardarCitaDesdeFormulario() {
+    /*public void guardarCitaDesdeFormulario() {
         try {
               if (pacienteSeleccionado == null) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un paciente primero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -377,9 +390,9 @@ if (salaSeleccionada == null) {
        }
        this.tablePaciente = tablePaciente;
        this.tableModelPaciente = (DefaultTableModel) tablePaciente.getModel();
-}
+}*/
 
-public void cargarPacienteEnTabla() {
+/*public void cargarPacienteEnTabla() {
     if (tablePaciente == null || tableModelPaciente == null) {
         throw new IllegalStateException("La tabla de pacientes no ha sido inicializada.");
     }
@@ -399,8 +412,8 @@ public void cargarPacienteEnTabla() {
         };
         tableModelPaciente.addRow(row);
     }
-}
-public void seleccionarPaciente() {
+}*/
+/*public void seleccionarPaciente() {
     int filaSeleccionada = tablePaciente.getSelectedRow();
     
     if (filaSeleccionada == -1) {
@@ -417,7 +430,7 @@ public void seleccionarPaciente() {
             "Paciente Asignado",
             JOptionPane.INFORMATION_MESSAGE);
     }
-}
+}*/
 public void cargarMedicoEnTabla() {
     if (tableMedico == null || tableModelMedico == null) {
         throw new IllegalStateException("La tabla de medicos no ha sido inicializada.");
@@ -457,7 +470,7 @@ public void seleccionarMedico() {
             JOptionPane.INFORMATION_MESSAGE);
     }
 }
-     public  void initTableModelCita() {
+    /* public  void initTableModelCita() {
     if (tablaCitas == null) {
         throw new IllegalStateException("La tabla de citas no ha sido inicializada");
     }
@@ -513,7 +526,7 @@ public void seleccionarMedico() {
         }
     }
 }
-   public void actualizarCita() {
+  /* public void actualizarCita() {
     try {
         int filaSeleccionada = tablaCitas.getSelectedRow();
         if (filaSeleccionada == -1) {
@@ -602,7 +615,7 @@ public void seleccionarMedico() {
             JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
-}
+}*/
     public void limpiarCita() {
         txtIdCita.setText("");
         JDateFechaCita.setDate(null);
@@ -631,7 +644,7 @@ public void seleccionarMedico() {
       
     }
   
-public void buscarCitaPorDocumento(String documentoPaciente) {
+/*public void buscarCitaPorDocumento(String documentoPaciente) {
     try {
         tableModelCita.setRowCount(0);
 
@@ -712,7 +725,7 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
              if (lblCitasProgramadas != null) lblCitasProgramadas.setText(String.valueOf(programadas));
              if (lblCitasCanceladas != null) lblCitasCanceladas.setText(String.valueOf(canceladas));
              if (lblCitasCompletadas != null) lblCitasCompletadas.setText(String.valueOf(completadas));
-    }
+    }*/
    public boolean existeCitaEnMismaHora(LocalDate fecha, String hora) {
     List<Cita> citas = citasDAO.cargarTodos();
     
@@ -769,7 +782,7 @@ public void configurarColoresTablaCitas() {
     tablaCitas.getColumnModel().getColumn(11).setCellRenderer(rendererEstado);
    }
 
-   public void buscarPacientePorDocumento(String documento) {
+   /*public void buscarPacientePorDocumento(String documento) {
     if (tablePaciente == null || tableModelPaciente == null) {
         JOptionPane.showMessageDialog(null, "La tabla de pacientes no está inicializada", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -800,7 +813,7 @@ public void configurarColoresTablaCitas() {
         "No se encontró un paciente con el documento: " + documento,
         "Búsqueda sin resultados", 
         JOptionPane.WARNING_MESSAGE);
-    }
+    }*/
  public void buscarMedicoPorApellido(String apellido) {
     if (tableMedico == null || tableModelMedico == null) {
         JOptionPane.showMessageDialog(null, 
@@ -832,7 +845,7 @@ public void configurarColoresTablaCitas() {
             JOptionPane.WARNING_MESSAGE);
     }
 }
-  public void cargarCitasPorPaciente(String documentoPaciente) {
+  /*public void cargarCitasPorPaciente(String documentoPaciente) {
     if (tablaCitas == null || tableModelCita == null) {
         throw new IllegalStateException("La tabla de citas no está inicializada.");
     }
@@ -870,7 +883,7 @@ public void configurarColoresTablaCitas() {
             tableModelCita.addRow(row);
         }
     }
-  }
+  }*/
   public void cargarSalasEnComboBox(JComboBox<String> comboBox) {
     if (comboBox == null) {
         System.err.println("Error: El JComboBox de sala es nulo");
@@ -962,7 +975,7 @@ public boolean medicoTieneCupoEnFecha(String documentoMedico, LocalDate fecha) {
     }
   
 
-public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccionada) {
+/*public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccionada) {
     if (tableConsultarMedico == null || tableModelConsultarMedico == null) {
         JOptionPane.showMessageDialog(null,
             "La tabla de citas no está inicializada",
@@ -1035,8 +1048,7 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
             "Sin resultados",
             JOptionPane.INFORMATION_MESSAGE);
     }
-}
-
+}*/
 
 }
      

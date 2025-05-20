@@ -110,5 +110,33 @@
     "email": "ine@gmail.com",
     "celular": "123456789",
     "contraseña": "357"
+  },
+  {
+    "tipoSangre": "0+",
+    "tipoDocumento": "CC",
+    "antecedentes": "camilo esta loco",
+    "numeroDocumento": "1234237893",
+    "nombres": "mooo",
+    "apellidos": "mii",
+    "fechaNacimiento": "2025-05-29",
+    "sexo": "F",
+    "eps": "Coosalud",
+    "email": "hfdjfd@gmail.com",
+    "celular": "423454",
+    "contraseña": "47837854"
+  },
+  {
+    "tipoSangre": "A-",
+    "tipoDocumento": "CC",
+    "antecedentes": "monolodjf",
+    "numeroDocumento": "1234567892",
+    "nombres": "stevenson",
+    "apellidos": "Caraballo",
+    "fechaNacimiento": "2025-05-22",
+    "sexo": "F",
+    "eps": "Coosalud",
+    "email": "ste@gmail.com",
+    "celular": "3224567898",
+    "contraseña": ""
   }
 ]
