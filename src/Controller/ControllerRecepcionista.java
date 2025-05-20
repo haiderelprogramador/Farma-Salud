@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +30,7 @@ public class ControllerRecepcionista {
     private JTextField txtDocumento;
     private JTextField txtEmail;
     private JTextField txtCelular;
-    private JTextField txtContraseña;
+    private JPasswordField pwdContraseña;
     private JTextField txtCodigoEmpleado;
     private JDateChooser dateChooserNacimiento;
     private JDateChooser dateChooserContratacion;
@@ -40,10 +41,8 @@ public class ControllerRecepcionista {
     private final GeneradorContraseñas generadorContraseñas = new GeneradorContraseñas();
     private final EnviadorCredenciales enviadorCredenciales = EnviadorCredenciales.getInstancia();
 
-    // Constructor privado
     private ControllerRecepcionista() {}
     
-    // Método para obtener la instancia singleton
     public static synchronized ControllerRecepcionista getInstancia() {
         if (instancia == null) {
             instancia = new ControllerRecepcionista();
@@ -77,8 +76,11 @@ public class ControllerRecepcionista {
         this.txtCelular = txtCelular;
     }
     
-    public void setTxtContraseña(JTextField txtContraseña) {
-        this.txtContraseña = txtContraseña;
+    public void setPwdContraseña(JPasswordField pwdContraseña) {
+        this.pwdContraseña = pwdContraseña;
+        if (this.pwdContraseña != null) {
+            this.pwdContraseña.setEchoChar('•'); // Ocultar caracteres de la contraseña
+        }
     }
     
     public void setTxtCodigoEmpleado(JTextField txtCodigoEmpleado) {
@@ -105,7 +107,6 @@ public class ControllerRecepcionista {
         this.cbEps = cbEps;
     }
     
-    // Inicialización de la tabla
     public void initTableRecepcionista() {
         tableModelRecepcionista = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
@@ -118,7 +119,6 @@ public class ControllerRecepcionista {
         tablaRecepcionistas.setModel(tableModelRecepcionista);
     }
     
-    // Cargar datos en la tabla
     public void cargarDatosEnTablaRecepcionista() {
         try {
             tableModelRecepcionista.setRowCount(0);
@@ -157,52 +157,87 @@ public class ControllerRecepcionista {
         }
     }
     
-    // Guardar recepcionista desde formulario
+    private LocalDate convertirFecha(Date fecha) {
+        return fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+    
+    private boolean validarCamposRecepcionista() {
+        if (txtDocumento.getText().trim().isEmpty()) {
+            mostrarError("El número de documento es obligatorio", txtDocumento);
+            return false;
+        }
+        
+        if (txtNombre.getText().trim().isEmpty()) {
+            mostrarError("Los nombres son obligatorios", txtNombre);
+            return false;
+        }
+        
+        if (txtApellido.getText().trim().isEmpty()) {
+            mostrarError("Los apellidos son obligatorios", txtApellido);
+            return false;
+        }
+        
+        if (dateChooserNacimiento.getDate() == null) {
+            mostrarError("La fecha de nacimiento es obligatoria", dateChooserNacimiento);
+            return false;
+        }
+        
+        if (cbSexo.getSelectedItem() == null) {
+            mostrarError("El sexo es obligatorio", cbSexo);
+            return false;
+        }
+        
+        if (cbEps.getSelectedItem() == null) {
+            mostrarError("La EPS es obligatoria", cbEps);
+            return false;
+        }
+        
+        if (txtEmail.getText().trim().isEmpty() || !txtEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            mostrarError("El correo electrónico no tiene un formato válido", txtEmail);
+            return false;
+        }
+        
+        if (txtCelular.getText().trim().isEmpty()) {
+            mostrarError("El celular es obligatorio", txtCelular);
+            return false;
+        }
+        
+        if (txtCodigoEmpleado.getText().trim().isEmpty()) {
+            mostrarError("El código de empleado es obligatorio", txtCodigoEmpleado);
+            return false;
+        }
+        
+        if (dateChooserContratacion.getDate() == null) {
+            mostrarError("La fecha de contratación es obligatoria", dateChooserContratacion);
+            return false;
+        }
+        
+        if (cbHorario.getSelectedItem() == null) {
+            mostrarError("El horario es obligatorio", cbHorario);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void mostrarError(String mensaje, Object componente) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        if (componente instanceof JTextField) {
+            ((JTextField) componente).requestFocus();
+        } else if (componente instanceof JDateChooser) {
+            ((JDateChooser) componente).requestFocus();
+        } else if (componente instanceof JComboBox) {
+            ((JComboBox<?>) componente).requestFocus();
+        }
+    }
+    
     public void guardarRecepcionistaDesdeFormulario() {
         try {
-            // Obtener datos del formulario
+            if (!validarCamposRecepcionista()) return;
+            
             String documento = txtDocumento.getText().trim();
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellido.getText().trim();
-            String email = txtEmail.getText().trim();
-            String celular = txtCelular.getText().trim();
-            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-            String sexo = cbSexo.getSelectedItem().toString();
-            String horario = cbHorario.getSelectedItem().toString();
-            String eps = cbEps.getSelectedItem().toString();
-            
-            // Validar campos obligatorios
-            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || codigoEmpleado.isEmpty() || 
-                dateChooserNacimiento.getDate() == null || dateChooserContratacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null, 
-                    "Todos los campos son obligatorios", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Validar formato de email
-            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                JOptionPane.showMessageDialog(null,
-                    "El correo electrónico no tiene un formato válido",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Convertir fechas
-            LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaContratacion = dateChooserContratacion.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            
-            // Verificar si ya existe
-            if (existeRecepcionista(documento, codigoEmpleado)) {
-                JOptionPane.showMessageDialog(null,
-                    "Ya existe un recepcionista con este documento o código de empleado",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            if (recepcionistaDAO.obtenerPorDocumento(documento) != null) {
+                mostrarError("Ya existe un recepcionista con este documento", txtDocumento);
                 return;
             }
             
@@ -210,76 +245,61 @@ public class ControllerRecepcionista {
             String contrasena = generadorContraseñas.generarContrasena(10);
             String contrasenaEncriptada = generadorContraseñas.encriptarContrasena(contrasena);
             
-            // Crear nuevo recepcionista
             Recepcionista nuevoRecepcionista = new Recepcionista(
                 documento,
-                nombres,
-                apellidos,
-                fechaNacimiento,
-                sexo,
-                eps,
-                email,
-                celular,
+                txtNombre.getText().trim(),
+                txtApellido.getText().trim(),
+                convertirFecha(dateChooserNacimiento.getDate()),
+                cbSexo.getSelectedItem().toString(),
+                cbEps.getSelectedItem().toString(),
+                txtEmail.getText().trim(),
+                txtCelular.getText().trim(),
                 contrasenaEncriptada,
-                codigoEmpleado,
-                fechaContratacion,
-                horario
+                txtCodigoEmpleado.getText().trim(),
+                convertirFecha(dateChooserContratacion.getDate()),
+                cbHorario.getSelectedItem().toString()
             );
             
-            // Guardar en la base de datos
             if (recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista)) {
-                // Enviar credenciales
-                boolean envioExitoso = enviadorCredenciales.enviarCredenciales(
-                    email, 
-                    nombres + " " + apellidos, 
-                    contrasena
-                );
-                
-                if (envioExitoso) {
-                    JOptionPane.showMessageDialog(null, 
-                        "Recepcionista registrado exitosamente. Las credenciales se han enviado al correo electrónico.", 
-                        "Éxito", 
-                        JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, 
-                        "Recepcionista registrado exitosamente, pero no se pudo enviar el correo con las credenciales.", 
-                        "Advertencia", 
-                        JOptionPane.WARNING_MESSAGE);
-                }
-                
+                enviarCredenciales(nuevoRecepcionista, contrasena);
                 cargarDatosEnTablaRecepcionista();
                 limpiarFormulario();
-            } else {
-                JOptionPane.showMessageDialog(null,
-                    "No se pudo guardar el recepcionista",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, 
-                "Error al guardar recepcionista: " + e.getMessage(),
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            manejarError("Error al guardar recepcionista", e);
         }    
     }
     
-    // Verificar si existe un recepcionista
-    private boolean existeRecepcionista(String documento, String codigoEmpleado) {
-        List<Recepcionista> recepcionistas = recepcionistaDAO.cargarTodos();
-        return recepcionistas.stream()
-            .anyMatch(r -> (r.getNumeroDocumento().equals(documento) || 
-                          (r.getCodigoEmpleado().equals(codigoEmpleado))));
+    private void enviarCredenciales(Recepcionista recepcionista, String contrasena) {
+        boolean envioExitoso = enviadorCredenciales.enviarCredenciales(
+            recepcionista.getEmail(), 
+            recepcionista.getNombres() + " " + recepcionista.getApellidos(), 
+            contrasena
+        );
+        
+        if (envioExitoso) {
+            JOptionPane.showMessageDialog(null, 
+                "Credenciales enviadas al correo electrónico", 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, 
+                "No se pudo enviar el correo con las credenciales", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+        }
     }
     
-    // Limpiar formulario
     public void limpiarFormulario() {
         txtDocumento.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
         txtEmail.setText("");
         txtCelular.setText("");
-        txtContraseña.setText("");
+        // Verificar que pwdContraseña no sea null antes de intentar operaciones sobre él
+        if (pwdContraseña != null) {
+            pwdContraseña.setText("");
+        }
         txtCodigoEmpleado.setText("");
         dateChooserNacimiento.setDate(null);
         dateChooserContratacion.setDate(null);
@@ -288,158 +308,207 @@ public class ControllerRecepcionista {
         cbEps.setSelectedIndex(0);
     }
     
-    // Eliminar recepcionista seleccionado
     public void eliminarRecepcionistaSeleccionado() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, 
-                "Seleccione un recepcionista de la tabla", 
-                "Error", 
-                JOptionPane.WARNING_MESSAGE);
+            mostrarAdvertencia("Seleccione un recepcionista de la tabla");
             return;
         }
 
         String documento = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
         
-        int confirmacion = JOptionPane.showConfirmDialog(
-            null, 
-            "¿Eliminar al recepcionista con documento " + documento + "?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (recepcionistaDAO.eliminarRecepcionista(documento)) {
-                JOptionPane.showMessageDialog(null, 
-                    "Recepcionista eliminado correctamente", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
-                cargarDatosEnTablaRecepcionista();
-            } else {
-                JOptionPane.showMessageDialog(null, 
-                    "No se pudo eliminar al recepcionista", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+        if (confirmarAccion("¿Eliminar al recepcionista con documento " + documento + "?")) {
+            try {
+                if (recepcionistaDAO.eliminarRecepcionista(documento)) {
+                    mostrarExito("Recepcionista eliminado correctamente");
+                    cargarDatosEnTablaRecepcionista();
+                }
+            } catch (Exception e) {
+                manejarError("Error al eliminar recepcionista", e);
             }
         }
     }
     
-    // Actualizar recepcionista
     public void actualizarRecepcionista() {
         try {
             int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
             if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(null, 
-                    "Seleccione un recepcionista de la tabla", 
-                    "Error", 
-                    JOptionPane.WARNING_MESSAGE);
+                mostrarAdvertencia("Seleccione un recepcionista de la tabla");
                 return;
             }
+
+            if (!validarCamposRecepcionista()) return;
 
             String documentoOriginal = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
             String documento = txtDocumento.getText().trim();
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellido.getText().trim();
-            String email = txtEmail.getText().trim();
-            String celular = txtCelular.getText().trim();
-            String contraseña = txtContraseña.getText().trim();
-            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-            String sexo = cbSexo.getSelectedItem().toString();
-            String horario = cbHorario.getSelectedItem().toString();
-            String eps = cbEps.getSelectedItem().toString();
-
-            // Validar campos obligatorios
-            if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
-                codigoEmpleado.isEmpty() || dateChooserNacimiento.getDate() == null || 
-                dateChooserContratacion.getDate() == null) {
-                JOptionPane.showMessageDialog(null,
-                    "Todos los campos son obligatorios",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Convertir fechas
-            LocalDate fechaNacimiento = dateChooserNacimiento.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaContratacion = dateChooserContratacion.getDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-            // Verificar si cambió el documento o código de empleado
+            
             if (!documentoOriginal.equals(documento)) {
-                if (existeRecepcionista(documento, codigoEmpleado)) {
-                    JOptionPane.showMessageDialog(null,
-                        "Ya existe un recepcionista con este documento o código de empleado",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                if (recepcionistaDAO.obtenerPorDocumento(documento) != null) {
+                    mostrarError("Ya existe un recepcionista con este documento", txtDocumento);
                     return;
                 }
             }
 
-            // Crear recepcionista actualizado
+            // Obtener recepcionista actual para mantener la contraseña
+            Recepcionista recepcionistaActual = recepcionistaDAO.obtenerPorDocumento(documentoOriginal);
+            String contraseña = recepcionistaActual.getContraseña();
+            
+            // Verificar si pwdContraseña es null antes de intentar obtener su valor
+            if (pwdContraseña != null) {
+                char[] nuevaContraseña = pwdContraseña.getPassword();
+                if (nuevaContraseña != null && nuevaContraseña.length > 0) {
+                    contraseña = generadorContraseñas.encriptarContrasena(new String(nuevaContraseña));
+                }
+            }
+
             Recepcionista recepcionistaActualizado = new Recepcionista(
                 documento,
-                nombres,
-                apellidos,
-                fechaNacimiento,
-                sexo,
-                eps,
-                email,
-                celular,
+                txtNombre.getText().trim(),
+                txtApellido.getText().trim(),
+                convertirFecha(dateChooserNacimiento.getDate()),
+                cbSexo.getSelectedItem().toString(),
+                cbEps.getSelectedItem().toString(),
+                txtEmail.getText().trim(),
+                txtCelular.getText().trim(),
                 contraseña,
-                codigoEmpleado,
-                fechaContratacion,
-                horario
+                txtCodigoEmpleado.getText().trim(),
+                convertirFecha(dateChooserContratacion.getDate()),
+                cbHorario.getSelectedItem().toString()
             );
 
-            // Actualizar en la base de datos
             if (recepcionistaDAO.actualizarRecepcionista(documentoOriginal, recepcionistaActualizado)) {
-                JOptionPane.showMessageDialog(null,
-                    "Recepcionista actualizado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+                mostrarExito("Recepcionista actualizado exitosamente");
                 cargarDatosEnTablaRecepcionista();
                 limpiarFormulario();
-            } else {
-                JOptionPane.showMessageDialog(null,
-                    "No se pudo actualizar el recepcionista",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,
-                "Error al actualizar recepcionista: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            manejarError("Error al actualizar recepcionista", e);
         }
     }
     
-    // Cargar datos del recepcionista seleccionado en el formulario
     public void cargarDatosRecepcionistaEnFormulario() {
         int filaSeleccionada = tablaRecepcionistas.getSelectedRow();
         if (filaSeleccionada != -1) {
-            txtDocumento.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString());
-            txtNombre.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 1).toString());
-            txtApellido.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 2).toString());
-            
-            // Convertir y establecer fechas
-            LocalDate fechaNac = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 3);
-            dateChooserNacimiento.setDate(Date.from(fechaNac.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            
-            cbSexo.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 4).toString());
-            cbEps.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 5).toString());
-            txtEmail.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 6).toString());
-            txtCelular.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 7).toString());
-            txtCodigoEmpleado.setText(tableModelRecepcionista.getValueAt(filaSeleccionada, 8).toString());
-            
-            LocalDate fechaCont = (LocalDate) tableModelRecepcionista.getValueAt(filaSeleccionada, 9);
-            dateChooserContratacion.setDate(Date.from(fechaCont.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            
-            cbHorario.setSelectedItem(tableModelRecepcionista.getValueAt(filaSeleccionada, 10).toString());
-            
-            this.documentoOriginal = txtDocumento.getText();
+            try {
+                String documento = tableModelRecepcionista.getValueAt(filaSeleccionada, 0).toString();
+                Recepcionista recepcionista = recepcionistaDAO.obtenerPorDocumento(documento);
+                
+                if (recepcionista != null) {
+                    txtDocumento.setText(recepcionista.getNumeroDocumento());
+                    txtNombre.setText(recepcionista.getNombres());
+                    txtApellido.setText(recepcionista.getApellidos());
+                    dateChooserNacimiento.setDate(Date.from(recepcionista.getFechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    cbSexo.setSelectedItem(recepcionista.getSexo());
+                    cbEps.setSelectedItem(recepcionista.getEps());
+                    txtEmail.setText(recepcionista.getEmail());
+                    txtCelular.setText(recepcionista.getCelular());
+                    txtCodigoEmpleado.setText(recepcionista.getCodigoEmpleado());
+                    dateChooserContratacion.setDate(Date.from(recepcionista.getFechaContratacion().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    cbHorario.setSelectedItem(recepcionista.getHorario());
+                    
+                    // Verificar que pwdContraseña no sea null antes de intentar operaciones sobre él
+                    if (pwdContraseña != null) {
+                        pwdContraseña.setText("");
+                        pwdContraseña.setToolTipText("Dejar vacío para mantener la contraseña actual");
+                    }
+                    
+                    this.documentoOriginal = documento;
+                }
+            } catch (Exception e) {
+                manejarError("Error al cargar datos del recepcionista", e);
+            }
         }
+    }
+    
+    // Asegurarse de que todos los componentes están inicializados antes de usarlos
+    public boolean verificarComponentesInicializados() {
+        boolean todosInicializados = true;
+        
+        if (tablaRecepcionistas == null) {
+            System.err.println("Error: tablaRecepcionistas no está inicializada");
+            todosInicializados = false;
+        }
+        
+        if (txtNombre == null) {
+            System.err.println("Error: txtNombre no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (txtApellido == null) {
+            System.err.println("Error: txtApellido no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (txtDocumento == null) {
+            System.err.println("Error: txtDocumento no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (txtEmail == null) {
+            System.err.println("Error: txtEmail no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (txtCelular == null) {
+            System.err.println("Error: txtCelular no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (pwdContraseña == null) {
+            System.err.println("Error: pwdContraseña no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (txtCodigoEmpleado == null) {
+            System.err.println("Error: txtCodigoEmpleado no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (dateChooserNacimiento == null) {
+            System.err.println("Error: dateChooserNacimiento no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (dateChooserContratacion == null) {
+            System.err.println("Error: dateChooserContratacion no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (cbSexo == null) {
+            System.err.println("Error: cbSexo no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (cbHorario == null) {
+            System.err.println("Error: cbHorario no está inicializado");
+            todosInicializados = false;
+        }
+        
+        if (cbEps == null) {
+            System.err.println("Error: cbEps no está inicializado");
+            todosInicializados = false;
+        }
+        
+        return todosInicializados;
+    }
+    
+    // Métodos auxiliares para manejo de mensajes
+    private void mostrarExito(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void mostrarAdvertencia(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private boolean confirmarAccion(String mensaje) {
+        return JOptionPane.showConfirmDialog(null, mensaje, "Confirmar", 
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+    
+    private void manejarError(String mensaje, Exception e) {
+        JOptionPane.showMessageDialog(null, mensaje + ": " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
 }
