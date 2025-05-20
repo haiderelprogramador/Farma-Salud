@@ -28,11 +28,7 @@ import model.Paciente;
  * @author Maria liz
  */
 public class PacienteDAOImpl implements PacienteDAO{
-<<<<<<< HEAD
-  private static final String ARCHIVO_JSON = "src/resources/data/pacientes.json";
-=======
    private static final String ARCHIVO_JSON = "src/resources/data/pacientes.json";
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     private final Gson gson;
 
     public PacienteDAOImpl() {

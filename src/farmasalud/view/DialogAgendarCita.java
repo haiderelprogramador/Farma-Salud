@@ -24,18 +24,17 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
 
        private final ControllerCitasPaciente controllerCitasPaciente = ControllerCitasPaciente.getInstance();
     private String documentoPaciente;
-<<<<<<< HEAD
-    PacienteDAO pacienteDAO ;
-=======
+
+ 
     PacienteDAO pacienteDAO;
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
+
 
 
 
     public DialogAgendarCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-     this.controller = ControllerCitasPaciente.getInstance();
+       this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this); 
         configurarCitas();
     }
@@ -135,7 +134,7 @@ public void citaEliminada(String idCita) {
         dialogConsultarCitas.actualizarTablaCitas();
     }
 }
-     
+      
    
    
    

@@ -4,24 +4,20 @@
  */
 package Controller;
 
-<<<<<<< HEAD
-import DAOImpl.CitaDAOImpl;
-import DAOImpl.PacienteDAOImpl;
-=======
-import Listener.CitaListener;
+
+
+
 import model.Cita;
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
+
 import com.toedter.calendar.JDateChooser;
 import dao.CitaDAO;
 import dao.MedicoDAO;
-import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-<<<<<<< HEAD
+
 import Listener.CitaListener;
-import dao.CitaDAO;
-=======
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
+
+
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
@@ -45,6 +41,7 @@ import dao.PacienteDAO;
 import DAOImpl.PacienteDAOImpl;
 import model.Sede;
 import DAOImpl.CitaDAOImpl;
+import dao.CitasDAO;
 
 
 
@@ -54,11 +51,7 @@ import DAOImpl.CitaDAOImpl;
  * @author Maria liz
  */
 public class ControllerCitas {
-<<<<<<< HEAD
   private DefaultTableModel tableModelCita;
-=======
-    private DefaultTableModel tableModelCita;
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
     private PacienteDAO pacienteDAO;
@@ -102,11 +95,7 @@ public class ControllerCitas {
     private Salas salaSeleccionada;
     private ControllerPaciente controllerPaciente;
     private static ControllerCitas instance;
-<<<<<<< HEAD
     private final CitaDAO citasDAO;
-=======
-    private final CitasDAO citasDAO;
->>>>>>> e23e402391b91befe5ac65502aa173daafde32c2
 
 
     
@@ -258,7 +247,6 @@ public void setControllerPaciente(ControllerPaciente controllerPaciente) {
     public void setCboSede2(JComboBox cboSede2) {
         this.cboSede2 = cboSede2;
     }
-
 
     
     
