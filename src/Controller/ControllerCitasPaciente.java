@@ -137,6 +137,7 @@ public class ControllerCitasPaciente {
 
     public void setjDateChooserCita(JDateChooser jDateChooserCita) {
         this.jDateChooserCita = jDateChooserCita;
+    
     }
 
     public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
@@ -372,6 +373,7 @@ if (cboTipoCita.getSelectedIndex() <= 0 ||
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
+   
           String nombreCompletoMedico = medicoSeleccionado.getNombres() + " " + medicoSeleccionado.getApellidos();
     String idCitaActual = txtIdCita.getText().trim();
 if (existeOtraCitaEnMismaHora(fechaCita, horaCita, nombreCompletoMedico, idCitaActual)) {

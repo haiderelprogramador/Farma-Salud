@@ -7,6 +7,7 @@ package farmasalud.view;
 import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
 import dao.PacienteDAO;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -99,6 +100,12 @@ public class DialogAgendarCita extends javax.swing.JDialog implements CitaListen
          cboEstadoCita.setEnabled(false); 
 
         controller.setJDateFechaCita(jDateFechaCita);
+                 Date fechaActual = new Date();
+    
+    if ( jDateFechaCita!= null) {
+        jDateFechaCita.setMinSelectableDate(fechaActual);
+        jDateFechaCita.setDateFormatString("yyyy-MM-dd");
+    }
         controller.setTxtIdCita(txtIdCita);
         controller.setCboSede(cboSede);
         controller.setCboConsultorio(cboConsultorio); 
