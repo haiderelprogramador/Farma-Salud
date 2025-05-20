@@ -1,1 +1,17 @@
-[{}]
+[
+  {},
+  {
+    "codigoEmpleado": "REC001",
+    "fechaContratacion": "2025-05-16",
+    "horario": "TARDE",
+    "numeroDocumento": "8527419635",
+    "nombres": "dfghjk",
+    "apellidos": "hgfds",
+    "fechaNacimiento": "1998-05-01",
+    "sexo": "FEMENINO",
+    "eps": "EPS SANITAS",
+    "email": "ahhahah@gmail.com",
+    "celular": "123548745",
+    "contraseña": "60758f6090bfb3868e2012abcf7fa07bf5edec3a7ea56d35622e2ec4d899a966"
+  }
+]
