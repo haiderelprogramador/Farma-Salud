@@ -22,8 +22,8 @@ import model.Recepcionista;
 
 public class RecepcionistaDAO {
 
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
-    private static RecepcionistaDAO instancia;
+private static final String JSON_BASE_PATH = "src/resources/data/";
+    private static final String ARCHIVO_JSON = JSON_BASE_PATH+"recepcionista.json";    private static RecepcionistaDAO instancia;
 
 
     private final Gson gson;
