@@ -200,7 +200,7 @@ public class ControllerDoctor {
             }
             
             String contrasena = generadorContraseñas.generarContrasena(10);
-            String contrasenaEncriptada = generadorContraseñas.encriptarContrasena(contrasena);
+            
             
             Medico nuevoMedico = new Medico(
                 cedula,
@@ -210,7 +210,7 @@ public class ControllerDoctor {
                 sexo,
                 correo,
                 telefono,
-                contrasenaEncriptada,
+                contrasena,
                 especialidad,
                 fechaContratacion,
                 horario

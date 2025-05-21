@@ -31,8 +31,7 @@ public class usuarioDAO {
             switch(rol) {
                 case "Administrador":
                     return buscarAdministrador(email, contraseña);
-                case "Médico":
-                case "Medico":
+                case "Doctor":
                     return buscarMedico(email, contraseña);
                 case "Recepcionista":
                     return buscarRecepcionista(email, contraseña);
