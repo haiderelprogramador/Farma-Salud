@@ -2,6 +2,10 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import model.Medico;
+import model.Paciente;
+import model.Salas;
+import model.Sede;
 
 public class Cita {
  private  String IdCita;
@@ -19,7 +23,8 @@ public class Cita {
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
-        CANCELADA;
+        CANCELADA,
+        NOASISTIO;
         
         public static EstadoCita getPROGRAMADA() {
             return PROGRAMADA;
