@@ -1,26 +1,29 @@
 
 package Controller;
 
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
+import Listener.CitaListener;
+import model.Cita;
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
-import farmasalud.view.CitaListener;
-import farmasalud.view.ConsultarCita;
+
+
+import Listener.CitaListener;
+
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,13 +32,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Paciente;
 import model.Salas;
 import model.Sede;
-import Controller.ControllerCitas;
+import DAOImpl.CitaDAOImpl;
+
+import DAOImpl.CitaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
 
 
 /**
@@ -43,7 +48,7 @@ import Controller.ControllerCitas;
  * @author Maria liz
  */
 public class ControllerCitasPaciente {
-    private JTextField txtIdCita;
+ private JTextField txtIdCita;
     private JLabel lblDocumento;
     private JLabel lblNombre;
     private JLabel lblApellido;
@@ -55,7 +60,6 @@ public class ControllerCitasPaciente {
     private JLabel lblEps;
     private Medico medicoSeleccionado;
     private Paciente pacienteActual;
-    private Sede sedeSeleccionada;
     private JComboBox cboConsultorio;
     private  Salas salaSeleccinada;
     private JComboBox cboSede;
@@ -66,8 +70,10 @@ public class ControllerCitasPaciente {
     private JDateChooser JDateFechaCita;
     private DefaultTableModel tableModelCitas;
     private Sede sedeSelecccionada;
-    private CitasDAO citasDAO = new CitasDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+
+    private CitaDAO citasDAO ;
+
+    private PacienteDAO pacienteDAO;
     private MedicoDAO medicoDAO=new MedicoDAO();
     SedeDAO sedesDAO=new SedeDAO();
     SalasDAO salasDAO=new SalasDAO();
@@ -86,17 +92,14 @@ public class ControllerCitasPaciente {
     private JLabel lblEmail2;
     private JLabel lblDocumentoPaciente2;
     private JLabel lblEps2;
-
     private static ControllerCitasPaciente instance;
     
     // Listeners
     private List<CitaListener> listeners = new ArrayList<>();
 
-    // Constructor privado
-    private ControllerCitasPaciente() {
-        // Inicialización de DAOs
-        this.citasDAO = new CitasDAO();
-        this.pacienteDAO = new PacienteDAO();
+  public ControllerCitasPaciente() {
+       this.citasDAO = new CitaDAOImpl();
+        this.pacienteDAO = new PacienteDAOImpl();
         this.medicoDAO = new MedicoDAO();
         this.sedesDAO = new SedeDAO();
         this.salasDAO = new SalasDAO();
@@ -134,6 +137,7 @@ public class ControllerCitasPaciente {
 
     public void setjDateChooserCita(JDateChooser jDateChooserCita) {
         this.jDateChooserCita = jDateChooserCita;
+    
     }
 
     public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
@@ -369,6 +373,7 @@ if (cboTipoCita.getSelectedIndex() <= 0 ||
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
+   
           String nombreCompletoMedico = medicoSeleccionado.getNombres() + " " + medicoSeleccionado.getApellidos();
     String idCitaActual = txtIdCita.getText().trim();
 if (existeOtraCitaEnMismaHora(fechaCita, horaCita, nombreCompletoMedico, idCitaActual)) {

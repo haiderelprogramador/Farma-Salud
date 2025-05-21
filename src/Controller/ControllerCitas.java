@@ -4,13 +4,20 @@
  */
 package Controller;
 
+
+
+
+import model.Cita;
+
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import dao.MedicoDAO;
-import dao.PacienteDAO;
 import dao.SalasDAO;
 import dao.SedeDAO;
-import farmasalud.view.CitaListener;
+
+import Listener.CitaListener;
+
+
 import java.awt.Color;
 import java.awt.Component;
 import model.Paciente;
@@ -27,11 +34,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.Cita;
 import model.Cita.EstadoCita;
 import model.Medico;
 import model.Salas;
+import dao.PacienteDAO;
+import DAOImpl.PacienteDAOImpl;
 import model.Sede;
+import DAOImpl.CitaDAOImpl;
+import java.io.IOException;
+import model.Medicamento;
+
 
 
 
@@ -41,18 +53,17 @@ import model.Sede;
  * @author Maria liz
  */
 public class ControllerCitas {
-    private DefaultTableModel tableModelCita;
-    private CitasDAO citasDAO = new CitasDAO();
+  private DefaultTableModel tableModelCita;
     private String idCitaOriginal;
     private MedicoDAO medicoDAO = new MedicoDAO();
-    private PacienteDAO pacienteDAO=new PacienteDAO();
+    private PacienteDAO pacienteDAO;
     private SalasDAO salasDAO = new SalasDAO();
     private SedeDAO sedeDAO=new SedeDAO();
     private Paciente pacienteSeleccionado;
     private Medico medicoSeleccionado;
     private DefaultTableModel tableModelMedico;
     private JTable tablaCitas;
-    private JTextField txtIdCita;
+    private JLabel txtIdCita;
     private JDateChooser JDateFechaCita;
     private JComboBox<String> cboHoraCita;
     private JComboBox<String> cboEstadoCita;
@@ -61,7 +72,7 @@ public class ControllerCitas {
     private JComboBox<String> cboConsultorio;
     private DefaultTableModel tableModelPaciente;
     private JTable tablePaciente;
-    private JTextField txtIdCita2;
+    private JLabel txtIdCita2;
     private JDateChooser JDateFechaCita2;
      private JComboBox<String> cboHoraCita2;
     private JComboBox<String> cboEstadoCita2;
@@ -84,10 +95,20 @@ public class ControllerCitas {
     private JComboBox cboSede2;
     private Sede sedeSeleccionada;
     private Salas salaSeleccionada;
-    private ControllerCitasPaciente controllerPaciente;
-
+    private ControllerPaciente controllerPaciente;
     private static ControllerCitas instance;
+    private final CitaDAO citasDAO;
 
+
+    
+    
+   public  ControllerCitas() {
+        citasDAO = new CitaDAOImpl();
+        medicoDAO = new MedicoDAO();
+        salasDAO = new SalasDAO();
+        sedeDAO = new SedeDAO();
+        pacienteDAO = new PacienteDAOImpl();
+    }
 public static ControllerCitas getInstance() {
     if (instance == null) {
         instance = new ControllerCitas();
@@ -115,14 +136,28 @@ public void notificarCitaAgregada(Cita cita) {
 public List<Cita> obtenerTodasLasCitas() {
         return citasDAO.cargarTodos();
     }
-
-
-
-   
-
-public void setControllerCitasPaciente(ControllerCitasPaciente controllerPaciente) {
+public void setControllerPaciente(ControllerPaciente controllerPaciente) {
     this.controllerPaciente = controllerPaciente;
 }
+public Cita buscarCitaPorId(String id) {
+    return citasDAO.buscarPorId(id);
+}
+ public void notificarCitaActualizada(Cita cita) {
+        for (CitaListener listener : listeners) {
+            listener.citaActualizada(cita);
+        }
+    }
+  public void actualizarCita(Cita cita) {
+        boolean actualizado = citasDAO.actualizarCita(cita.getIdCita(), cita);
+        if (actualizado) {
+            System.out.println("Cita actualizada correctamente.");
+            notificarCitaActualizada(cita);
+        } else {
+            System.out.println("No se encontró la cita para actualizar.");
+        }
+    }
+
+
 
     public void setTableConsultarMedico(JTable tableConsultarMedico) {
         this.tableConsultarMedico = tableConsultarMedico;
@@ -162,12 +197,12 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
         configurarDateChooser();
     }
     
-    public void setTxtIdCita(JTextField txtIdCita) {
+    public void setTxtIdCita(JLabel txtIdCita) {
         this.txtIdCita = txtIdCita;
     }
     
    
-     public void setTxtIdCita2(JTextField txtIdCita2) {
+     public void setTxtIdCita2(JLabel txtIdCita2) {
         this.txtIdCita2 = txtIdCita2;
     } 
      public void setJDateFechaCita2(JDateChooser JDateFechaCita2) {
@@ -233,8 +268,6 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
         this.cboSede2 = cboSede2;
     }
 
-
-
     
     
 
@@ -249,7 +282,8 @@ public void setControllerCitasPaciente(ControllerCitasPaciente controllerPacient
             return;
         }
 
-            String IdCita = txtIdCita.getText().trim();
+          String IdCita = ControllerCitas.getInstance().generarCodigoUnico();
+            txtIdCita.setText(IdCita);  
             String fechaStr = JDateFechaCita.getDate().toString();
             String horaCita = cboHoraCita.getSelectedItem().toString();
             String motivo = cboMotivoCita.getSelectedItem().toString();
@@ -990,20 +1024,31 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
     tableModelConsultarMedico.setRowCount(0); // Limpiar tabla
 
     LocalDate fechaLocal = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
     List<Cita> todasCitas = ControllerCitas.getInstance().obtenerTodasLasCitas();
+
+    boolean encontroCita = false;
 
     for (Cita cita : todasCitas) {
         Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
 
         if (medico != null) {
+            // Comparación flexible de nombre o apellido
             String nombreCompleto = (medico.getNombres() + " " + medico.getApellidos()).toLowerCase();
-            boolean coincideNombre = nombreCompleto.contains(nombreApellido.toLowerCase().trim());
-            boolean coincideFecha = cita.getFechaCita().equals(fechaLocal);
+            String[] partes = nombreApellido.trim().toLowerCase().split("\\s+");
+
+            boolean coincideNombre = false;
+            for (String parte : partes) {
+                if (nombreCompleto.contains(parte)) {
+                    coincideNombre = true;
+                    break;
+                }
+            }
+
+LocalDate fechaCita = cita.getFechaCita();
+            boolean coincideFecha = fechaCita.equals(fechaLocal);
 
             if (coincideNombre && coincideFecha) {
                 Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
-
                 if (paciente != null) {
                     tableModelConsultarMedico.addRow(new Object[]{
                         paciente.getNumeroDocumento(),
@@ -1014,7 +1059,7 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
                         cita.getIdCita(),
                         cita.getHora(),
                         cita.getMotivo(),
-                        cita.getFechaCita(),
+                        fechaCita,
                         cita.getTipoCita(),
                         cita.getSala(),
                         cita.getEstado(),
@@ -1024,20 +1069,38 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
                         medico.getEspecialidad(),
                         cita.getSede()
                     });
+                    encontroCita = true;
                 }
             }
         }
     }
 
-    if (tableModelConsultarMedico.getRowCount() == 0) {
+    if (!encontroCita) {
         JOptionPane.showMessageDialog(null,
             "No se encontraron citas para ese médico en la fecha seleccionada",
             "Sin resultados",
             JOptionPane.INFORMATION_MESSAGE);
     }
 }
+ public String generarCodigoUnico() {
+    List<Cita> citas = citasDAO.cargarTodos();
+    int maxNumero = 0;
 
-
+    for (Cita cita : citas) {
+        try {
+            String codigo = cita.getIdCita();
+            if (codigo != null && codigo.startsWith("Med.")) {
+                int numero = Integer.parseInt(codigo.substring(4));
+                if (numero > maxNumero) {
+                    maxNumero = numero;
+                }
+            }
+        } catch (NumberFormatException e) {
+           
+        }
+    }
+    return String.format("Med.%03d", maxNumero + 1);
+}
 }
      
 

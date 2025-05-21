@@ -182,18 +182,23 @@ public class login_ extends javax.swing.JFrame {
                 abrirVista(new admin(), "Bienvenido Administrador");
                 break;
             case "Doctor":
-                abrirVista(new Doctor(), "Bienvenido Doctor");
-                break;
+                  model.Medico MedicoLogueado = (model.Medico) usuario;
+    farmasalud.view.Doctor framedoctor = new farmasalud.view.Doctor();
+    framedoctor.inicializarConDoctor(MedicoLogueado.getNumeroDocumento()); // ✅ Filtramos por documento
+    framedoctor.setVisible(true);
+    break;
+                
+                
             case "Recepcionista":
                 abrirVista(new recepcionista(), "Bienvenida Recepcionista");
                 break;
             case "Paciente":
-      model.Paciente pacienteLogueado = (model.Paciente) usuario;
+     model.Paciente pacienteLogueado = (model.Paciente) usuario;
     farmasalud.view.Paciente framePaciente = new farmasalud.view.Paciente();
     framePaciente.inicializarConPaciente(pacienteLogueado.getNumeroDocumento());
     framePaciente.setVisible(true);
-   
-    break;        }
+   // ¡Importante! Cierra la ventana de login.
+    break;     }
         
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, 

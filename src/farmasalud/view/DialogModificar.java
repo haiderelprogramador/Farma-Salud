@@ -15,7 +15,7 @@ import model.Medico;
 import model.Cita;
 import Controller.ControllerCitas;
 import com.toedter.calendar.JDateChooser;
-import dao.CitasDAO;
+import dao.CitaDAO;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -110,7 +110,6 @@ public void cargarDatosDesdeFilaSeleccionada(JTable table, int fila) {
     public void setTablaCitasPaciente(JTable tabla) {
     this.tablaCitasPacienteExterna = tabla;
 }
-
 
 
   

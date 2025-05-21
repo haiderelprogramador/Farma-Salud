@@ -30,10 +30,16 @@ public class Paciente extends javax.swing.JFrame {
         jLabel1.setIcon(new ImageIcon(imagenEscalada));
     }
      
+   
     public void inicializarConPaciente(String documento) {
+        if (documento == null || documento.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Documento inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.documentoPaciente = documento;
         actualizarInterfaz();
     }
+
 
     private void actualizarInterfaz() {
         jLabel2.setText("BIENVENIDO PACIENTE");

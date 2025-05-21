@@ -2,16 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package farmasalud.view;
-
-import model.Cita;
+package Listener;
 
 /**
  *
  * @author Maria liz
  */
-public interface CitaListener {
-   
-    void citaAgregada(Cita cita);
-
+public interface MedicamentosSeleccionadaListener {
+    void  MedicamentosSeleccionadaListener(String medicamentos);
 }

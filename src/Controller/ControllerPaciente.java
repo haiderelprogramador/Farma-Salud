@@ -1,5 +1,6 @@
 package Controller;
 
+import DAOImpl.PacienteDAOImpl;
 import com.toedter.calendar.JDateChooser;
 import dao.PacienteDAO;
 import java.time.LocalDate;
@@ -22,13 +23,9 @@ import model.Paciente;
 
 
 public class ControllerPaciente {
-
-  
     private DefaultTableModel tableModelPaciente;
-    private PacienteDAO pacienteDAO = new PacienteDAO();
     private String documentoOriginal;
-    
-    // Componentes de la vista
+    private  static ControllerPaciente instance;
     private JTable tablaPacientes;
     private JTextField txtNombre;
     private JTextField txtApellido;
@@ -37,13 +34,25 @@ public class ControllerPaciente {
     private JTextField txtCelular;
     private JTextField txtContraseña;
     private JDateChooser dateChooserNacimiento;
+    private final PacienteDAO pacienteDAO;
     private JComboBox<String> cbSexo;
     private JComboBox<String> cbEps;
     private JComboBox<String> cbTipoDocumento;
     private JComboBox<String> cbTipoSangre;
     private JTextArea txtAreaAntecedentes;
+    private JTextField txtAltura;
+    private JTextField txtPeso;
     
-    // Setters para los componentes
+    
+    public static ControllerPaciente getInstance() {
+        if (instance == null) {
+            instance = new ControllerPaciente();
+        }
+        return instance;
+    }
+       public  ControllerPaciente() {
+        this.pacienteDAO = new PacienteDAOImpl();
+    }
     public void setTablaPacientes(JTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
         this.tableModelPaciente = (DefaultTableModel) tablaPacientes.getModel();
@@ -96,12 +105,20 @@ public class ControllerPaciente {
     public void setTxtAreaAntecedentes(JTextArea txtAreaAntecedentes) {
         this.txtAreaAntecedentes = txtAreaAntecedentes;
     }
+
+    public void setTxtAltura(JTextField txtAltura) {
+        this.txtAltura = txtAltura;
+    }
+
+    public void setTxtPeso(JTextField txtPeso) {
+        this.txtPeso = txtPeso;
+    }
     
     // Inicialización de la tabla
     public void initTablePaciente() {
         tableModelPaciente = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nac.", "Sexo", 
-                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes","Contraseña"}, 0) {
+                        "EPS", "Email", "Teléfono", "Tipo Doc.", "Tipo Sangre", "Antecedentes","Peso","Altura"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -136,7 +153,9 @@ public class ControllerPaciente {
                     paciente.getTipoDocumento(),
                     paciente.getTipoSangre(),
                     paciente.getAntecedentes(),
-                    paciente.getContraseña()
+                    paciente.getPeso(),
+                    paciente.getAltura()
+                   
                 };
                 tableModelPaciente.addRow(row);
             }
@@ -151,7 +170,6 @@ public class ControllerPaciente {
     
     public void guardarPacienteDesdeFormulario() {
         try {
-            // Obtener datos del formulario
             String documento = txtDocumento.getText().trim();
             String nombres = txtNombre.getText().trim();
             String apellidos = txtApellido.getText().trim();
@@ -163,8 +181,9 @@ public class ControllerPaciente {
             String tipoDocumento = cbTipoDocumento.getSelectedItem().toString();
             String tipoSangre = cbTipoSangre.getSelectedItem().toString();
             String antecedentes = txtAreaAntecedentes.getText().trim();
+            int peso = Integer.parseInt(txtPeso.getText().trim());
+           double altura = Double.parseDouble(txtAltura.getText().trim());
             
-            // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
                 email.isEmpty() || celular.isEmpty()  || 
                 dateChooserNacimiento.getDate() == null) {
@@ -188,7 +207,6 @@ public class ControllerPaciente {
                 return;
             }
             
-            // Crear nuevo paciente
             Paciente nuevoPaciente = new Paciente(
                 documento,
                 nombres,
@@ -201,10 +219,12 @@ public class ControllerPaciente {
                 contraseña,
                 tipoDocumento,
                 tipoSangre,
-                antecedentes
+                antecedentes,
+                peso,
+                altura
+                  
             );
             
-            // Guardar en la base de datos
             if (pacienteDAO.guardarPaciente(nuevoPaciente)) {
                 JOptionPane.showMessageDialog(null, 
                     "Paciente guardado exitosamente", 
@@ -311,10 +331,12 @@ public class ControllerPaciente {
             String tipoDocumento = cbTipoDocumento.getSelectedItem().toString();
             String tipoSangre = cbTipoSangre.getSelectedItem().toString();
             String antecedentes = txtAreaAntecedentes.getText().trim();
+           int peso = Integer.parseInt(txtPeso.getText().trim());
+           double altura = Double.parseDouble(txtAltura.getText().trim());
 
             // Validar campos obligatorios
             if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || 
-                email.isEmpty() || celular.isEmpty() || contraseña.isEmpty() || 
+                email.isEmpty() || celular.isEmpty()  || 
                 dateChooserNacimiento.getDate() == null) {
                 JOptionPane.showMessageDialog(null,
                     "Todos los campos son obligatorios",
@@ -349,7 +371,9 @@ public class ControllerPaciente {
                 contraseña,
                 tipoDocumento,
                 tipoSangre,
-                antecedentes
+                antecedentes,
+                 peso,
+                 altura
             );
 
             if (pacienteDAO.actualizarPaciente(documentoOriginal, pacienteActualizado)) {
@@ -396,7 +420,9 @@ public class ControllerPaciente {
                 cbTipoDocumento.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 8).toString());
                 cbTipoSangre.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 9).toString());
                 txtAreaAntecedentes.setText(tableModelPaciente.getValueAt(filaSeleccionada, 10).toString());
-                txtContraseña.setText(tableModelPaciente.getValueAt(filaSeleccionada, 11).toString());
+                txtPeso.setText(tableModelPaciente.getValueAt(filaSeleccionada, 11).toString());
+                txtAltura.setText(tableModelPaciente.getValueAt(filaSeleccionada, 12).toString());
+               
                 
                 this.documentoOriginal = txtDocumento.getText();
             } catch (Exception e) {
