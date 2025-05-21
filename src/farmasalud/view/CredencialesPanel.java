@@ -1,5 +1,6 @@
 package farmasalud.view;
 
+import DAOImpl.AdminDAOImpl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ public class CredencialesPanel {
     private String emailAdmin;
 
     public CredencialesPanel(JFrame parentFrame, String emailAdmin) {
-        this.adminDAO = new AdminDAO();
+        this.adminDAO = new AdminDAOImpl();
         this.parentFrame = parentFrame;
         this.emailAdmin = emailAdmin;
     }

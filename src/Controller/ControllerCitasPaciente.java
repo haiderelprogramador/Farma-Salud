@@ -40,7 +40,10 @@ import model.Sede;
 import DAOImpl.CitaDAOImpl;
 
 import DAOImpl.CitaDAOImpl;
+import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
+import DAOImpl.SalasDAOImpl;
+import DAOImpl.SedeDAOImpl;
 
 
 /**
@@ -74,10 +77,10 @@ public class ControllerCitasPaciente {
     private CitaDAO citasDAO ;
 
     private PacienteDAO pacienteDAO;
-    private MedicoDAO medicoDAO=new MedicoDAO();
-    SedeDAO sedesDAO=new SedeDAO();
-    SalasDAO salasDAO=new SalasDAO();
-     private JTextField txtIdCita2;
+    private MedicoDAO medicoDAO=new MedicoDAOImpl();
+    private SedeDAO sedesDAO = new SedeDAOImpl();
+    private SalasDAO salasDAO = new SalasDAOImpl();
+    private JTextField txtIdCita2;
     private JDateChooser jDateChooserCita;
     private JComboBox<String> cboHoraCita2;
     private JComboBox<String> cboMotivoCita2;
@@ -100,9 +103,9 @@ public class ControllerCitasPaciente {
   public ControllerCitasPaciente() {
        this.citasDAO = new CitaDAOImpl();
         this.pacienteDAO = new PacienteDAOImpl();
-        this.medicoDAO = new MedicoDAO();
-        this.sedesDAO = new SedeDAO();
-        this.salasDAO = new SalasDAO();
+        this.medicoDAO = new MedicoDAOImpl();
+        this.sedesDAO = new SedeDAOImpl();
+        this.salasDAO = new SalasDAOImpl();
     }
     
 

@@ -1,5 +1,6 @@
 package Controller;
 
+import DAOImpl.RecepcionistaDAOImpl;
 import Utilidades.EnviadorCredenciales;
 import Utilidades.GeneradorContraseñas;
 import com.toedter.calendar.JDateChooser;
@@ -16,11 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Recepcionista;
 
+
 public class ControllerRecepcionista {
     private static ControllerRecepcionista instancia;
   
     private DefaultTableModel tableModelRecepcionista;
-    private final RecepcionistaDAO recepcionistaDAO = RecepcionistaDAO.getInstancia();
+    private RecepcionistaDAO recepcionistaDAO = RecepcionistaDAOImpl.getInstancia();
     private String documentoOriginal;
     
     // Componentes de la vista

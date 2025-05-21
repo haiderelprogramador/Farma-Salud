@@ -1,5 +1,6 @@
 package Controller;
 
+import DAOImpl.MedicoDAOImpl;
 import Utilidades.EnviadorCredenciales;
 import com.toedter.calendar.JDateChooser;
 import dao.MedicoDAO;
@@ -29,7 +30,7 @@ public class ControllerDoctor {
     private static ControllerDoctor instancia;
   
     private DefaultTableModel tableModelDoctor;
-    private MedicoDAO medicoDAO = MedicoDAO.getInstancia();
+    private MedicoDAO medicoDAO = MedicoDAOImpl.getInstancia();
     private String documentoOriginal;
     
     private JTable tablaDoctores;

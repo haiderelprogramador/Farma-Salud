@@ -1,5 +1,6 @@
 package farmasalud.view;
 
+import DAOImpl.AdminDAOImpl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -27,7 +28,7 @@ public class MisDatosPanel {
 
     public void mostrarPanel(JFrame parentFrame, String emailAdmin) {
         try {
-            adminOriginal = new AdminDAO().obtenerAdministradorPorEmail(emailAdmin);
+            adminOriginal = new AdminDAOImpl().obtenerAdministradorPorEmail(emailAdmin);
             
             if (adminOriginal == null) {
                 JOptionPane.showMessageDialog(parentFrame, "Administrador no encontrado");
@@ -285,7 +286,7 @@ public class MisDatosPanel {
             adminModificado.addProperty("contraseña", adminOriginal.get("contraseña").getAsString());
 
             // Actualizar en el JSON
-            AdminDAO adminDAO = new AdminDAO();
+            AdminDAO adminDAO = new AdminDAOImpl();
             boolean success = adminDAO.actualizarDatosAdministrador(
                 adminOriginal.get("email").getAsString(),
                 adminModificado

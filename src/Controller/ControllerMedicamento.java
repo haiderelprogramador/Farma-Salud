@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAOImpl.MedicamentosDAOImpl;
 import dao.MedicamentosDAO;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class ControllerMedicamento {
     
     
     private DefaultTableModel tablaModelMedicamento;
-    private MedicamentosDAO medicamentoDAO = new MedicamentosDAO();
+    private MedicamentosDAO medicamentoDAO = new MedicamentosDAOImpl();
     private String codMedicamento;
     
     private JTable TabladeMedicamentos;

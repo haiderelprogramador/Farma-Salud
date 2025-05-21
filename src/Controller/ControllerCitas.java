@@ -41,6 +41,9 @@ import dao.PacienteDAO;
 import DAOImpl.PacienteDAOImpl;
 import model.Sede;
 import DAOImpl.CitaDAOImpl;
+import DAOImpl.MedicoDAOImpl;
+import DAOImpl.SalasDAOImpl;
+import DAOImpl.SedeDAOImpl;
 import java.io.IOException;
 import model.Medicamento;
 
@@ -55,10 +58,10 @@ import model.Medicamento;
 public class ControllerCitas {
   private DefaultTableModel tableModelCita;
     private String idCitaOriginal;
-    private MedicoDAO medicoDAO = new MedicoDAO();
+    private MedicoDAO medicoDAO = new MedicoDAOImpl();
     private PacienteDAO pacienteDAO;
-    private SalasDAO salasDAO = new SalasDAO();
-    private SedeDAO sedeDAO=new SedeDAO();
+    private SalasDAO salasDAO = new SalasDAOImpl();
+    private SedeDAO sedeDAO = new SedeDAOImpl();
     private Paciente pacienteSeleccionado;
     private Medico medicoSeleccionado;
     private DefaultTableModel tableModelMedico;
@@ -104,9 +107,9 @@ public class ControllerCitas {
     
    public  ControllerCitas() {
         citasDAO = new CitaDAOImpl();
-        medicoDAO = new MedicoDAO();
-        salasDAO = new SalasDAO();
-        sedeDAO = new SedeDAO();
+        medicoDAO = new MedicoDAOImpl();
+        salasDAO = new SalasDAOImpl();
+        sedeDAO = new SedeDAOImpl();
         pacienteDAO = new PacienteDAOImpl();
     }
 public static ControllerCitas getInstance() {

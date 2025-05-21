@@ -5,6 +5,7 @@
 package farmasalud.view;
 
 import Controller.ControllerCargarMedicosCitas;
+import DAOImpl.EnfermedadesDAOImpl;
 import Listener.EnfermedadSeleccionadaListener;
 import dao.EnfermedadesDAO;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Enfermedades extends javax.swing.JDialog {
    private EnfermedadSeleccionadaListener listener;
-private EnfermedadesDAO enfermedadDAO = new EnfermedadesDAO();
+private EnfermedadesDAO enfermedadDAO = new EnfermedadesDAOImpl();
 ControllerCargarMedicosCitas controller = ControllerCargarMedicosCitas.getInstance();
 private DialogAtender dialogAtender;
 
