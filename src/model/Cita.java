@@ -23,7 +23,8 @@ public class Cita {
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
-        CANCELADA;
+        CANCELADA,
+        NOASISTIO;
         
         public static EstadoCita getPROGRAMADA() {
             return PROGRAMADA;

@@ -23,7 +23,7 @@ public class usuarioDAO {
             switch(rol) {
                 case "Administrador":
                     return buscarAdministrador(email, contraseña);
-                case "Médico":
+                case "Doctor":
                     return buscarMedico(email, contraseña);
                 case "Recepcionista":
                     return buscarRecepcionista(email, contraseña);
@@ -135,7 +135,9 @@ public class usuarioDAO {
                 
                 if (json.get("email").getAsString().equalsIgnoreCase(email) && 
                     json.get("contraseña").getAsString().equals(contraseña)) {
-                    
+                    int peso = json.has("Peso") && !json.get("Peso").isJsonNull() ? json.get("Peso").getAsInt() : 0;
+                   double altura = json.has("Altura") && !json.get("Altura").isJsonNull() ? json.get("Altura").getAsDouble() : 0.0;
+
                     return new Paciente(
                         json.get("numeroDocumento").getAsString(),
                         json.get("nombres").getAsString(),
@@ -148,7 +150,9 @@ public class usuarioDAO {
                         json.get("contraseña").getAsString(),
                         json.get("tipoDocumento").getAsString(),
                         json.get("tipoSangre").getAsString(),
-                        json.get("antecedentes").getAsString()
+                        json.get("antecedentes").getAsString(),
+                          peso,
+                          altura
                     );
                 }
             }
