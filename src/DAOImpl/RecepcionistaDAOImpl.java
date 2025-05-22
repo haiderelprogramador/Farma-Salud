@@ -229,4 +229,48 @@ public class RecepcionistaDAOImpl implements RecepcionistaDAO {
             }
         }
     }
+    @Override
+    public Recepcionista buscarPorEmail(String email) {
+    List<Recepcionista> recepcionistas = cargarTodos();
+    return recepcionistas.stream()
+        .filter(Objects::nonNull)
+        .filter(r -> email.equalsIgnoreCase(r.getEmail()))
+        .findFirst()
+        .orElse(null);
+}
+@Override
+public boolean existeEmail(String email) {
+    return cargarTodos().stream()
+        .filter(Objects::nonNull)
+        .anyMatch(r -> email.equalsIgnoreCase(r.getEmail()));
+}
+@Override
+public boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña) {
+    try {
+        List<Recepcionista> recepcionistas = cargarTodos();
+        boolean encontrado = false;
+        
+        for (Recepcionista recepcionista : recepcionistas) {
+            if (recepcionista.getEmail().equalsIgnoreCase(emailActual)) {
+                if (nuevoEmail != null && !nuevoEmail.isEmpty()) {
+                    recepcionista.setEmail(nuevoEmail);
+                }
+                if (nuevaContraseña != null && !nuevaContraseña.isEmpty()) {
+                    recepcionista.setContraseña(nuevaContraseña);
+                }
+                encontrado = true;
+                break;
+            }
+        }
+        
+        if (encontrado) {
+            guardarTodos(recepcionistas);
+            return true;
+        }
+        return false;
+    } catch (Exception e) {
+        System.err.println("Error al actualizar credenciales: " + e.getMessage());
+        return false;
+    }
+}
 }
