@@ -17,7 +17,7 @@ import model.Medicamento;
  */
 public class DialogMedicamentos extends javax.swing.JDialog {
  ControllerCargarMedicosCitas controller = ControllerCargarMedicosCitas.getInstance();
-private DialogTratamiento dialogTratamiento;
+private DialogAtender dialogAtender;
     /**
      * Creates new form DialogMedicamentos
      */
@@ -30,16 +30,16 @@ private DialogTratamiento dialogTratamiento;
     ControllerCargarMedicosCitas.getInstance().cargarMedicamentosEnTabla();
        
     }
-public void setDialogMedicamento(DialogTratamiento dialogTratamiento) {
-        this.dialogTratamiento = dialogTratamiento;
+public void setDialogMedicamento(DialogAtender dialogAtender) {
+        this.dialogAtender = dialogAtender;
     }
 
     private void cargarMedicamentoSeleccionado() {
         int fila = tableMedicamentos.getSelectedRow();
         if (fila >= 0) {
             String medicamentos = tableMedicamentos.getValueAt(fila, 1).toString();
-            if (dialogTratamiento != null) {
-                dialogTratamiento.setMedicamento(medicamentos);
+            if (dialogAtender != null) {
+                dialogAtender.setMedicamento(medicamentos);
             }
         }
     }
@@ -164,8 +164,8 @@ public void setDialogMedicamento(DialogTratamiento dialogTratamiento) {
 
         String Medicamentos = "Medicamento: " + nombreMedicamento + "\nSíntomas: " + descripcion;
 
-        if (dialogTratamiento != null) {
-            dialogTratamiento.setMedicamento(Medicamentos);
+        if (dialogAtender!= null) {
+          //  dialogTratamiento.setMedicamento(Medicamentos);
             this.dispose(); // Cierra el diálogo Enfermedades si ya seleccionó
         }
     } else {

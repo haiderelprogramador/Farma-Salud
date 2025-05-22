@@ -40,7 +40,7 @@ public class Cita {
     }
 
     
-    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,Salas sala,EstadoCita estado,Paciente paciente,Medico medico,Sede sede  ) {
+    public Cita(String IdCita, LocalDate fechaCita, String hora, String motivo, String tipoCita, Salas sala, EstadoCita estado, Paciente paciente, Medico medico, Sede sede) {
         
         this.IdCita=IdCita;
         this.motivo=motivo;

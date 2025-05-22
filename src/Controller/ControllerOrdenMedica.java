@@ -4,7 +4,11 @@
  */
 package Controller;
 
+import DAOImpl.CitaDAOImpl;
 import DAOImpl.OrdenMedicaDAOImpl;
+import DAOImpl.PacienteDAOImpl;
+import dao.CitaDAO;
+import dao.MedicoDAO;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,84 +20,105 @@ import model.Medico;
 import model.OrdenMedica;
 import model.Paciente;
 import dao.OrdenMedicaDAO;
+import dao.PacienteDAO;
+import dao.SalasDAO;
+import dao.SedeDAO;
+import exceptions.ValidacionException;
+import java.util.ArrayList;
+import model.Cita;
+
 
 /**
  *
  * @author HP
  */
 public class ControllerOrdenMedica {
-  private static ControllerOrdenMedica instance;
+  
 
-private final OrdenMedicaDAO ordenMedicaDAO = new OrdenMedicaDAOImpl();
+private Medico medicoLogueado;
 
-    private JTextArea areaDiagnostico;
-    private JTextArea areaMedicamentos;
-    private Paciente pacienteSeleccionado;
-    private Medico medicoSeleccionado;
-
-    private ControllerOrdenMedica() {}
-
-    public static ControllerOrdenMedica getInstance() {
-        if (instance == null) {
-            instance = new ControllerOrdenMedica();
-        }
-        return instance;
-    }
-
-    public void setAreaDiagnostico(JTextArea areaDiagnostico) {
+ private JLabel lblNombre;
+ private JLabel lblApellido;
+  private JLabel lblEmail;
+  private JLabel lblAltura;
+  private JLabel txtPeso;
+   private JLabel lblFechaNacimiento;
+   private JLabel lblTipoSangre;
+   private JTextArea txtAntecedentes;
+   private JLabel lblCelular;
+   private JLabel lblSexo;
+   private JLabel lblEps;
+   private JTextArea areaDiagnostico;
+  private JTextArea textAreareceta;
+  private JTextArea txtAreaMedicamentos;
+  private JLabel lblFechaCita;
+  private JLabel lblHoraCita;
+  private JLabel lblidCita;
+    private OrdenMedicaDAO ordenmedica;
+    public ControllerOrdenMedica(OrdenMedicaDAO ordenmedica){
+     this.ordenmedica = ordenmedica;
+   
+  }
+    public ControllerOrdenMedica(JLabel lblNombre,JLabel lblApellido,JLabel lblEmail,JLabel lblAltura,
+                                 JLabel txtPeso,JLabel lblFechaNacimiento,JLabel lblTipoSangre,JTextArea txtAntecedentes,JLabel lblCelular,
+                                 JLabel lblSexo,JLabel lblEps,JTextArea areaDiagnostico,JTextArea textAreareceta,JTextArea txtAreaMedicamentos,JLabel lblFechaCita,
+                                 JLabel lblHoraCita,Medico medicoLogueado,OrdenMedicaDAO ordenmedica,JLabel idCita){
+        
+        this.lblNombre = lblNombre;
+        this.lblApellido = lblApellido;
+        this.lblEmail = lblEmail;
+        this.lblAltura = lblAltura;
+        this.txtPeso = txtPeso;
+        this.lblFechaNacimiento = lblFechaNacimiento;
+        this.lblTipoSangre = lblTipoSangre;
+        this.txtAntecedentes = txtAntecedentes;
+        this.lblCelular = lblCelular;
+        this.lblSexo = lblSexo;
+        this.lblEps = lblEps;
         this.areaDiagnostico = areaDiagnostico;
+        this.txtAreaMedicamentos =txtAreaMedicamentos;
+        this.textAreareceta=textAreareceta;
+        this.lblFechaCita=lblFechaCita;
+        this.lblHoraCita=lblHoraCita;
+        this.medicoLogueado= medicoLogueado;
+        this.ordenmedica = ordenmedica;  
+          this.lblidCita = lblidCita;
+    
     }
-
-    public void setAreaMedicamentos(JTextArea areaMedicamentos) {
-        this.areaMedicamentos = areaMedicamentos;
-    }
-
-    public void setPacienteSeleccionado(Paciente pacienteSeleccionado) {
-        this.pacienteSeleccionado = pacienteSeleccionado;
-    }
-
-
-
-    public void guardarOrdenMedicaDesdeFormulario() {
-        try {
-            if (pacienteSeleccionado == null) {
-                JOptionPane.showMessageDialog(null, "Debe buscar un paciente primero.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+    public OrdenMedica extraerDatosFormulario() {
+        String nombre = lblNombre != null ? lblNombre.getText() : "";
+        String apellido = lblApellido != null ? lblApellido.getText() : "";
+        String email = lblEmail != null ? lblEmail.getText() : "";
+        String altura = lblAltura != null ? lblAltura.getText() : "";
+        String peso = txtPeso != null ? txtPeso.getText() : "";
+        String fechaNacimiento = lblFechaNacimiento != null ? lblFechaNacimiento.getText() : "";
+        String tipoSangre = lblTipoSangre != null ? lblTipoSangre.getText() : "";
+        String antecedentes = txtAntecedentes != null ? txtAntecedentes.getText() : "";
+        String celular = lblCelular != null ? lblCelular.getText() : "";
+        String sexo = lblSexo != null ? lblSexo.getText() : "";
+        String eps = lblEps != null ? lblEps.getText() : "";
+        String diagnostico = areaDiagnostico != null ? areaDiagnostico.getText() : "";
+        String receta= textAreareceta != null ? textAreareceta.getText() : "";
+        List<String> listaMedicamentos = new ArrayList<>();
+      if (txtAreaMedicamentos != null) {
+    String texto = txtAreaMedicamentos.getText().trim();
+    if (!texto.isEmpty()) {
+        String[] medicamentos = texto.split("\\n"); // separa por líneas
+        for (String med : medicamentos) {
+            if (!med.trim().isEmpty()) {
+                listaMedicamentos.add(med.trim());
             }
-
-            if (medicoSeleccionado == null) {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un médico.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (areaDiagnostico == null || areaMedicamentos == null) {
-                JOptionPane.showMessageDialog(null, "Áreas de texto no están vinculadas.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            String diagnostico = areaDiagnostico.getText().trim();
-            String receta = areaMedicamentos.getText().trim();
-
-            if (diagnostico.isEmpty() || receta.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "El diagnóstico y la receta no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-           
-            OrdenMedica orden = new OrdenMedica(
-                diagnostico,
-                receta,
-                pacienteSeleccionado,
-                medicoSeleccionado
-             
-            );
-
-            ordenMedicaDAO.guardarOrdenMedica(orden); 
-            JOptionPane.showMessageDialog(null, "Orden médica guardada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar orden médica: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
+    }
+}
+        String fechacita= lblFechaCita != null ? lblFechaCita.getText() : "";
+        String horacita=lblHoraCita != null ? lblHoraCita.getText() : "";
+        String nombreMedico = medicoLogueado != null ? medicoLogueado.getNombres(): "";
+        String apellidoMedico = medicoLogueado != null ? medicoLogueado.getApellidos() : "";
+        String especialidad = medicoLogueado != null ? medicoLogueado.getEspecialidad() : "";
+        return new OrdenMedica(
+            nombre, apellido, email, altura, peso, fechaNacimiento,
+            tipoSangre, antecedentes, celular, sexo, eps, diagnostico,receta,listaMedicamentos,fechacita,horacita,nombreMedico,apellidoMedico,especialidad
+        );
     }
 }

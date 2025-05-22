@@ -8,6 +8,7 @@ import Controller.ControllerCargarMedicosCitas;
 import Controller.ControllerCitas;
 import Controller.ControllerOrdenMedica;
 import Controller.ControllerPaciente;
+import dao.MedicoDAO;
 import dao.PacienteDAO;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JMenuItem;
@@ -22,6 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 import model.Cita;
+import model.Medicamento;
+import model.Medico;
 import model.OrdenMedica;
 
 /**
@@ -32,6 +36,8 @@ public class Doctor extends javax.swing.JFrame {
    private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
     private JPopupMenu popupMenu;
     private JMenuItem itemAtender;
+    private Medico medicoLogueado;
+
     private ControllerPaciente controller;
     private DefaultTableModel tableModelPaciente;
     private ControllerOrdenMedica controllerorden;
@@ -49,6 +55,7 @@ public class Doctor extends javax.swing.JFrame {
 
         itemAtender = new JMenuItem("Atender cita");  
         popupMenu.add(itemAtender);
+        
 
          JMenuItem itemNoAsistio = new JMenuItem("No asistió");
          popupMenu.add(itemNoAsistio);
@@ -56,6 +63,9 @@ public class Doctor extends javax.swing.JFrame {
          itemAtender.addActionListener(evt -> {
             int filaSeleccionada = tableCitasPorMedico.getSelectedRow();
             if (filaSeleccionada != -1) {
+                  String idCita = tableCitasPorMedico.getValueAt(filaSeleccionada, 5).toString();
+                      Cita cita = controllerCitas.buscarCitaPorId(idCita); // Método ya implementado
+
                 Object valorFecha = tableCitasPorMedico.getValueAt(filaSeleccionada, 8);
                 Object valorHora = tableCitasPorMedico.getValueAt(filaSeleccionada, 6);
 
@@ -64,6 +74,9 @@ public class Doctor extends javax.swing.JFrame {
                     String hora = valorHora.toString();
 
                     DialogAtender dialog = new DialogAtender(null, true);
+                    dialog.setMedicamento("");
+                        dialog.setCita(cita);
+                    dialog.setMedicoSeleccionado(medicoLogueado);
                     dialog.setFechaYHora(fecha, hora);
                     dialog.setLocationRelativeTo(tableCitasPorMedico);
                     dialog.setVisible(true);
@@ -140,6 +153,8 @@ public class Doctor extends javax.swing.JFrame {
 
    
      public void inicializarConDoctor(String documento) {
+         MedicoDAO medicodao = new MedicoDAO();
+         this.medicoLogueado = medicodao.buscarMedicoPorIdentificacion(documento);
         this.documentoDoctor = documento;
         actualizarInterfaz();
 
@@ -156,6 +171,8 @@ public class Doctor extends javax.swing.JFrame {
                 }
             }
         });
+ 
+
     }
 
     private void actualizarInterfaz() {
@@ -516,6 +533,22 @@ public class Doctor extends javax.swing.JFrame {
        Date fecha = dateChooserF.getDate();
     if (fecha == null) {
         JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    Date fechaSeleccionada = dateChooserF.getDate();
+    
+    // Validación 2: Fecha futura
+    if (fechaSeleccionada.before(new Date())) {
+        JOptionPane.showMessageDialog(this, "No puede seleccionar fechas pasadas.", "Error", JOptionPane.ERROR_MESSAGE);
+        dateChooserF.setDate(null);
+        return;
+    }
+    dateChooserF.setDateFormatString("dd/MM/yyyy"); // Establecer formato visual
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(fechaSeleccionada);
+    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+        JOptionPane.showMessageDialog(this, "Seleccione un día entre lunes y viernes.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
     }//GEN-LAST:event_dateChooserFechaActionPerformed

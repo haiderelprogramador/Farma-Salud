@@ -40,7 +40,10 @@ import model.Sede;
 import DAOImpl.CitaDAOImpl;
 
 import DAOImpl.CitaDAOImpl;
+import DAOImpl.OrdenMedicaDAOImpl;
 import DAOImpl.PacienteDAOImpl;
+import dao.OrdenMedicaDAO;
+import model.OrdenMedica;
 
 
 /**
@@ -93,7 +96,10 @@ public class ControllerCitasPaciente {
     private JLabel lblDocumentoPaciente2;
     private JLabel lblEps2;
     private static ControllerCitasPaciente instance;
-    
+    private OrdenMedicaDAO ordenMedicaDAO = new OrdenMedicaDAOImpl();
+
+
+
     // Listeners
     private List<CitaListener> listeners = new ArrayList<>();
 
@@ -103,8 +109,12 @@ public class ControllerCitasPaciente {
         this.medicoDAO = new MedicoDAO();
         this.sedesDAO = new SedeDAO();
         this.salasDAO = new SalasDAO();
+        this.ordenMedicaDAO = new OrdenMedicaDAOImpl();
+
     }
-    
+     public OrdenMedica obtenerOrdenMedicaPorCita(int idCita) {
+        return ordenMedicaDAO.obtenerPorIdCita(idCita);
+    }
 
     public static synchronized ControllerCitasPaciente getInstance() {
         if (instance == null) {
@@ -1038,7 +1048,6 @@ public boolean cancelarCitaPorId(String idCita) {
     }
     return false;
 }
-
 
 }
 
