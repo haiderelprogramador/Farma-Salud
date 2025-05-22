@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAOImpl.SalasDAOImpl;
 import dao.SalasDAO;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -17,7 +18,7 @@ import model.Salas;
 public class ControllerSalas {
   
     private DefaultTableModel tableModelSalas;
-    private SalasDAO salasDAO = new SalasDAO();
+    private SalasDAO salasDAO = new SalasDAOImpl();
     private String codigoOriginal;
     
     private JTable tablaSalas;
@@ -72,30 +73,30 @@ public class ControllerSalas {
         }
     }
     
-   public void guardarSalaDesdeFormulario() {
-    try {
-        String nombreSala = txtNombreSala.getText().trim();
-        String codigoSala = txtCodigoSala.getText().trim();
-        String tipoSala = cbTipoSala.getSelectedItem().toString();
-        int capacidad = (int) spCapacidad.getValue();
-        
-        if (nombreSala.isEmpty() || codigoSala.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nombre y código son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Solución: Verificar nulos en la comparación
-        boolean existe = salasDAO.cargarTodasSalas().stream()
-            .anyMatch(s -> codigoSala.equals(s.getCodigoSala())); // Cambio importante aquí
-        
-        if (existe) {
-            JOptionPane.showMessageDialog(null,
-                "Ya existe una sala con este código",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    public void guardarSalaDesdeFormulario() {
+        try {
+            String nombreSala = txtNombreSala.getText().trim();
+            String codigoSala = txtCodigoSala.getText().trim();
+            String tipoSala = cbTipoSala.getSelectedItem().toString();
+            int capacidad = (int) spCapacidad.getValue();
             
+            if (nombreSala.isEmpty() || codigoSala.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nombre y código son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Solución: Verificar nulos en la comparación
+            boolean existe = salasDAO.cargarTodasSalas().stream()
+                .anyMatch(s -> s != null && codigoSala.equals(s.getCodigoSala()));
+            
+            if (existe) {
+                JOptionPane.showMessageDialog(null,
+                    "Ya existe una sala con este código",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+                
             Salas nuevaSala = new Salas(
                 nombreSala,
                 codigoSala,
@@ -103,10 +104,13 @@ public class ControllerSalas {
                 String.valueOf(capacidad)
             );
             
-            salasDAO.guardarSalaConValidacion(nuevaSala);
-            JOptionPane.showMessageDialog(null, "Sala guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            cargarDatosEnTablaSalas();
-            limpiarSala();
+            if (salasDAO.guardarSalaConValidacion(nuevaSala)) {
+                JOptionPane.showMessageDialog(null, "Sala guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cargarDatosEnTablaSalas();
+                limpiarSala();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo guardar la sala", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al guardar Sala: " + e.getMessage(),
                 "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -185,7 +189,7 @@ public class ControllerSalas {
 
             if (!codigoOriginal.equals(codigoSala)) {
                 boolean existe = salasDAO.cargarTodasSalas().stream()
-                    .anyMatch(s -> s.getCodigoSala().equals(codigoSala));
+                    .anyMatch(s -> s != null && s.getCodigoSala().equals(codigoSala));
                 if (existe) {
                     JOptionPane.showMessageDialog(null,
                         "Ya existe una sala con este código",

@@ -8,6 +8,7 @@ import Controller.ControllerCargarMedicosCitas;
 import Controller.ControllerCitas;
 import Controller.ControllerOrdenMedica;
 import Controller.ControllerPaciente;
+import DAOImpl.MedicoDAOImpl;
 import dao.MedicoDAO;
 import dao.PacienteDAO;
 import java.awt.Color;
@@ -153,7 +154,7 @@ public class Doctor extends javax.swing.JFrame {
 
    
      public void inicializarConDoctor(String documento) {
-         MedicoDAO medicodao = new MedicoDAO();
+         MedicoDAO medicodao = new MedicoDAOImpl();
          this.medicoLogueado = medicodao.buscarMedicoPorIdentificacion(documento);
         this.documentoDoctor = documento;
         actualizarInterfaz();

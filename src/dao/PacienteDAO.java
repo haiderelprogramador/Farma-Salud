@@ -21,6 +21,8 @@ public interface PacienteDAO {
     Paciente buscarPorDocumento(String documento);
     boolean actualizarPaciente(String documentoOriginal, Paciente pacienteActualizado);
     Paciente buscarPorEmail(String email);
+    boolean existeEmail(String email);
+    boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña);
 
     
 

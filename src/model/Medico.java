@@ -12,7 +12,8 @@ public class Medico extends Persona {
     
     @SerializedName("horario")
     private String horario;
-
+    
+    
     public Medico(String numeroDocumento, String nombres, String apellidos, 
                  LocalDate fechaNacimiento, String sexo, 
                  String email, String celular,String contraseña, String especialidad,

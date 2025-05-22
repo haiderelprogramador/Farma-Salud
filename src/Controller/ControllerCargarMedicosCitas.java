@@ -5,7 +5,12 @@
 package Controller;
 
 import DAOImpl.CitaDAOImpl;
+import DAOImpl.EnfermedadesDAOImpl;
+import DAOImpl.MedicamentosDAOImpl;
+import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
+import DAOImpl.SalasDAOImpl;
+import DAOImpl.SedeDAOImpl;
 import static com.sun.source.util.DocTrees.instance;
 import static com.sun.source.util.JavacTask.instance;
 import static com.sun.source.util.Trees.instance;
@@ -46,9 +51,8 @@ public class ControllerCargarMedicosCitas {
     private JTable tableCitasPorMedico;
     private PacienteDAO pacienteDAO;
     private final CitaDAO citasDAO;
-    private SalasDAO salasDAO = new SalasDAO();
-    private SedeDAO sedesDAO=new SedeDAO();
-    private MedicoDAO medicoDAO = new MedicoDAO();
+    ControllerCargarMedicosCitas controller = ControllerCargarMedicosCitas.getInstance();
+    private MedicoDAO medicoDAO = new MedicoDAOImpl();
   private Medico medicoActual; 
    private String documentoMedicoActual;
    private EnfermedadesDAO enfermedadDAO;
@@ -56,7 +60,7 @@ public class ControllerCargarMedicosCitas {
     private Integer idOriginal;
     private JTable tablaEnfermedades;
      private DefaultTableModel tablaModelMedicamento;
-    private MedicamentosDAO medicamentoDAO = new MedicamentosDAO();
+    private MedicamentosDAO medicamentoDAO = new MedicamentosDAOImpl();
     private String codMedicamento;
     private JTextField txtCodMedicamento;
     private JTextField txtMedicamento;
@@ -68,6 +72,8 @@ public class ControllerCargarMedicosCitas {
     private JComboBox<String> cbDisponible;
     private JTextField txtPrecio;   
     private ControllerCargarMedicosCitas controllerCargarMedico;
+    private SalasDAO salasDAO = new SalasDAOImpl();
+    private SedeDAO sedesDAO = new SedeDAOImpl();
 
     
     private JTable TabladeMedicamentos;
@@ -85,10 +91,10 @@ public class ControllerCargarMedicosCitas {
       public ControllerCargarMedicosCitas() {
        this.citasDAO = new CitaDAOImpl();
         this.pacienteDAO = new PacienteDAOImpl();
-        this.medicoDAO = new MedicoDAO();
-        this.sedesDAO = new SedeDAO();
-        this.salasDAO = new SalasDAO();
-            this.enfermedadDAO = new EnfermedadesDAO();
+        this.medicoDAO = new MedicoDAOImpl();
+        this.sedesDAO = new SedeDAOImpl();
+        this.salasDAO = new SalasDAOImpl();
+            this.enfermedadDAO = new EnfermedadesDAOImpl();
         this.idOriginal = null;
     }
           public Paciente buscarPacientePorDocumento(String documento) {
@@ -315,7 +321,7 @@ public void buscarEnfermedadesPorNombre(String nombreBuscado) {
 }
 public void cargarMedicamentosEnTabla() {
     try {
-        List<Medicamento> medicamentos = new MedicamentosDAO().cargarTodos();
+        List<Medicamento> medicamentos = new MedicamentosDAOImpl().cargarTodos();
         tablaModelMedicamento.setRowCount(0); // Limpiar tabla
 
         for (Medicamento m : medicamentos) {

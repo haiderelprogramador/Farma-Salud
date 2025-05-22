@@ -1,5 +1,6 @@
 package Controller;
 
+import DAOImpl.EnfermedadesDAOImpl;
 import dao.EnfermedadesDAO;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ControllerEnfermedades {
     private JTextArea txtCausas;
     
     public ControllerEnfermedades() {
-        this.enfermedadDAO = new EnfermedadesDAO();
+        this.enfermedadDAO = new EnfermedadesDAOImpl();
         this.idOriginal = null;
     }
     

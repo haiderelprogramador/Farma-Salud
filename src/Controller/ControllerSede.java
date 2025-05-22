@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAOImpl.SedeDAOImpl;
 import dao.SedeDAO;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -16,7 +17,7 @@ import model.Sede;
 public class ControllerSede {
   
     private DefaultTableModel tableModelSedes;
-    private SedeDAO sedeDAO = new SedeDAO();
+    private SedeDAO sedeDAO = new SedeDAOImpl();
     private String codigoOriginal;
     
     private JTable tablaSedes;
