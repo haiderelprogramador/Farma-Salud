@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controller.ControllerPaciente;
 import DAOImpl.CitaDAOImpl;
+import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
 import dao.CitaDAO;
 import dao.MedicoDAO;
@@ -51,7 +52,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
     private ControllerPaciente controller;
     private DefaultTableModel tableModelCita;
     private DefaultTableModel tableModelConsultarMedico=new DefaultTableModel();
-    private MedicoDAO medicoDAO = new MedicoDAO();
+    private MedicoDAO medicoDAO = new MedicoDAOImpl();
     private final ControllerCitas controlllercitas=ControllerCitas.getInstance();
         ControllerCitas controllerCitas = ControllerCitas.getInstance();
     
