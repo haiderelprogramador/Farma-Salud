@@ -234,4 +234,34 @@ public class MedicoDAOImpl implements MedicoDAO {
             }
         }
     }
+    @Override
+    public boolean existeEmail(String email) {
+    return cargarTodos().stream()
+        .filter(Objects::nonNull)
+        .anyMatch(m -> email.equalsIgnoreCase(m.getEmail()));
+}
+@Override
+public boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña) {
+    List<Medico> medicos = cargarTodos();
+    boolean encontrado = false;
+    
+    for (Medico medico : medicos) {
+        if (medico.getEmail().equalsIgnoreCase(emailActual)) {
+            if (nuevoEmail != null && !nuevoEmail.isEmpty()) {
+                medico.setEmail(nuevoEmail);
+            }
+            if (nuevaContraseña != null && !nuevaContraseña.isEmpty()) {
+                medico.setContraseña(nuevaContraseña);
+            }
+            encontrado = true;
+            break;
+        }
+    }
+    
+    if (encontrado) {
+        guardarTodos(medicos);
+        return true;
+    }
+    return false;
+}
 }

@@ -28,4 +28,6 @@ List<Medico> cargarTodos();
     boolean actualizarMedico(String cedulaOriginal, Medico medicoActualizado);
     Medico buscarPorNombreYApellido(String nombre, String apellido);
     boolean existeMedico(String numeroDocumento);
+    boolean existeEmail(String email);
+    boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña);
 }

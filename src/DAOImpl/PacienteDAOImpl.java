@@ -143,4 +143,38 @@ public class PacienteDAOImpl implements PacienteDAO{
             return (date == null || date.trim().isEmpty()) ? null : LocalDate.parse(date, formatter);
         }
     }   
+    @Override
+    public boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña) {
+    List<Paciente> pacientes = cargarTodos();
+    boolean encontrado = false;
+    
+    for (Paciente paciente : pacientes) {
+        if (paciente.getEmail().equalsIgnoreCase(emailActual)) {
+            // Actualizar email si se proporciona uno nuevo
+            if (nuevoEmail != null && !nuevoEmail.isEmpty()) {
+                paciente.setEmail(nuevoEmail);
+            }
+            
+            // Actualizar contraseña si se proporciona una nueva
+            if (nuevaContraseña != null && !nuevaContraseña.isEmpty()) {
+                paciente.setContraseña(nuevaContraseña);
+            }
+            
+            encontrado = true;
+            break;
+        }
+    }
+    
+    if (encontrado) {
+        guardarTodos(pacientes);
+        return true;
+    }
+    return false;
+}
+    @Override
+public boolean existeEmail(String email) {
+    return cargarTodos().stream()
+        .anyMatch(p -> p.getEmail().equalsIgnoreCase(email));
+}
+
 }
