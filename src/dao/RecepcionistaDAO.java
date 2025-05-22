@@ -27,4 +27,8 @@ List<Recepcionista> cargarTodos();
     boolean eliminarRecepcionista(String numeroDocumento);
     Recepcionista obtenerPorDocumento(String documento);
     boolean actualizarRecepcionista(String documentoOriginal, Recepcionista recepcionistaActualizado);
+    public Recepcionista buscarPorEmail(String email);
+    public boolean existeEmail(String email);
+    public boolean actualizarCredenciales(String emailActual, String nuevoEmail, String nuevaContraseña);
+    
 }
