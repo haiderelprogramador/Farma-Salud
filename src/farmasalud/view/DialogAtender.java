@@ -7,7 +7,9 @@ package farmasalud.view;
 import Controller.ControllerCargarMedicosCitas;
 import Controller.ControllerCitas;
 import Controller.ControllerOrdenMedica;
+import Controller.ControllerPaciente;
 import DAOImpl.OrdenMedicaDAOImpl;
+import Listener.PacienteListener;
 import dao.OrdenMedicaDAO;
 import jakarta.mail.internet.ParseException;
 import java.awt.event.KeyAdapter;
@@ -26,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Cita;
 import model.Medico;
 import model.OrdenMedica;
+import model.Paciente;
 
 
  
@@ -33,34 +36,59 @@ import model.OrdenMedica;
  *
  * @author Maria liz
  */
-public class DialogAtender extends javax.swing.JDialog {
+public class DialogAtender extends javax.swing.JDialog implements PacienteListener {
 private Cita citaSeleccionada;
+    private Paciente paciente;
+
 private Cita cita;
 private DefaultTableModel tableModel;
 private int filaSeleccionada;
 private int columnaEstado = 7; 
+    private String documentoPaciente;
 
     OrdenMedicaDAO OrdenMEdica = new OrdenMedicaDAOImpl();
     
     public DialogAtender(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-   
+    ControllerPaciente.getInstance().agregarPacienteListener(this);
 
     }
-    public void setFechaYHora(String fecha, String hora) {
+    @Override
+public void actualizar(Paciente paciente) {
+    if (paciente != null && this.documentoPaciente != null 
+        && paciente.getNumeroDocumento().equals(documentoPaciente)) {
+
+        setPesoYAltura(paciente.getPeso(), paciente.getAltura());
+        JOptionPane.showMessageDialog(this, "Peso y altura actualizados del paciente.");
+    }
+}
+public void setDocumentoPaciente(String documentoPaciente) {
+    this.documentoPaciente = documentoPaciente;
+}
+
+
+    public void setFechaYHora(String fecha, String hora,String idCita,String estado,String motivo,String sede,String documento) {
     
     lblFechaCita.setText(fecha);  
-    lblHoraCita.setText(hora);    
+    lblHoraCita.setText(hora);  
+    lblEstado.setText(estado);
+    lblMotivo.setText(motivo);
+    lblSede.setText(sede);
+    
 }
     
     public void setCita(Cita cita) {
     this.cita = cita;
-    // otras configuraciones si necesitas
+   
 }
+    
     public void setCitaSeleccionada(Cita cita) {
     this.citaSeleccionada = cita;
 }
+ 
+
+  
 
 
 
@@ -192,7 +220,11 @@ public void setFilaSeleccionada(int fila) {
     public void setDiagnostico(String diagnostico) {
     areaDiagnostico.setText(diagnostico);
 }
-  
+
+
+
+
+
 
 
     /**
@@ -249,6 +281,15 @@ public void setFilaSeleccionada(int fila) {
         lblCelular = new javax.swing.JLabel();
         jSeparator13 = new javax.swing.JSeparator();
         lblAltura = new javax.swing.JTextField();
+        lblEstado = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblSede = new javax.swing.JLabel();
+        jSeparator14 = new javax.swing.JSeparator();
+        jSeparator15 = new javax.swing.JSeparator();
+        jLabel10 = new javax.swing.JLabel();
+        lblMotivo = new javax.swing.JLabel();
+        jSeparator16 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtDocumento = new javax.swing.JTextField();
@@ -359,7 +400,7 @@ public void setFilaSeleccionada(int fila) {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Eps");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 110, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Peso ");
@@ -384,7 +425,7 @@ public void setFilaSeleccionada(int fila) {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setText("Sexo");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, -1, -1));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, -1, -1));
         jPanel2.add(lblSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, 130, 40));
 
         jSeparator9.setBackground(new java.awt.Color(28, 43, 110));
@@ -411,7 +452,7 @@ public void setFilaSeleccionada(int fila) {
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel24.setText("HoraCita ");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 150, -1, -1));
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, -1, -1));
         jPanel2.add(lblHoraCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 110, 30));
 
         jSeparator12.setBackground(new java.awt.Color(28, 43, 110));
@@ -427,7 +468,7 @@ public void setFilaSeleccionada(int fila) {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Telefono");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
         jPanel2.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 120, 40));
 
         jSeparator13.setBackground(new java.awt.Color(28, 43, 110));
@@ -441,8 +482,35 @@ public void setFilaSeleccionada(int fila) {
             }
         });
         jPanel2.add(lblAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 120, 30));
+        jPanel2.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 110, 40));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 860, 230));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("Estado");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Sede");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
+        jPanel2.add(lblSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 120, 40));
+
+        jSeparator14.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator14.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel2.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 120, -1));
+
+        jSeparator15.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator15.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel2.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 110, 10));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("Motivo Cita");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 240, -1, -1));
+        jPanel2.add(lblMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 220, 100, 40));
+
+        jSeparator16.setBackground(new java.awt.Color(28, 43, 110));
+        jSeparator16.setForeground(new java.awt.Color(28, 43, 110));
+        jPanel2.add(jSeparator16, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, 100, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 860, 280));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Documento ");
@@ -486,7 +554,7 @@ public void setFilaSeleccionada(int fila) {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 860, 40));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 860, 40));
 
         btnSeleccionarEnfermedad.setText("Seleccionar Enfermedad ");
         btnSeleccionarEnfermedad.addActionListener(new java.awt.event.ActionListener() {
@@ -606,7 +674,8 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
             "Error al buscar paciente: " + e.getMessage(), 
             "Error", 
             JOptionPane.ERROR_MESSAGE);
-    }        // TODO add your handling code here:
+    }       
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocumentoActionPerformed
@@ -646,8 +715,12 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     }//GEN-LAST:event_txtDocumentoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-          // Validar campos obligatorios
-    if (txtMedicamento.getText().trim().isEmpty()) {
+    if (citaSeleccionada == null) {
+        JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna cita.");
+        return;
+    }
+
+        if (txtMedicamento.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "El medicamento no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
         txtMedicamento.requestFocus();
         return;
@@ -701,14 +774,36 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
         if (tableModel != null && filaSeleccionada != -1) {
             tableModel.setValueAt("Completada", filaSeleccionada, columnaEstado);
         }
-    }      JOptionPane.showMessageDialog(this, "Orden Guardada correctamente");
-        
+    }    
+   
+       
+   Paciente paciente = citaSeleccionada.getPaciente();
+   if (paciente == null) {
+            JOptionPane.showMessageDialog(this, "La cita seleccionada no tiene paciente asociado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+paciente.setPeso(Integer.parseInt(txtPeso.getText().trim()));
+paciente.setAltura(Double.parseDouble(lblAltura.getText().trim()));
+
+// Guardar los cambios en el DAO
+ControllerPaciente controllerPaciente = ControllerPaciente.getInstance();
+controllerPaciente.actualizarPaciente(paciente.getNumeroDocumento(), paciente);
+
+// Notificar a las interfaces que escuchan cambios en pacientes
+controllerPaciente.notificarPacienteActualizado(paciente);
+   
+   JOptionPane.showMessageDialog(this, "Orden Guardada correctamente");
+       
         this.dispose();
     } catch(Exception e) {
         JOptionPane.showMessageDialog(this, "Error al guardar la orden: " + e.getMessage(), 
             "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace(); 
     }
+      
+    
+
+
           
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -801,6 +896,7 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     private javax.swing.JButton btnSeleccionarEnfermedad;
     private javax.swing.JButton btnSeleccionarMedicamento;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
@@ -814,6 +910,8 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -828,6 +926,9 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
+    private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -842,10 +943,13 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     private javax.swing.JLabel lblDiagnostico;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEps;
+    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFechaCita;
     private javax.swing.JLabel lblFechaNacimiento;
     private javax.swing.JLabel lblHoraCita;
+    private javax.swing.JLabel lblMotivo;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblSede;
     private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblTipoSangre;
     private javax.swing.JTextArea txtAntecedentes;
@@ -886,8 +990,15 @@ if (txtMedicamento != null) {
     String nombreMedico = medicoSeleccionado != null ? medicoSeleccionado.getNombres(): "";
     String apellidoMedico = medicoSeleccionado != null ? medicoSeleccionado.getApellidos() : "";
     String especialidad = medicoSeleccionado != null ? medicoSeleccionado.getEspecialidad() : "";
+    String idCita = lblEstado != null ? lblEstado.getText() : "";
+   String sede = lblSede != null ? lblSede.getText() : "";
+   String motivo = lblMotivo!= null ? lblMotivo.getText() : ""; 
+    String estado = lblEstado != null ? lblEstado.getText() : "";
+
+
     return new OrdenMedica(nombre, apellido, email, altura, peso, fechaNacimiento, 
-                         tipoSangre, antecedentes, celular, sexo, eps, diagnostico,receta,listaMedicamentos,fechacita,horacita,nombreMedico,apellidoMedico,especialidad);
+                         tipoSangre, antecedentes, celular, sexo, eps, diagnostico,receta,
+            listaMedicamentos,fechacita,horacita,nombreMedico,apellidoMedico,especialidad,idCita,sede,motivo,estado);
    }
 }
 

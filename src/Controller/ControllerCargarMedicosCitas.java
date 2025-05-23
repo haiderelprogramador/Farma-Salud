@@ -11,9 +11,7 @@ import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
 import DAOImpl.SalasDAOImpl;
 import DAOImpl.SedeDAOImpl;
-import static com.sun.source.util.DocTrees.instance;
-import static com.sun.source.util.JavacTask.instance;
-import static com.sun.source.util.Trees.instance;
+
 import dao.CitaDAO;
 
 import dao.MedicoDAO;
@@ -34,9 +32,7 @@ import model.Enfermedad;
 import model.Medico;
 import model.Paciente;
 import dao.EnfermedadesDAO;
-import static com.sun.source.util.DocTrees.instance;
-import static com.sun.source.util.JavacTask.instance;
-import static com.sun.source.util.Trees.instance;
+
 import dao.MedicamentosDAO;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -51,8 +47,8 @@ public class ControllerCargarMedicosCitas {
     private JTable tableCitasPorMedico;
     private PacienteDAO pacienteDAO;
     private final CitaDAO citasDAO;
-    ControllerCargarMedicosCitas controller = ControllerCargarMedicosCitas.getInstance();
-    private MedicoDAO medicoDAO = new MedicoDAOImpl();
+ControllerCargarMedicosCitas controller;
+    private MedicoDAO medicoDAO ;
   private Medico medicoActual; 
    private String documentoMedicoActual;
    private EnfermedadesDAO enfermedadDAO;
@@ -60,7 +56,7 @@ public class ControllerCargarMedicosCitas {
     private Integer idOriginal;
     private JTable tablaEnfermedades;
      private DefaultTableModel tablaModelMedicamento;
-    private MedicamentosDAO medicamentoDAO = new MedicamentosDAOImpl();
+    private MedicamentosDAO medicamentoDAO ;
     private String codMedicamento;
     private JTextField txtCodMedicamento;
     private JTextField txtMedicamento;
@@ -72,8 +68,8 @@ public class ControllerCargarMedicosCitas {
     private JComboBox<String> cbDisponible;
     private JTextField txtPrecio;   
     private ControllerCargarMedicosCitas controllerCargarMedico;
-    private SalasDAO salasDAO = new SalasDAOImpl();
-    private SedeDAO sedesDAO = new SedeDAOImpl();
+    private SalasDAO salasDAO ;
+    private SedeDAO sedesDAO ;
 
     
     private JTable TabladeMedicamentos;
@@ -368,6 +364,7 @@ public void cargarMedicamentosEnTabla() {
             JOptionPane.ERROR_MESSAGE);
     }
 }
+
 
 }
 

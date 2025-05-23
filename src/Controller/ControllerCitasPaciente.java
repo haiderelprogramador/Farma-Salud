@@ -119,10 +119,7 @@ public class ControllerCitasPaciente {
         this.ordenMedicaDAO = new OrdenMedicaDAOImpl();
 
     }
-     public OrdenMedica obtenerOrdenMedicaPorCita(int idCita) {
-        return ordenMedicaDAO.obtenerPorIdCita(idCita);
-       
-    }
+    
 
     public static synchronized ControllerCitasPaciente getInstance() {
         if (instance == null) {
@@ -156,6 +153,12 @@ public class ControllerCitasPaciente {
     public void setjDateChooserCita(JDateChooser jDateChooserCita) {
         this.jDateChooserCita = jDateChooserCita;
     
+    }
+     public Paciente buscarPorDocumento(String documento) {
+        if (documento == null || documento.isEmpty()) {
+            return null;
+        }
+        return pacienteDAO.buscarPorDocumento(documento);
     }
 
     public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
@@ -1056,6 +1059,14 @@ public boolean cancelarCitaPorId(String idCita) {
     }
     return false;
 }
+public OrdenMedica obtenerOrdenMedicaPorCita(String idCita) {
+    OrdenMedicaDAO ordenDAO = new OrdenMedicaDAOImpl();
+    return ordenDAO.obtenerPorIdCita(idCita);
+}
+
+
+
+
 
 }
 

@@ -16,6 +16,7 @@ import Controller.ControllerPaciente;
 import DAOImpl.CitaDAOImpl;
 import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
+import Listener.PacienteListener;
 import dao.CitaDAO;
 import dao.MedicoDAO;
 import java.awt.Component;
@@ -46,7 +47,7 @@ import model.Paciente;
  *
  * @author Maria liz
  */
-public class recepcionista extends javax.swing.JFrame implements CitaListener{
+public class recepcionista extends javax.swing.JFrame implements CitaListener,PacienteListener{
 
      private DefaultTableModel tableModel;
     private ControllerPaciente controller;
@@ -71,6 +72,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
           if (tablePaciente == null || tablaCitas == null) {
             throw new IllegalStateException("Las tablas no están inicializadas en el diseño");
         }
+          
        
         configurarPacientes();
         controllerCitas.setTablePaciente(tablePaciente);
@@ -89,6 +91,7 @@ public class recepcionista extends javax.swing.JFrame implements CitaListener{
         }
          btnBuscarCita.addActionListener(e -> buscarCitaPorDocumento());
     }
+    
 @Override
 public void citaAgregada(Cita cita) {
     System.out.println("Listener recibido en recepcionista, recargando tabla...");
@@ -287,6 +290,24 @@ private void buscarCitaPorDocumento() {
     }
     controllerCitas.buscarCitaPorDocumento(documentoABuscar);
 }
+ @Override
+public void actualizar(Paciente pacienteActualizado) {
+    DefaultTableModel model = (DefaultTableModel) tablaPacientes.getModel();
+    int colPeso = model.findColumn("Peso");
+    int colAltura = model.findColumn("Altura");
+
+    if (colPeso != -1 && colAltura != -1) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String cedula = model.getValueAt(i, 0).toString();
+            if (cedula.equals(pacienteActualizado.getNumeroDocumento())) {
+                model.setValueAt(pacienteActualizado.getPeso(), i, colPeso);
+                model.setValueAt(pacienteActualizado.getAltura(), i, colAltura);
+                break;
+            }
+        }
+    }
+}
+
 
 
 public void verificarDisponibilidadHoraActualizacion() {
@@ -658,7 +679,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
 
         jLabel31.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Citas Por Medico");
 

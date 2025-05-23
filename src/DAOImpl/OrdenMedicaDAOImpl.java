@@ -51,16 +51,14 @@ public class OrdenMedicaDAOImpl implements OrdenMedicaDAO{
             System.err.println("Error al guardar órdenes médicas: " + e.getMessage());
         }
     }
-  @Override
-public OrdenMedica obtenerPorIdCita(int idCita) {
-    List<OrdenMedica> ordenes = cargarTodas();
+ @Override
+public OrdenMedica obtenerPorIdCita(String idCita) {
+    List<OrdenMedica> ordenes = cargarTodas(); // ← Usa el método correcto
     for (OrdenMedica orden : ordenes) {
-        if (orden.getIdCita() == idCita) {
+        if (orden.getIdCita().equals(String.valueOf(idCita))) {
             return orden;
         }
     }
-    return null; 
+    return null;
 }
-
-
 }

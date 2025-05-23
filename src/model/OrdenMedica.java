@@ -17,7 +17,7 @@ import java.util.List;
 public class OrdenMedica  {
   
     
-        private int idCita;
+        private String idCita;
 
   private   String nombre ;
     private String apellido ;
@@ -38,9 +38,16 @@ public class OrdenMedica  {
     private String nombreMedico;
 private String apellidoMedico;
 private String especialidadMedico;
+private String motivo;
+private String sede;
+private String estado;
 
    
-     public OrdenMedica(String nombre, String apellido ,String email ,String altura , String peso, String fechaNacimiento , String tipoSangre , String antecedentes , String celular ,String sexo ,String eps ,String diagnostico,String receta, List<String> areamedicamentos,String fecha,String hora,String nombreMedico,String apellidoMedico,String especialidadMedico){
+     public OrdenMedica(String nombre, String apellido ,String email ,String altura , String peso,
+             String fechaNacimiento , String tipoSangre , String antecedentes , String celular 
+             ,String sexo ,String eps ,String diagnostico,String receta, List<String> areamedicamentos
+             ,String fecha,String hora,String nombreMedico,String apellidoMedico,
+             String especialidadMedico,String idCita,String motivo,String sede,String estado){
      this.nombre = nombre != null ? nombre : "";
      this.apellido= apellido != null ? apellido : "";
      this.email = email != null ? email : "";
@@ -60,6 +67,12 @@ private String especialidadMedico;
      this.nombreMedico = nombreMedico != null ? nombreMedico : "";
      this.apellidoMedico= apellidoMedico != null ? apellidoMedico : "";
      this.especialidadMedico= especialidadMedico != null ? especialidadMedico : "";
+     this.idCita= idCita != null ? idCita : "";
+     this.sede= sede != null ? sede : "";
+     this.estado= estado != null ? estado : "";
+    this.motivo= motivo != null ? motivo : "";
+
+
      }
 
     public String getNombre() {
@@ -167,12 +180,36 @@ public void setAreamedicamentos(List<String> areamedicamentos) {
     }
     // otros atributos...
 
-    public int getIdCita() {
+    public String getIdCita() {
         return idCita;
     }
 
-    public void setIdCita(int idCita) {
+    public void setIdCita(String idCita) {
         this.idCita = idCita;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getSede() {
+        return sede;
+    }
+
+    public void setSede(String sede) {
+        this.sede = sede;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 

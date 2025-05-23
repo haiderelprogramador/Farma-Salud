@@ -19,19 +19,37 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    public void setOrdenMedica(OrdenMedica orden) {
-    if (orden != null) {
-        // Aquí pones los datos de la orden médica en los componentes visuales
-        lblNombrep.setText(orden.getNombre());
-        lblApellidop.setText(orden.getApellido());
-        lblEps.setText(orden.getEps());
-        lblAltura.setText(orden.getAltura());
-        lblFechaCita.setText(orden.getFecha());
-        lblHora.setText(orden.getHora());
-        
-       
+   
+private OrdenMedica ordenMedica;
+
+    public void setOrdenMedica(OrdenMedica ordenMedica) {
+        this.ordenMedica = ordenMedica;
     }
-}
+
+    public void cargarDatos() {
+            txtAreaDiagnostico.setText(ordenMedica.getDiagnostico());
+            lblNombrep.setText(ordenMedica.getNombre());
+            lblApellidop.setText(ordenMedica.getApellido());
+            lblEps.setText(ordenMedica.getEps());
+            lblAltura.setText(ordenMedica.getAltura());
+            lblPeso.setText(ordenMedica.getPeso());
+            lblHora.setText(ordenMedica.getHora());
+            lblNombreMedico.setText(ordenMedica.getNombreMedico());
+            lblEspecialidadMedico.setText(ordenMedica.getEspecialidadMedico());
+            lblFechaCita.setText(ordenMedica.getFecha());
+            lblAreaAntecendetes.setText(ordenMedica.getAntecedentes());
+            txtAReceta.setText(ordenMedica.getReceta());
+            lblEmail.setText(ordenMedica.getEmail());
+            txtAreaMedicamento.setText(String.join("\n", ordenMedica.getAreamedicamentos()));
+            lblSexo.setText(ordenMedica.getSexo());
+            lblTipoSangre.setText(ordenMedica.getTipoSangre());
+            lblTelefono.setText(ordenMedica.getCelular());
+            
+            
+            
+            
+        
+    }
 
 
     /**
@@ -49,16 +67,14 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         lblApellidop = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        lblDocumentop = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         lblTelefono = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         lblEps = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblSexo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblTipoCita = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         lblTipoSangre = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lblPeso = new javax.swing.JLabel();
@@ -74,13 +90,13 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         lblEspecialidadMedico = new javax.swing.JLabel();
         lbMedicamentos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaMedicamento = new javax.swing.JTextArea();
         lblReceta = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAReceta = new javax.swing.JTextArea();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtArea = new javax.swing.JTextArea();
+        txtAreaDiagnostico = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel15 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -96,7 +112,9 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jSeparator12 = new javax.swing.JSeparator();
         jSeparator13 = new javax.swing.JSeparator();
         jSeparator14 = new javax.swing.JSeparator();
-        jSeparator15 = new javax.swing.JSeparator();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lblAreaAntecendetes = new javax.swing.JTextArea();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -115,16 +133,14 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jPanel1.add(lblApellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 140, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Documento ");
+        jLabel5.setText("Telefono");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
-        jPanel1.add(lblDocumentop, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 146, 130, 30));
+        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 146, 130, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Telefono");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
-
-        lblTelefono.setText("jLabel8");
-        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 130, 40));
+        jLabel7.setText("Email");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
+        jPanel1.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 130, 40));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("EPS");
@@ -139,15 +155,11 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tipo Sangre");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
-        jPanel1.add(lblTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 120, 30));
-
-        jLabel6.setText("TipoCita");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
         jPanel1.add(lblTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 130, 30));
 
         jLabel8.setText("peso");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
-        jPanel1.add(lblPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 120, 40));
+        jPanel1.add(lblPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 120, 30));
 
         jLabel10.setText("Altura");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, -1));
@@ -175,35 +187,35 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
 
         lbMedicamentos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbMedicamentos.setText("Medicamento");
-        jPanel1.add(lbMedicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel1.add(lbMedicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaMedicamento.setEditable(false);
+        txtAreaMedicamento.setColumns(20);
+        txtAreaMedicamento.setRows(5);
+        jScrollPane1.setViewportView(txtAreaMedicamento);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 90));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, 100));
 
         lblReceta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblReceta.setText("receta");
-        jPanel1.add(lblReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, -1));
+        jPanel1.add(lblReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
 
         txtAReceta.setEditable(false);
         txtAReceta.setColumns(20);
         txtAReceta.setRows(5);
         jScrollPane2.setViewportView(txtAReceta);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, -1, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 536, -1, 80));
 
         jLabel14.setText("Diagnostico");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, -1, 20));
 
-        txtArea.setEditable(false);
-        txtArea.setColumns(20);
-        txtArea.setRows(5);
-        jScrollPane3.setViewportView(txtArea);
+        txtAreaDiagnostico.setEditable(false);
+        txtAreaDiagnostico.setColumns(20);
+        txtAreaDiagnostico.setRows(5);
+        jScrollPane3.setViewportView(txtAreaDiagnostico);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, -1, -1));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 536, -1, 80));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 360, 10));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -215,14 +227,23 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 130, 10));
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 130, -1));
         jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 296, 130, 10));
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 120, 10));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 120, 10));
         jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 120, -1));
         jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 120, 10));
         jPanel1.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 120, -1));
         jPanel1.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 120, -1));
         jPanel1.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 120, -1));
         jPanel1.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 120, 10));
-        jPanel1.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 120, 10));
+
+        lblAreaAntecendetes.setEditable(false);
+        lblAreaAntecendetes.setColumns(20);
+        lblAreaAntecendetes.setRows(5);
+        jScrollPane4.setViewportView(lblAreaAntecendetes);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, -1, 80));
+
+        jLabel18.setText("Antecedentes");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 640));
 
@@ -279,11 +300,11 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -291,13 +312,13 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
-    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -306,11 +327,11 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lbMedicamentos;
     private javax.swing.JLabel lblAltura;
     private javax.swing.JLabel lblApellidop;
-    private javax.swing.JLabel lblDocumentop;
+    private javax.swing.JTextArea lblAreaAntecendetes;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEps;
     private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblEspecialidadMedico;
@@ -322,9 +343,9 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JLabel lblReceta;
     private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblTelefono;
-    private javax.swing.JLabel lblTipoCita;
     private javax.swing.JLabel lblTipoSangre;
     private javax.swing.JTextArea txtAReceta;
-    private javax.swing.JTextArea txtArea;
+    private javax.swing.JTextArea txtAreaDiagnostico;
+    private javax.swing.JTextArea txtAreaMedicamento;
     // End of variables declaration//GEN-END:variables
 }

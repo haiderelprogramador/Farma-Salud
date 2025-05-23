@@ -15,6 +15,6 @@ public interface OrdenMedicaDAO {
      List<OrdenMedica> cargarTodas();
     void guardarOrdenMedica(OrdenMedica orden);
     void guardarTodas(List<OrdenMedica> ordenes);
-        public OrdenMedica obtenerPorIdCita(int idCita);
+        public OrdenMedica obtenerPorIdCita(String idCita);
 
 }

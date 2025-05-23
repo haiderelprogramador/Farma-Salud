@@ -8,6 +8,8 @@ public class Paciente extends Persona {
     private String antecedentes;
     private int peso;
     private double altura;
+    
+   
 
     public Paciente(
         String numeroDocumento, String nombres,  String apellidos, LocalDate fechaNacimiento, String sexo,String eps,String email, 
