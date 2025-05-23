@@ -226,11 +226,6 @@ String idCita = tableCitas.getValueAt(fila, 0).toString();
     public void citaActualizada(Cita cita) {
         controller.cargarCitasPorPaciente(documentoPaciente);
     }
-  
-     
-
-    
-
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

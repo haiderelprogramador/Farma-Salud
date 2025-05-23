@@ -9,6 +9,7 @@ import Controller.ControllerCitas;
 import Controller.ControllerOrdenMedica;
 import Controller.ControllerPaciente;
 import DAOImpl.OrdenMedicaDAOImpl;
+import Listener.PacienteListener;
 import Utilidades.GeneradorOrdenMedicaPDF;
 import dao.OrdenMedicaDAO;
 import jakarta.mail.internet.ParseException;
@@ -222,10 +223,6 @@ public void setFilaSeleccionada(int fila) {
     public void setDiagnostico(String diagnostico) {
     areaDiagnostico.setText(diagnostico);
 }
-
-
-
-
 
 
 
@@ -717,16 +714,7 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     }//GEN-LAST:event_txtDocumentoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-<<<<<<< HEAD
-    if (citaSeleccionada == null) {
-        JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna cita.");
-        return;
-    }
-
-        if (txtMedicamento.getText().trim().isEmpty()) {
-=======
  if (txtMedicamento.getText().trim().isEmpty()) {
->>>>>>> 62a911b (feat:agregando validaciones)
         JOptionPane.showMessageDialog(this, "El medicamento no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
         txtMedicamento.requestFocus();
         return;
@@ -781,49 +769,6 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
             if (tableModel != null && filaSeleccionada != -1) {
                 tableModel.setValueAt("Completada", filaSeleccionada, columnaEstado);
             }
-<<<<<<< HEAD
-        }
-
-        // Generar PDF después de guardar
-        try {
-            String nombreArchivo = "OrdenMedica_" + guardarOrden.getNombre() + "_" + 
-                guardarOrden.getApellido() + "_" + System.currentTimeMillis() + ".pdf";
-            String rutaPDF = "ordenes_medicas/" + nombreArchivo;
-            
-            new File("ordenes_medicas").mkdirs(); // Crear directorio si no existe
-            
-            GeneradorOrdenMedicaPDF.generarPDF(guardarOrden, rutaPDF);
-            
-            JOptionPane.showMessageDialog(this, 
-                "Orden guardada y PDF generado exitosamente!\n" +
-                "Archivo: " + rutaPDF);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Orden guardada pero error al generar PDF: " + e.getMessage(), 
-                "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }    
-   
-       
-   Paciente paciente = citaSeleccionada.getPaciente();
-   if (paciente == null) {
-            JOptionPane.showMessageDialog(this, "La cita seleccionada no tiene paciente asociado.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-paciente.setPeso(Integer.parseInt(txtPeso.getText().trim()));
-paciente.setAltura(Double.parseDouble(lblAltura.getText().trim()));
-
-// Guardar los cambios en el DAO
-ControllerPaciente controllerPaciente = ControllerPaciente.getInstance();
-controllerPaciente.actualizarPaciente(paciente.getNumeroDocumento(), paciente);
-
-// Notificar a las interfaces que escuchan cambios en pacientes
-controllerPaciente.notificarPacienteActualizado(paciente);
-   
-   JOptionPane.showMessageDialog(this, "Orden Guardada correctamente");
-       
-=======
         }
 
         // Generar PDF después de guardar
@@ -846,23 +791,13 @@ controllerPaciente.notificarPacienteActualizado(paciente);
                 "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         
->>>>>>> 62a911b (feat:agregando validaciones)
         this.dispose();
     } catch(Exception e) {
         JOptionPane.showMessageDialog(this, 
             "Error al guardar la orden: " + e.getMessage(), 
             "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace(); 
-<<<<<<< HEAD
-    }
-      
-    
-
-
-          
-=======
     }       
->>>>>>> 62a911b (feat:agregando validaciones)
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarMedicamentoActionPerformed
