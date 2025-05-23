@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package farmasalud.view;
 
 import Controller.ControllerCargarMedicosCitas;
@@ -13,7 +9,6 @@ import Listener.PacienteListener;
 import Utilidades.GeneradorOrdenMedicaPDF;
 import dao.OrdenMedicaDAO;
 import jakarta.mail.internet.ParseException;
-import java.awt.Desktop;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -223,8 +218,6 @@ public void setFilaSeleccionada(int fila) {
     public void setDiagnostico(String diagnostico) {
     areaDiagnostico.setText(diagnostico);
 }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
