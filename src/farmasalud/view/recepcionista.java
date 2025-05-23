@@ -446,6 +446,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         JDateFechaCita = new com.toedter.calendar.JDateChooser();
         jLabel24 = new javax.swing.JLabel();
         cboSede = new javax.swing.JComboBox<>();
+        jSeparator25 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
@@ -712,7 +713,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         jLabel77.setText("CITAS ");
         jPanel9.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 530, 40));
 
-        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 1000, 120));
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 1000, 190));
 
         TabbetCitas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1011,7 +1012,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 cboTipoCitaActionPerformed(evt);
             }
         });
-        jPanel8.add(cboTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 100, 40));
+        jPanel8.add(cboTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 140, 40));
 
         cboHoraCita.setBackground(new java.awt.Color(0, 0, 0, 0));
         cboHoraCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione>", "07:00 am", "07:30am", "08:00am", "08:30am", "09:00am", "09:30am", "10:00am", "10:30am", "11:00am", "11:30am", "12:00pm", "01:30pm", "02:00pm", "02:30pm", "03:00pm", "03:30pm", "04:00pm", "04:30pm" }));
@@ -1020,11 +1021,11 @@ public void verificarDisponibilidadHoraActualizacion() {
                 cboHoraCitaActionPerformed(evt);
             }
         });
-        jPanel8.add(cboHoraCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, -1, 40));
+        jPanel8.add(cboHoraCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, 40));
 
         jLabel62.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel62.setText("Hora*");
-        jPanel8.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, -1, -1));
+        jPanel8.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
         jLabel71.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel71.setText("Consultorio*");
@@ -1037,7 +1038,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 cboConsultorioActionPerformed(evt);
             }
         });
-        jPanel8.add(cboConsultorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, 40));
+        jPanel8.add(cboConsultorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 140, 40));
 
         btnAgendarCita.setBackground(new java.awt.Color(10, 92, 184));
         btnAgendarCita.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -1053,7 +1054,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                 btnAgendarCitaActionPerformed(evt);
             }
         });
-        jPanel8.add(btnAgendarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, 29));
+        jPanel8.add(btnAgendarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 350, -1, 29));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Estado de la cita");
@@ -1072,16 +1073,16 @@ public void verificarDisponibilidadHoraActualizacion() {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtIdCita.setText("jLabel35");
+        txtIdCita.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(txtIdCita, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(txtIdCita, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1105,15 +1106,16 @@ public void verificarDisponibilidadHoraActualizacion() {
                 refrecarTablaPacienteActionPerformed(evt);
             }
         });
-        jPanel8.add(refrecarTablaPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        jPanel8.add(refrecarTablaPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel19.setText("Id Cita");
         jPanel8.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
         jPanel8.add(JDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, 30));
 
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel24.setText("Sede");
-        jPanel8.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, -1, -1));
+        jPanel8.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, -1, -1));
 
         cboSede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboSede.addActionListener(new java.awt.event.ActionListener() {
@@ -1121,7 +1123,8 @@ public void verificarDisponibilidadHoraActualizacion() {
                 cboSedeActionPerformed(evt);
             }
         });
-        jPanel8.add(cboSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 80, 40));
+        jPanel8.add(cboSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 140, 40));
+        jPanel8.add(jSeparator25, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 140, 0));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -1282,9 +1285,9 @@ public void verificarDisponibilidadHoraActualizacion() {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         panelAgendarLayout.setVerticalGroup(
             panelAgendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1303,7 +1306,7 @@ public void verificarDisponibilidadHoraActualizacion() {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                         .addGap(53, 53, 53))
                     .addGroup(panelAgendarLayout.createSequentialGroup()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -1619,7 +1622,7 @@ public void verificarDisponibilidadHoraActualizacion() {
         });
         jScrollPane3.setViewportView(tablaPacientes);
 
-        panelGuardarPaciente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 302, 940, 230));
+        panelGuardarPaciente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 302, 920, 230));
 
         TabbetCitas.addTab("AgendarPacientes", panelGuardarPaciente);
 
@@ -2297,6 +2300,7 @@ TabbetCitas.setSelectedIndex(4);       // TODO add your handling code here:
     private javax.swing.JSeparator jSeparator22;
     private javax.swing.JSeparator jSeparator23;
     private javax.swing.JSeparator jSeparator24;
+    private javax.swing.JSeparator jSeparator25;
     private javax.swing.JSeparator jSeparator27;
     private javax.swing.JSeparator jSeparator28;
     private javax.swing.JSeparator jSeparator29;

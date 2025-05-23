@@ -153,13 +153,13 @@ public void setTablaEnfermedades(JTable tabla) {
         throw new IllegalStateException("La tabla de citas por medico no ha sido inicializada.");
     }
 
-    tableModelCitasPorMedico.setRowCount(0); // Limpiar la tabla
+    tableModelCitasPorMedico.setRowCount(0);
 
     List<Cita> citas = citasDAO.cargarTodos();
 
     for (Cita cita : citas) {
         if (cita.getMedico() == null || !cita.getMedico().getNumeroDocumento().equals(documentoMedicoActual)) {
-            continue; // Saltar si no es del médico actual
+            continue; 
         }
 
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
@@ -196,7 +196,7 @@ public void setTablaEnfermedades(JTable tabla) {
         throw new IllegalStateException("La tabla de citas por medico no ha sido inicializada.");
     }
 
-    tableModelCitasPorMedico.setRowCount(0); // Limpiar tabla
+    tableModelCitasPorMedico.setRowCount(0); 
 
     List<Cita> citas = citasDAO.cargarTodos();
 
@@ -206,7 +206,7 @@ public void setTablaEnfermedades(JTable tabla) {
         }
 
         if (cita.getFechaCita() == null || !cita.getFechaCita().equals(fechaSeleccionada)) {
-            continue; // Saltar si no es la fecha seleccionada
+            continue;
         }
 
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
@@ -259,7 +259,6 @@ public void setTablaEnfermedades(JTable tabla) {
         }
     }
     
-    // Cargar datos en la tabla
     public void cargarDatosEnTabla() {
         if (tableModelEnfermedades == null) {
             initTableEnfermedades();
@@ -271,7 +270,7 @@ public void setTablaEnfermedades(JTable tabla) {
         for (Enfermedad enfermedad : enfermedades) {
             int id = enfermedad.getIdEnfermedad();
             Object[] row = {
-                id, // Aseguramos que el ID se envía como entero
+                id,
                 enfermedad.getNombre(),
                 enfermedad.getTipo(),
                 convertirListaAString(enfermedad.getSintomas()),
@@ -279,12 +278,10 @@ public void setTablaEnfermedades(JTable tabla) {
             };
             tableModelEnfermedades.addRow(row);
             
-            // Verificación para depuración
             System.out.println("Cargando enfermedad ID: " + id + " - " + enfermedad.getNombre());
         }
     }
     
-    // Convertir lista a string para mostrar en la tabla
     private String convertirListaAString(List<String> lista) {
         if (lista == null || lista.isEmpty()) {
             return "";
@@ -298,7 +295,7 @@ public void buscarEnfermedadesPorNombre(String nombreBuscado) {
         return;
     }
 
-    tableModelEnfermedades.setRowCount(0); // Limpiar tabla
+    tableModelEnfermedades.setRowCount(0); 
 
     List<Enfermedad> enfermedades = enfermedadDAO.cargarTodasEnfermedades();
 
@@ -318,7 +315,7 @@ public void buscarEnfermedadesPorNombre(String nombreBuscado) {
 public void cargarMedicamentosEnTabla() {
     try {
         List<Medicamento> medicamentos = new MedicamentosDAOImpl().cargarTodos();
-        tablaModelMedicamento.setRowCount(0); // Limpiar tabla
+        tablaModelMedicamento.setRowCount(0); 
 
         for (Medicamento m : medicamentos) {
             tablaModelMedicamento.addRow(new Object[]{

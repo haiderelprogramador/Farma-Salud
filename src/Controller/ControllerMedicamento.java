@@ -20,7 +20,7 @@ import model.Medicamento;
 
 
 public class ControllerMedicamento {
-     private final javax.swing.JFrame view; // Referencia a la vista
+     private final javax.swing.JFrame view; 
     
     public ControllerMedicamento(javax.swing.JFrame view) {
         this.view = view;

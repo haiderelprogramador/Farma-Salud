@@ -18,7 +18,6 @@ public class ControllerEnfermedades {
     private final EnfermedadesDAO enfermedadDAO;
     private Integer idOriginal;
     
-    // Componentes de la vista
     private JTable tablaEnfermedades;
     private JTextField txtIdEnfermedad;
     private JTextField txtNombre;

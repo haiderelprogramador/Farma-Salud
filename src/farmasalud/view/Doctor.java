@@ -517,7 +517,7 @@ cita.setPaciente(paciente);
             dateChooserF.setDate(null);
             return;
         }
-        dateChooserF.setDateFormatString("dd/MM/yyyy"); // Establecer formato visual
+        dateChooserF.setDateFormatString("dd/MM/yyyy"); 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fechaSeleccionada);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
