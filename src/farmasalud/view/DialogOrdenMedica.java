@@ -4,6 +4,8 @@
  */
 package farmasalud.view;
 
+import model.OrdenMedica;
+
 /**
  *
  * @author Maria liz
@@ -17,6 +19,20 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    public void setOrdenMedica(OrdenMedica orden) {
+    if (orden != null) {
+        // Aquí pones los datos de la orden médica en los componentes visuales
+        lblNombrep.setText(orden.getNombre());
+        lblApellidop.setText(orden.getApellido());
+        lblEps.setText(orden.getEps());
+        lblAltura.setText(orden.getAltura());
+        lblFechaCita.setText(orden.getFecha());
+        lblHora.setText(orden.getHora());
+        
+       
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +51,7 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         lblDocumentop = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         lblEps = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -65,6 +81,22 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel15 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
+        jSeparator10 = new javax.swing.JSeparator();
+        jSeparator11 = new javax.swing.JSeparator();
+        jSeparator12 = new javax.swing.JSeparator();
+        jSeparator13 = new javax.swing.JSeparator();
+        jSeparator14 = new javax.swing.JSeparator();
+        jSeparator15 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,121 +104,127 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nombre Paciente");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jPanel1.add(lblNombrep, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 76, 140, 30));
 
-        lblNombrep.setText("jLabel2");
-        jPanel1.add(lblNombrep, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
-
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Apellido Paciente");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel1.add(lblApellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 140, 30));
 
-        lblApellidop.setText("jLabel4");
-        jPanel1.add(lblApellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Documento ");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+        jPanel1.add(lblDocumentop, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 146, 130, 30));
 
-        jLabel5.setText("Documento Pciente");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Telefono");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
-        lblDocumentop.setText("jLabel6");
-        jPanel1.add(lblDocumentop, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
+        lblTelefono.setText("jLabel8");
+        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 130, 40));
 
-        jLabel7.setText("Gmail");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
-
-        lblEmail.setText("jLabel8");
-        jPanel1.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, -1, -1));
-
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("EPS");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
+        jPanel1.add(lblEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 130, 30));
 
-        lblEps.setText("jLabel10");
-        jPanel1.add(lblEps, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
-
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("sexo");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        jPanel1.add(lblSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 130, 30));
 
-        lblSexo.setText("jLabel4");
-        jPanel1.add(lblSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, -1, -1));
-
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tipo Sangre");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
-
-        lblTipoCita.setText("jLabel6");
-        jPanel1.add(lblTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+        jPanel1.add(lblTipoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 120, 30));
 
         jLabel6.setText("TipoCita");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, -1, -1));
-
-        lblTipoSangre.setText("jLabel8");
-        jPanel1.add(lblTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
+        jPanel1.add(lblTipoSangre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 130, 30));
 
         jLabel8.setText("peso");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, -1, -1));
-
-        lblPeso.setText("jLabel10");
-        jPanel1.add(lblPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
+        jPanel1.add(lblPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 120, 40));
 
         jLabel10.setText("Altura");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, -1));
+        jPanel1.add(lblAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 146, 110, 30));
 
-        lblAltura.setText("jLabel11");
-        jPanel1.add(lblAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
-
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("fecha Cita");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, -1, -1));
+        jPanel1.add(lblFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 120, 40));
 
-        lblFechaCita.setText("jLabel12");
-        jPanel1.add(lblFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, -1, -1));
-
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setText("Hora Cita");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, -1, -1));
+        jPanel1.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 226, 110, 30));
 
-        lblHora.setText("jLabel13");
-        jPanel1.add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
-
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel13.setText("Medico");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, -1, -1));
+        jPanel1.add(lblNombreMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 120, 40));
 
-        lblNombreMedico.setText("jLabel14");
-        jPanel1.add(lblNombreMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, -1, -1));
-
+        lblEspecialidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEspecialidad.setText("Especialidad");
-        jPanel1.add(lblEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
+        jPanel1.add(lblEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, -1, -1));
+        jPanel1.add(lblEspecialidadMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 306, 120, 30));
 
-        lblEspecialidadMedico.setText("jLabel14");
-        jPanel1.add(lblEspecialidadMedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, -1, -1));
-
+        lbMedicamentos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbMedicamentos.setText("Medicamento");
-        jPanel1.add(lbMedicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+        jPanel1.add(lbMedicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 150, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 90));
 
+        lblReceta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblReceta.setText("receta");
-        jPanel1.add(lblReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, -1, -1));
+        jPanel1.add(lblReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, -1));
 
         txtAReceta.setEditable(false);
         txtAReceta.setColumns(20);
         txtAReceta.setRows(5);
         jScrollPane2.setViewportView(txtAReceta);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, -1, -1));
 
         jLabel14.setText("Diagnostico");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
 
         txtArea.setEditable(false);
         txtArea.setColumns(20);
         txtArea.setRows(5);
         jScrollPane3.setViewportView(txtArea);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, -1, -1));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 360, 10));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 550, 640));
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel15.setText("FARMASALUD");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 103, 130, 10));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 130, 10));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 130, 10));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 130, 10));
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 130, -1));
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 296, 130, 10));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 120, 10));
+        jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 120, -1));
+        jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 120, 10));
+        jPanel1.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 120, -1));
+        jPanel1.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 120, -1));
+        jPanel1.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 120, -1));
+        jPanel1.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 120, 10));
+        jPanel1.add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 120, 10));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -240,6 +278,7 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -252,12 +291,26 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lbMedicamentos;
     private javax.swing.JLabel lblAltura;
     private javax.swing.JLabel lblApellidop;
     private javax.swing.JLabel lblDocumentop;
-    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEps;
     private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblEspecialidadMedico;
@@ -268,6 +321,7 @@ public class DialogOrdenMedica extends javax.swing.JDialog {
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblReceta;
     private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTipoCita;
     private javax.swing.JLabel lblTipoSangre;
     private javax.swing.JTextArea txtAReceta;

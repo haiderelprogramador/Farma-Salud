@@ -21,7 +21,7 @@ import dao.OrdenMedicaDAO;
  * @author Maria liz
  */
 public class OrdenMedicaDAOImpl implements OrdenMedicaDAO{
-    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Documents\\NetBeansProjects\\farmaSalud-software\\src\\resources\\data\\ordenmedica.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Music\\Farma-Salud\\src\\resources\\data\\ordenmedica.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
@@ -51,4 +51,16 @@ public class OrdenMedicaDAOImpl implements OrdenMedicaDAO{
             System.err.println("Error al guardar órdenes médicas: " + e.getMessage());
         }
     }
+  @Override
+public OrdenMedica obtenerPorIdCita(int idCita) {
+    List<OrdenMedica> ordenes = cargarTodas();
+    for (OrdenMedica orden : ordenes) {
+        if (orden.getIdCita() == idCita) {
+            return orden;
+        }
+    }
+    return null; 
+}
+
+
 }

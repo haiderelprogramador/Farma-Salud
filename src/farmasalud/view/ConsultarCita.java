@@ -6,7 +6,9 @@ package farmasalud.view;
 
 import Listener.CitaListener;
 import Controller.ControllerCitasPaciente;
+import DAOImpl.OrdenMedicaDAOImpl;
 import dao.CitaDAO;
+import dao.OrdenMedicaDAO;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.View;
 import model.Cita;
+import model.OrdenMedica;
 
 
 /**
@@ -46,7 +49,7 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
          this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this);
         configurarControlador();
-
+verOrdenMedica();
       
         
     }
@@ -126,6 +129,30 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
             }
         }
     });
+    JMenuItem itemVerOrden = new JMenuItem("Ver orden médica");
+popupMenu.add(itemVerOrden);
+
+  itemVerOrden.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            int filaSeleccionada = tableCitas.getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                int idCita = Integer.parseInt(tableCitas.getValueAt(filaSeleccionada, 0).toString());
+                OrdenMedica orden = controller.obtenerOrdenMedicaPorCita(idCita);
+
+                if (orden != null) {
+                    DialogOrdenMedica dialogOrden = new DialogOrdenMedica(null, true);
+                    dialogOrden.setOrdenMedica(orden); // ESTA LÍNEA ES CLAVE
+                    dialogOrden.setLocationRelativeTo(null);
+                    dialogOrden.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró una orden médica para esta cita.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
+            }
+        }
+    });
     tableCitas.addMouseListener(new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent evt) {
@@ -147,6 +174,24 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
             }
         }
     });
+}
+private void verOrdenMedica() {
+    int fila = tableCitas.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila primero.");
+        return;
+    }
+    int idCita = Integer.parseInt(tableCitas.getValueAt(fila, 0).toString());
+    OrdenMedicaDAO ordenDAO = new OrdenMedicaDAOImpl();
+    OrdenMedica orden = ordenDAO.obtenerPorIdCita(idCita);
+    if (orden == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró una orden médica para esta cita.");
+        return;
+    }
+    DialogOrdenMedica dialog = new DialogOrdenMedica(null, true);
+    dialog.setOrdenMedica(orden);
+    dialog.setLocationRelativeTo(this);
+    dialog.setVisible(true);
 }
 
 

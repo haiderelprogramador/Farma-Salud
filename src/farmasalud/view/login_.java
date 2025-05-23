@@ -144,7 +144,7 @@ public class login_ extends javax.swing.JFrame {
     String contraseña = new String(Jtextfield_contraseña.getPassword());
     String rolSeleccionado = (String) jComboBox1.getSelectedItem();
     
-    // Validaciones básicas
+  
     if (email.isEmpty() || contraseña.isEmpty()) {
         JOptionPane.showMessageDialog(this, 
             "Email y contraseña son requeridos", 
