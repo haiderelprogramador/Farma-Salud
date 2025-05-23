@@ -1,10 +1,12 @@
 package Controller;
 
 import DAOImpl.PacienteDAOImpl;
+import Listener.PacienteListener;
 import com.toedter.calendar.JDateChooser;
 import dao.PacienteDAO;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -42,7 +44,36 @@ public class ControllerPaciente {
     private JTextArea txtAreaAntecedentes;
     private JTextField txtAltura;
     private JTextField txtPeso;
-    
+
+    private List<PacienteListener> listeners = new ArrayList<>();
+   public void agregarListener(PacienteListener listener) {
+    listeners.add(listener);
+}
+public PacienteDAO getPacienteDAO() {
+    return pacienteDAO;
+}
+public void agregarPacienteListener(PacienteListener listener) {
+    listeners.add(listener);
+}
+
+  public void notificarPacienteActualizado(Paciente paciente) {
+    for (PacienteListener l : listeners) {
+        l.actualizar(paciente); // Aquí se pasa el objeto ya creado
+    }
+}  public Paciente buscarPacientePorDocumento(String documento) {
+    try {
+        return pacienteDAO.buscarPorDocumento(documento);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error buscando paciente: " + e.getMessage(),
+                                      "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
+}
+ 
+
+ 
+
+
     
     public static ControllerPaciente getInstance() {
         if (instance == null) {
@@ -53,6 +84,23 @@ public class ControllerPaciente {
        public  ControllerPaciente() {
         this.pacienteDAO = new PacienteDAOImpl();
     }
+    public void actualizarPaciente(String documentoOriginal, Paciente pacienteActualizado) {
+    boolean exito = pacienteDAO.actualizarPaciente(documentoOriginal, pacienteActualizado);
+    if (!exito) {
+        System.err.println("No se encontró paciente con documento original: " + documentoOriginal);
+    }
+}
+ public boolean actualizarPacienteCompleto(String documento, Paciente pacienteActualizado) {
+    boolean exito = pacienteDAO.actualizarPaciente(documento, pacienteActualizado);
+    if (!exito) {
+        System.err.println("No se encontró paciente con documento: " + documento);
+    }
+    return exito;
+}
+
+ 
+
+
     public void setTablaPacientes(JTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
         this.tableModelPaciente = (DefaultTableModel) tablaPacientes.getModel();
@@ -113,6 +161,7 @@ public class ControllerPaciente {
     public void setTxtPeso(JTextField txtPeso) {
         this.txtPeso = txtPeso;
     }
+   
     
     // Inicialización de la tabla
     public void initTablePaciente() {
@@ -433,6 +482,9 @@ public class ControllerPaciente {
             }
         }
     }
+  
+
+
 }
 
 

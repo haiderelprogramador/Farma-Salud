@@ -49,7 +49,6 @@ public class ConsultarCita extends javax.swing.JDialog implements CitaListener {
          this.controller = ControllerCitasPaciente.getInstance();
         this.controller.addCitaListener(this);
         configurarControlador();
-verOrdenMedica();
       
         
     }
@@ -57,6 +56,10 @@ verOrdenMedica();
         JMenuItem dialogCancelar =new JMenuItem("Cancelar o Modificar Cita ");
         tableCitas.add(dialogCancelar);
     }
+
+
+
+
 
     private void configurarControlador() {
         controller.setJDateFechaCita(dateCita);
@@ -129,30 +132,36 @@ verOrdenMedica();
             }
         }
     });
-    JMenuItem itemVerOrden = new JMenuItem("Ver orden médica");
+  JMenuItem itemVerOrden = new JMenuItem("Ver orden médica");
 popupMenu.add(itemVerOrden);
 
-  itemVerOrden.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            int filaSeleccionada = tableCitas.getSelectedRow();
-            if (filaSeleccionada >= 0) {
-                int idCita = Integer.parseInt(tableCitas.getValueAt(filaSeleccionada, 0).toString());
-                OrdenMedica orden = controller.obtenerOrdenMedicaPorCita(idCita);
+itemVerOrden.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        int filaSeleccionada = tableCitas.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            String idCita = tableCitas.getValueAt(filaSeleccionada, 5).toString(); 
+            OrdenMedica orden = controller.obtenerOrdenMedicaPorCita(idCita); 
 
-                if (orden != null) {
-                    DialogOrdenMedica dialogOrden = new DialogOrdenMedica(null, true);
-                    dialogOrden.setOrdenMedica(orden); // ESTA LÍNEA ES CLAVE
-                    dialogOrden.setLocationRelativeTo(null);
-                    dialogOrden.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se encontró una orden médica para esta cita.");
-                }
+            if (orden != null) {
+                DialogOrdenMedica dialogOrden = new DialogOrdenMedica(null, true);
+                dialogOrden.setOrdenMedica(orden);  
+                dialogOrden.cargarDatos();        
+                dialogOrden.setLocationRelativeTo(null);
+                dialogOrden.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
+                JOptionPane.showMessageDialog(null, "No se encontró una orden médica para esta cita.");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
         }
-    });
+    }
+});
+
+
+ 
+
+
     tableCitas.addMouseListener(new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent evt) {
@@ -181,7 +190,7 @@ private void verOrdenMedica() {
         JOptionPane.showMessageDialog(this, "Seleccione una fila primero.");
         return;
     }
-    int idCita = Integer.parseInt(tableCitas.getValueAt(fila, 0).toString());
+String idCita = tableCitas.getValueAt(fila, 0).toString();
     OrdenMedicaDAO ordenDAO = new OrdenMedicaDAOImpl();
     OrdenMedica orden = ordenDAO.obtenerPorIdCita(idCita);
     if (orden == null) {
@@ -190,6 +199,7 @@ private void verOrdenMedica() {
     }
     DialogOrdenMedica dialog = new DialogOrdenMedica(null, true);
     dialog.setOrdenMedica(orden);
+    dialog.cargarDatos();  
     dialog.setLocationRelativeTo(this);
     dialog.setVisible(true);
 }

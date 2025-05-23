@@ -34,6 +34,7 @@ import model.Cita;
  */
 public class ControllerOrdenMedica {
   
+private PacienteDAO pacienteDAO = new PacienteDAOImpl(); // Asegúrate de tenerlo
 
 private Medico medicoLogueado;
 
@@ -54,7 +55,20 @@ private Medico medicoLogueado;
   private JLabel lblFechaCita;
   private JLabel lblHoraCita;
   private JLabel lblidCita;
-    private OrdenMedicaDAO ordenmedica;
+  private JLabel lblSede;
+  private JLabel lblEstado;
+  private JLabel lblMotivo;
+  private OrdenMedicaDAO ordenmedica;
+  
+     private Cita cita; 
+    
+    public Cita getCita() {
+        return cita;
+    }
+
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
     public ControllerOrdenMedica(OrdenMedicaDAO ordenmedica){
      this.ordenmedica = ordenmedica;
    
@@ -62,7 +76,7 @@ private Medico medicoLogueado;
     public ControllerOrdenMedica(JLabel lblNombre,JLabel lblApellido,JLabel lblEmail,JLabel lblAltura,
                                  JLabel txtPeso,JLabel lblFechaNacimiento,JLabel lblTipoSangre,JTextArea txtAntecedentes,JLabel lblCelular,
                                  JLabel lblSexo,JLabel lblEps,JTextArea areaDiagnostico,JTextArea textAreareceta,JTextArea txtAreaMedicamentos,JLabel lblFechaCita,
-                                 JLabel lblHoraCita,Medico medicoLogueado,OrdenMedicaDAO ordenmedica,JLabel idCita){
+                                 JLabel lblHoraCita,Medico medicoLogueado,OrdenMedicaDAO ordenmedica,JLabel idCita,JLabel lblSede,JLabel lblMotivo,JLabel lblEstado){
         
         this.lblNombre = lblNombre;
         this.lblApellido = lblApellido;
@@ -82,7 +96,13 @@ private Medico medicoLogueado;
         this.lblHoraCita=lblHoraCita;
         this.medicoLogueado= medicoLogueado;
         this.ordenmedica = ordenmedica;  
-          this.lblidCita = lblidCita;
+        this.lblidCita = lblidCita;
+        this.lblEstado = lblEstado;
+        this.lblSede = lblSede;
+        this.lblMotivo = lblMotivo;
+    
+            
+           
     
     }
     public OrdenMedica extraerDatosFormulario() {
@@ -116,9 +136,15 @@ private Medico medicoLogueado;
         String nombreMedico = medicoLogueado != null ? medicoLogueado.getNombres(): "";
         String apellidoMedico = medicoLogueado != null ? medicoLogueado.getApellidos() : "";
         String especialidad = medicoLogueado != null ? medicoLogueado.getEspecialidad() : "";
+       String idCita = lblidCita != null ? lblidCita.getText(): "";
+       String motivo = lblMotivo != null ? lblMotivo.getText(): "";
+       String sede = lblSede != null ? lblSede.getText(): "";
+       String estado = lblEstado != null ? lblEstado.getText(): "";
+
         return new OrdenMedica(
             nombre, apellido, email, altura, peso, fechaNacimiento,
-            tipoSangre, antecedentes, celular, sexo, eps, diagnostico,receta,listaMedicamentos,fechacita,horacita,nombreMedico,apellidoMedico,especialidad
+            tipoSangre, antecedentes, celular, sexo, eps, diagnostico,receta,listaMedicamentos,fechacita,horacita,
+                nombreMedico,apellidoMedico,especialidad,idCita,motivo,sede,estado
         );
     }
 }

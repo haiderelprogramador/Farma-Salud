@@ -28,6 +28,8 @@ import model.Cita;
 import model.Medicamento;
 import model.Medico;
 import model.OrdenMedica;
+import model.Paciente; 
+
 
 /**
  *
@@ -61,31 +63,57 @@ public class Doctor extends javax.swing.JFrame {
          JMenuItem itemNoAsistio = new JMenuItem("No asistió");
          popupMenu.add(itemNoAsistio);
        actualizarInterfaz();   
-         itemAtender.addActionListener(evt -> {
-            int filaSeleccionada = tableCitasPorMedico.getSelectedRow();
-            if (filaSeleccionada != -1) {
-                  String idCita = tableCitasPorMedico.getValueAt(filaSeleccionada, 5).toString();
-                      Cita cita = controllerCitas.buscarCitaPorId(idCita); // Método ya implementado
+        itemAtender.addActionListener(evt -> {
+    int filaSeleccionada = tableCitasPorMedico.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        String idCita = tableCitasPorMedico.getValueAt(filaSeleccionada, 5).toString();
+        Cita cita = controllerCitas.buscarCitaPorId(idCita);
+        
+        if (cita == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la cita con ID: " + idCita);
+            return;
+        }
 
-                Object valorFecha = tableCitasPorMedico.getValueAt(filaSeleccionada, 8);
-                Object valorHora = tableCitasPorMedico.getValueAt(filaSeleccionada, 6);
+Object valorDocumento = tableCitasPorMedico.getValueAt(filaSeleccionada, 0);
+String documentoPaciente = valorDocumento.toString(); 
 
-                if (valorFecha != null && valorHora != null) {
-                    String fecha = valorFecha.toString();
-                    String hora = valorHora.toString();
+Paciente paciente = ControllerPaciente.getInstance().buscarPacientePorDocumento(documentoPaciente);
+if (paciente == null) {
+    JOptionPane.showMessageDialog(this, "No se encontró el paciente con documento: " + documentoPaciente);
+    return;
+}
+cita.setPaciente(paciente);
 
-                    DialogAtender dialog = new DialogAtender(null, true);
-                    dialog.setMedicamento("");
-                        dialog.setCita(cita);
-                    dialog.setMedicoSeleccionado(medicoLogueado);
-                    dialog.setFechaYHora(fecha, hora);
-                    dialog.setLocationRelativeTo(tableCitasPorMedico);
-                    dialog.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(this, "La fila seleccionada no contiene hora o fecha válida.");
-                }
-            }
-        });
+        Object valorFecha = tableCitasPorMedico.getValueAt(filaSeleccionada, 8);
+        Object valorHora = tableCitasPorMedico.getValueAt(filaSeleccionada, 6);
+        Object valorMotivo = tableCitasPorMedico.getValueAt(filaSeleccionada, 15);
+        Object valorEstado = tableCitasPorMedico.getValueAt(filaSeleccionada, 11);
+        Object valorSede = tableCitasPorMedico.getValueAt(filaSeleccionada, 7);
+
+        if (valorFecha != null && valorHora != null) {
+            String fecha = valorFecha.toString();
+            String hora = valorHora.toString();
+            String motivo = valorMotivo != null ? valorMotivo.toString() : "";
+            String estado = valorEstado != null ? valorEstado.toString() : "";
+            String sede = valorSede != null ? valorSede.toString() : "";
+            String documento = valorDocumento.toString();
+
+            DialogAtender dialog = new DialogAtender(null, true);
+            dialog.setCita(cita);
+            dialog.setCitaSeleccionada(cita);
+            
+            dialog.setDocumentoPaciente(documento);
+            dialog.setMedicamento("");
+            dialog.setMedicoSeleccionado(medicoLogueado);
+            dialog.setFechaYHora(fecha, hora, idCita, estado, sede, motivo, documento);
+            dialog.setLocationRelativeTo(tableCitasPorMedico);
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La fila seleccionada no contiene hora o fecha válida.");
+        }
+    }
+});
+
 
         // Agregar MouseListener para mostrar el menú contextual
         tableCitasPorMedico.addMouseListener(new MouseAdapter() {
@@ -186,13 +214,23 @@ public class Doctor extends javax.swing.JFrame {
             
             Object valorFecha = tableCitasPorMedico.getValueAt(fila, 8);
             Object valorHora = tableCitasPorMedico.getValueAt(fila, 6);
-
+            Object valoridCita=tableCitasPorMedico.getValueAt(fila,0);
+            Object valorEstado=tableCitasPorMedico.getValueAt(fila, 11);
+            Object valorMotivo=tableCitasPorMedico.getValueAt(fila, 15);
+            Object valorSede=tableCitasPorMedico.getValueAt(fila,7);
+            Object valorDocumento=tableCitasPorMedico.getValueAt(fila, 0);
+            
             if (valorFecha != null && valorHora != null) {
                 String fecha = valorFecha.toString();
                 String hora = valorHora.toString();
+                String idCita=valoridCita.toString();
+                String estado=valorEstado.toString();
+                String motivo=valorMotivo.toString();
+                String sede=valorSede.toString();
+                String documento=valorDocumento.toString();
 
                 DialogAtender dialog = new DialogAtender(null, true);
-                dialog.setFechaYHora(fecha, hora);
+                dialog.setFechaYHora(fecha, hora,idCita,estado,motivo,sede,documento);
                 dialog.setLocationRelativeTo(tableCitasPorMedico);
                 dialog.setVisible(true);
             } else {
@@ -235,18 +273,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         dateChooserF = new com.toedter.calendar.JDateChooser();
         dateChooserFecha = new javax.swing.JButton();
-        PanelAgenda = new javax.swing.JPanel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        btnCredenciales = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -383,8 +410,8 @@ public class Doctor extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Fecha Cita ");
-        PanelDiagnostico.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, -1, -1));
-        PanelDiagnostico.add(dateChooserF, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 40, 150, 30));
+        PanelDiagnostico.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, -1, -1));
+        PanelDiagnostico.add(dateChooserF, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 150, 30));
 
         dateChooserFecha.setText("Buscar");
         dateChooserFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -392,69 +419,19 @@ public class Doctor extends javax.swing.JFrame {
                 dateChooserFechaActionPerformed(evt);
             }
         });
-        PanelDiagnostico.add(dateChooserFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, -1, -1));
+        PanelDiagnostico.add(dateChooserFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, -1, -1));
+
+        btnCredenciales.setText("Cambiar Credenciales");
+        btnCredenciales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCredencialesActionPerformed(evt);
+            }
+        });
+        PanelDiagnostico.add(btnCredenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jTabbedPane1.addTab("Diagnostico", PanelDiagnostico);
 
-        PanelAgenda.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jLabel30.setText("Agenda Medica");
-        PanelAgenda.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 18, 244, -1));
-
-        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(10, 92, 184));
-        jLabel32.setText("Medico:");
-        PanelAgenda.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 67, 41));
-
-        jLabel39.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel39.setText("La cabra  ");
-        PanelAgenda.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 70, 35));
-
-        jLabel40.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(10, 92, 184));
-        jLabel40.setText("Fecha Inicial:");
-        PanelAgenda.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, 60));
-
-        jLabel41.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(10, 92, 184));
-        jLabel41.setText("Fecha Final:");
-        PanelAgenda.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, 60));
-
-        jLabel42.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(10, 92, 184));
-        jLabel42.setText("Estado De Atencion:");
-        PanelAgenda.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, -1, 60));
-        PanelAgenda.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 97, 110, 30));
-
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
-        PanelAgenda.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 95, 112, 30));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Por Atender", "Pendientes", "Listas", "Eliminadas" }));
-        PanelAgenda.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, 130, 50));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Cc", "Nombre", "Apellido", "Cita"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        PanelAgenda.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 154, 912, 326));
-
-        jTabbedPane1.addTab("Agenda", PanelAgenda);
-
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 100, -1, 530));
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 100, 1040, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -526,33 +503,33 @@ public class Doctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
     private void dateChooserFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateChooserFechaActionPerformed
-       Date fecha = dateChooserF.getDate();
-    if (fecha == null) {
-        JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    Date fechaSeleccionada = dateChooserF.getDate();
-    
-    // Validación 2: Fecha futura
-    if (fechaSeleccionada.before(new Date())) {
-        JOptionPane.showMessageDialog(this, "No puede seleccionar fechas pasadas.", "Error", JOptionPane.ERROR_MESSAGE);
-        dateChooserF.setDate(null);
-        return;
-    }
-    dateChooserF.setDateFormatString("dd/MM/yyyy"); // Establecer formato visual
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(fechaSeleccionada);
-    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-    if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-        JOptionPane.showMessageDialog(this, "Seleccione un día entre lunes y viernes.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        Date fecha = dateChooserF.getDate();
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Date fechaSeleccionada = dateChooserF.getDate();
+
+        // Validación 2: Fecha futura
+        if (fechaSeleccionada.before(new Date())) {
+            JOptionPane.showMessageDialog(this, "No puede seleccionar fechas pasadas.", "Error", JOptionPane.ERROR_MESSAGE);
+            dateChooserF.setDate(null);
+            return;
+        }
+        dateChooserF.setDateFormatString("dd/MM/yyyy"); // Establecer formato visual
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaSeleccionada);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+            JOptionPane.showMessageDialog(this, "Seleccione un día entre lunes y viernes.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }//GEN-LAST:event_dateChooserFechaActionPerformed
+
+    private void btnCredencialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCredencialesActionPerformed
+  
+    }//GEN-LAST:event_btnCredencialesActionPerformed
 
     /*
      * @param args the command line arguments
@@ -593,35 +570,24 @@ public class Doctor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Agenda;
     private javax.swing.JPanel Diagnostico;
-    private javax.swing.JPanel PanelAgenda;
     private javax.swing.JPanel PanelDiagnostico;
     private javax.swing.JScrollPane YY;
+    private javax.swing.JButton btnCredenciales;
     private com.toedter.calendar.JDateChooser dateChooserF;
     private javax.swing.JButton dateChooserFecha;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblIconRecepcion;
     private javax.swing.JTable tableCitasPorMedico;
     // End of variables declaration//GEN-END:variables

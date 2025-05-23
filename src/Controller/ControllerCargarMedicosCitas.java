@@ -11,9 +11,7 @@ import DAOImpl.MedicoDAOImpl;
 import DAOImpl.PacienteDAOImpl;
 import DAOImpl.SalasDAOImpl;
 import DAOImpl.SedeDAOImpl;
-import static com.sun.source.util.DocTrees.instance;
-import static com.sun.source.util.JavacTask.instance;
-import static com.sun.source.util.Trees.instance;
+
 import dao.CitaDAO;
 
 import dao.MedicoDAO;
@@ -34,9 +32,7 @@ import model.Enfermedad;
 import model.Medico;
 import model.Paciente;
 import dao.EnfermedadesDAO;
-import static com.sun.source.util.DocTrees.instance;
-import static com.sun.source.util.JavacTask.instance;
-import static com.sun.source.util.Trees.instance;
+
 import dao.MedicamentosDAO;
 import java.io.IOException;
 import java.time.LocalDate;
