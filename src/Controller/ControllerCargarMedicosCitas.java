@@ -283,6 +283,7 @@ public class ControllerCargarMedicosCitas {
         if (tableModelEnfermedades == null || tablaEnfermedades == null) {
             return;
         }
+<<<<<<< HEAD
 
         tableModelEnfermedades.setRowCount(0);
 
@@ -353,3 +354,75 @@ public class ControllerCargarMedicosCitas {
         }
     }
 }
+=======
+
+        tableModelEnfermedades.setRowCount(0);
+
+        List<Enfermedad> enfermedades = enfermedadDAO.cargarTodasEnfermedades();
+
+        for (Enfermedad enfermedad : enfermedades) {
+            if (enfermedad.getNombre().toLowerCase().contains(nombreBuscado.toLowerCase())) {
+                Object[] row = {
+                    enfermedad.getIdEnfermedad(),
+                    enfermedad.getNombre(),
+                    enfermedad.getTipo(),
+                    convertirListaAString(enfermedad.getSintomas()),
+                    convertirListaAString(enfermedad.getCausas())
+                };
+                tableModelEnfermedades.addRow(row);
+            }
+        }
+    }
+
+    public void cargarMedicamentosEnTabla() {
+        try {
+            List<Medicamento> medicamentos = new MedicamentosDAOImpl().cargarTodos();
+            tablaModelMedicamento.setRowCount(0);
+
+            for (Medicamento m : medicamentos) {
+                tablaModelMedicamento.addRow(new Object[]{
+                    m.getIdMedicamento(),
+                    m.getNombre(),
+                    m.getDescripcion(),
+                    m.getLaboratorio(),
+                    m.getCantidad(),
+                    m.getLote(),
+                    m.getFechaVencimiento(),
+                    m.getDisponible(),
+                    m.getPrecio()
+                });
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar medicamentos: " + e.getMessage());
+        }
+    }
+
+    public void buscarMedicamentos(String criterio) {
+        try {
+            List<Medicamento> resultados = medicamentoDAO.buscarMedicamentos(criterio);
+            
+            tablaModelMedicamento.setRowCount(0);
+            
+            for (Medicamento medicamento : resultados) {
+                Object[] row = {
+                    medicamento.getIdMedicamento(),
+                    medicamento.getNombre(),
+                    medicamento.getDescripcion(),
+                    medicamento.getLaboratorio(),
+                    medicamento.getCantidad(),
+                    medicamento.getLote(),
+                    medicamento.getFechaVencimiento(),
+                    medicamento.getDisponible(),
+                    medicamento.getPrecio()
+                };
+                tablaModelMedicamento.addRow(row);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,
+                "Error al buscar medicamentos: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+>>>>>>> 62a911b (feat:agregando validaciones)
