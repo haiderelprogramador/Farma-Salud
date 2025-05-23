@@ -321,5 +321,55 @@
     "nombreMedico": "Haider",
     "apellidoMedico": "Stiven",
     "especialidadMedico": "Cardilogo"
+  },
+  {
+    "idCita": 0,
+    "nombre": "araima",
+    "apellido": "davila",
+    "email": "arai@gmail.com",
+    "altura": "111",
+    "peso": "75",
+    "fechaNacimiento": "08/05/2025",
+    "tipoSangre": "O-",
+    "antecedentes": "dufre de alergias a las abejas",
+    "celular": "1234567890",
+    "sexo": "F",
+    "eps": "Comfamiliar",
+    "diagnostico": "Enfermedad: Artritis reumatoide\nSíntomas: Dolor articular, Rigidez matutina, Hinchazón",
+    "receta": "una cada 1 minuto",
+    "areamedicamentos": [
+      "Atorvastatina",
+      "Pantoprazol"
+    ],
+    "fecha": "2025-05-16",
+    "hora": "03:30",
+    "nombreMedico": "",
+    "apellidoMedico": "",
+    "especialidadMedico": ""
+  },
+  {
+    "idCita": 0,
+    "nombre": "araima",
+    "apellido": "davila",
+    "email": "arai@gmail.com",
+    "altura": "111",
+    "peso": "76",
+    "fechaNacimiento": "08/05/2025",
+    "tipoSangre": "O-",
+    "antecedentes": "dufre de alergias a las abejas",
+    "celular": "1234567890",
+    "sexo": "F",
+    "eps": "Comfamiliar",
+    "diagnostico": "Enfermedad: Malaria\nSíntomas: Fiebre alta, Escalofríos, Dolor muscular",
+    "receta": "una cada 4 horas",
+    "areamedicamentos": [
+      "Acetaminofen",
+      "Atorvastatina"
+    ],
+    "fecha": "2025-05-16",
+    "hora": "03:30",
+    "nombreMedico": "",
+    "apellidoMedico": "",
+    "especialidadMedico": ""
   }
 ]

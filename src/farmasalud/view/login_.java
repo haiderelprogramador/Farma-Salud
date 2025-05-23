@@ -38,8 +38,10 @@ public class login_ extends javax.swing.JFrame {
         Jtextfield_contraseña = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
+        chkMostrarContrasena = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,7 +55,7 @@ public class login_ extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 29, 291, 61));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel2.setText("Usuario *");
+        jLabel2.setText("Correo *");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 144, 26));
 
         Jtextfield_usuario.setBorder(null);
@@ -62,10 +64,10 @@ public class login_ extends javax.swing.JFrame {
                 Jtextfield_usuarioActionPerformed(evt);
             }
         });
-        jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 300, 29));
+        jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 380, 29));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutico", "Paciente" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione un rol>", "Administrador", "Doctor", "Recepcionista", "Paciente" }));
         jComboBox1.setBorder(null);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +90,7 @@ public class login_ extends javax.swing.JFrame {
                 Jtextfield_contraseñaActionPerformed(evt);
             }
         });
-        jPanel2.add(Jtextfield_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 292, 300, 24));
+        jPanel2.add(Jtextfield_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 292, 380, 30));
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
@@ -105,15 +107,25 @@ public class login_ extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 385, 141, 36));
 
-        jLabel9.setForeground(new java.awt.Color(10, 92, 184));
-        jLabel9.setText("¿Olvidaste tu contraseña?");
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 140, 20));
+        chkMostrarContrasena.setText("Mostrar contraseña");
+        chkMostrarContrasena.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkMostrarContrasenaItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(chkMostrarContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 140, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 590));
 
         jPanel3.setBackground(new java.awt.Color(10, 92, 184));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Logo Medicina Salud Minimalista Corporativo Azul  (3).jpg"))); // NOI18N
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 200, 140));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/doc-removebg-preview.png"))); // NOI18N
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 350, 340));
+
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 360, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,6 +243,16 @@ private void abrirVista(JFrame vista, String mensajeBienvenida) {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void chkMostrarContrasenaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkMostrarContrasenaItemStateChanged
+         if (chkMostrarContrasena.isSelected()) {
+        // Mostrar contraseña como texto plano
+        Jtextfield_contraseña.setEchoChar((char)0); // Carácter nulo para mostrar texto
+    } else {
+        // Ocultar contraseña con caracteres de contraseña
+        Jtextfield_contraseña.setEchoChar('•'); // Puedes usar '*' u otro carácter
+    }
+    }//GEN-LAST:event_chkMostrarContrasenaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -269,12 +291,14 @@ private void abrirVista(JFrame vista, String mensajeBienvenida) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField Jtextfield_contraseña;
     private javax.swing.JTextField Jtextfield_usuario;
+    private javax.swing.JCheckBox chkMostrarContrasena;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

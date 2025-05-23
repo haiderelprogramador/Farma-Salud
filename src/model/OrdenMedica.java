@@ -39,6 +39,7 @@ public class OrdenMedica  {
 private String apellidoMedico;
 private String especialidadMedico;
 
+
    
      public OrdenMedica(String nombre, String apellido ,String email ,String altura , String peso, String fechaNacimiento , String tipoSangre , String antecedentes , String celular ,String sexo ,String eps ,String diagnostico,String receta, List<String> areamedicamentos,String fecha,String hora,String nombreMedico,String apellidoMedico,String especialidadMedico){
      this.nombre = nombre != null ? nombre : "";

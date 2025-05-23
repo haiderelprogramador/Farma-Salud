@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -1221,6 +1222,11 @@ public class admin extends javax.swing.JFrame {
 
         txtNombreSala.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNombreSala.setBorder(null);
+        txtNombreSala.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreSalaKeyTyped(evt);
+            }
+        });
         jPanel24.add(txtNombreSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 250, 20));
 
         jSeparator12.setBackground(new java.awt.Color(0, 0, 0));
@@ -1421,6 +1427,11 @@ public class admin extends javax.swing.JFrame {
                 Jtextfield_Descripcion_MedicamentoFocusLost(evt);
             }
         });
+        Jtextfield_Descripcion_Medicamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Jtextfield_Descripcion_MedicamentoKeyTyped(evt);
+            }
+        });
         jPanel35.add(Jtextfield_Descripcion_Medicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 250, 20));
 
         jSeparator27.setBackground(new java.awt.Color(0, 0, 0));
@@ -1562,6 +1573,11 @@ public class admin extends javax.swing.JFrame {
 
         JtexfieldLote_Medicamento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JtexfieldLote_Medicamento.setBorder(null);
+        JtexfieldLote_Medicamento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtexfieldLote_MedicamentoFocusLost(evt);
+            }
+        });
         JtexfieldLote_Medicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 JtexfieldLote_MedicamentoKeyTyped(evt);
@@ -1640,12 +1656,27 @@ public class admin extends javax.swing.JFrame {
         jPanel44.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextField_Horario_atencion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "HORARIO DE ATENCION"));
+        jTextField_Horario_atencion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_Horario_atencionKeyTyped(evt);
+            }
+        });
         jPanel44.add(jTextField_Horario_atencion, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 270, -1));
 
         jTextField_ID_Sede.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "ID_SEDE"));
+        jTextField_ID_Sede.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_ID_SedeKeyTyped(evt);
+            }
+        });
         jPanel44.add(jTextField_ID_Sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 270, -1));
 
         jTextField_Nombre_sede.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "NOMBRE SEDE"));
+        jTextField_Nombre_sede.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_Nombre_sedeKeyTyped(evt);
+            }
+        });
         jPanel44.add(jTextField_Nombre_sede, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 270, -1));
 
         Jtextfield_Direccion_sede.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "DIRECCION DE LA SEDE"));
@@ -1854,14 +1885,29 @@ public class admin extends javax.swing.JFrame {
         jPanel54.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 256, -1));
 
         jTextField7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "ID DE ENFERMEDAD"));
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField7KeyTyped(evt);
+            }
+        });
         jPanel54.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 256, -1));
 
         jTextField9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "TIPO DE ENFERMEDAD"));
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField9KeyTyped(evt);
+            }
+        });
         jPanel54.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 256, -1));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "SINTOMAS"));
+        jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextArea1KeyTyped(evt);
+            }
+        });
         jScrollPane8.setViewportView(jTextArea1);
 
         jPanel54.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 246, -1));
@@ -1869,6 +1915,11 @@ public class admin extends javax.swing.JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jTextArea2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "CAUSAS"));
+        jTextArea2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextArea2KeyTyped(evt);
+            }
+        });
         jScrollPane9.setViewportView(jTextArea2);
 
         jPanel54.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 246, 110));
@@ -2151,17 +2202,26 @@ public class admin extends javax.swing.JFrame {
 
 
     private void Btn_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_salirMouseClicked
-        int respuesta = JOptionPane.showConfirmDialog(
+                                       
+    int respuesta = JOptionPane.showConfirmDialog(
         this, 
-        "¿Está seguro que desea cerrar la aplicación?",
-        "Confirmar cierre",
+        "¿Está seguro que desea cerrar la sesión actual?",
+        "Confirmar cierre de sesión",
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE);
     
     if (respuesta == JOptionPane.YES_OPTION) {
-        System.exit(0);
+        // Cierra la ventana actual
+        this.dispose();
         
+        // Abre la ventana de login
+        login_ Login = new login_();
+        Login.setVisible(true);
+        
+        // Centrar la ventana de login en la pantalla
+        Login.setLocationRelativeTo(null);
     }
+
     }//GEN-LAST:event_Btn_salirMouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
@@ -2260,11 +2320,21 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_Panel_MISDATOSMouseExited
 
     private void Jtexfieldnombre_IDmEDICAMENTOKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldnombre_IDmEDICAMENTOKeyTyped
-        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE /*&& c != '.'*/) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten números", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_Jtexfieldnombre_IDmEDICAMENTOKeyTyped
 
     private void jtextfieldNombre_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfieldNombre_MedicamentoKeyTyped
-        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_jtextfieldNombre_MedicamentoKeyTyped
 
     private void Jtextfield_Descripcion_MedicamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Jtextfield_Descripcion_MedicamentoFocusLost
@@ -2272,7 +2342,13 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_Descripcion_MedicamentoFocusLost
 
     private void jtextfiel_Laboratorio_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfiel_Laboratorio_MedicamentoKeyTyped
-        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_jtextfiel_Laboratorio_MedicamentoKeyTyped
 
     private void jtextfield_cantidad_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextfield_cantidad_MedicamentoKeyTyped
@@ -2327,7 +2403,7 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelModificarMedicamentoMouseClicked
 
     private void JtexfieldLote_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtexfieldLote_MedicamentoKeyTyped
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_JtexfieldLote_MedicamentoKeyTyped
 
     private void Jtexfieldfechavencimiento_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtexfieldfechavencimiento_MedicamentoKeyTyped
@@ -2489,6 +2565,92 @@ public class admin extends javax.swing.JFrame {
     private void Panel_doctor1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Panel_doctor1MouseExited
         Panel_doctor1.setBackground(new Color(10, 92, 184));
     }//GEN-LAST:event_Panel_doctor1MouseExited
+
+    private void txtNombreSalaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreSalaKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_txtNombreSalaKeyTyped
+
+    private void Jtextfield_Descripcion_MedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtextfield_Descripcion_MedicamentoKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_Jtextfield_Descripcion_MedicamentoKeyTyped
+
+    private void JtexfieldLote_MedicamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtexfieldLote_MedicamentoFocusLost
+        
+    }//GEN-LAST:event_JtexfieldLote_MedicamentoFocusLost
+
+    private void jTextField_ID_SedeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_ID_SedeKeyTyped
+        
+    }//GEN-LAST:event_jTextField_ID_SedeKeyTyped
+
+    private void jTextField_Nombre_sedeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Nombre_sedeKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jTextField_Nombre_sedeKeyTyped
+
+    private void jTextField_Horario_atencionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Horario_atencionKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jTextField_Horario_atencionKeyTyped
+
+    private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE /*&& c != '.'*/) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten números", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jTextField7KeyTyped
+
+    private void jTextField9KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jTextField9KeyTyped
+
+    private void jTextArea2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jTextArea2KeyTyped
+
+    private void jTextArea1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jTextArea1KeyTyped
 
 
     /**

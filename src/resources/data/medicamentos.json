@@ -687,8 +687,8 @@
     "descripcion": "Regulador del sueño",
     "laboratorio": "Takeda",
     "cantidad": "650",
-    "lote": "2030-02-30",
-    "fechaVencimiento": "2032-02-30",
+    "lote": "2030-02-10",
+    "fechaVencimiento": "2032-02-10",
     "disponible": "NO DISPONIBLE",
     "precio": "850000"
   },
@@ -951,8 +951,8 @@
     "descripcion": "Energía y función nerviosa",
     "laboratorio": "Solgar",
     "cantidad": "1600",
-    "lote": "2032-02-30",
-    "fechaVencimiento": "2034-02-30",
+    "lote": "2032-02-18",
+    "fechaVencimiento": "2034-02-18",
     "disponible": "NO DISPONIBLE",
     "precio": "250000"
   },

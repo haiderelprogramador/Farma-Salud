@@ -8,10 +8,13 @@ import Controller.ControllerCargarMedicosCitas;
 import Controller.ControllerCitas;
 import Controller.ControllerOrdenMedica;
 import DAOImpl.OrdenMedicaDAOImpl;
+import Utilidades.GeneradorOrdenMedicaPDF;
 import dao.OrdenMedicaDAO;
 import jakarta.mail.internet.ParseException;
+import java.awt.Desktop;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.SwingUtilities;
 import java.text.SimpleDateFormat;
@@ -646,8 +649,7 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
     }//GEN-LAST:event_txtDocumentoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-          // Validar campos obligatorios
-    if (txtMedicamento.getText().trim().isEmpty()) {
+ if (txtMedicamento.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "El medicamento no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
         txtMedicamento.requestFocus();
         return;
@@ -684,32 +686,53 @@ java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
 
     // Si todo está correcto, guardar
     try {
-        OrdenMedica guardarOrden = getOrdenMedica();
-        OrdenMEdica.guardarOrdenMedica(guardarOrden);
-       OrdenMedica ordenmedica = getOrdenMedica();
-   if (citaSeleccionada != null) {
-        citaSeleccionada.setEstado(Cita.EstadoCita.COMPLETADA);
-        
-        // Actualizar cita en controlador / DAO para persistir
-        ControllerCitas controllerCitas = ControllerCitas.getInstance();
-        controllerCitas.actualizarCita(citaSeleccionada);
+        OrdenMedica guardarOrden = getOrdenMedica(); // Asegúrate que este método existe
+        OrdenMedicaDAO ordenMedicaDAO = new OrdenMedicaDAOImpl(); // O usa tu implementación de DAO
+        ordenMedicaDAO.guardarOrdenMedica(guardarOrden);
 
-        // Notificar actualización para refrescar interfaces
-        controllerCitas.notificarCitaActualizada(citaSeleccionada);
+        if (citaSeleccionada != null) {
+            citaSeleccionada.setEstado(Cita.EstadoCita.COMPLETADA);
+            
+            // Actualizar cita en controlador / DAO para persistir
+            ControllerCitas controllerCitas = ControllerCitas.getInstance();
+            controllerCitas.actualizarCita(citaSeleccionada);
 
-        // Actualizar estado en la tabla (columnaEstado es el índice correcto)
-        if (tableModel != null && filaSeleccionada != -1) {
-            tableModel.setValueAt("Completada", filaSeleccionada, columnaEstado);
+            // Notificar actualización para refrescar interfaces
+            controllerCitas.notificarCitaActualizada(citaSeleccionada);
+
+            // Actualizar estado en la tabla (asegúrate que tableModel y filaSeleccionada estén definidos)
+            if (tableModel != null && filaSeleccionada != -1) {
+                tableModel.setValueAt("Completada", filaSeleccionada, columnaEstado);
+            }
         }
-    }      JOptionPane.showMessageDialog(this, "Orden Guardada correctamente");
+
+        // Generar PDF después de guardar
+        try {
+            String nombreArchivo = "OrdenMedica_" + guardarOrden.getNombre() + "_" + 
+                guardarOrden.getApellido() + "_" + System.currentTimeMillis() + ".pdf";
+            String rutaPDF = "ordenes_medicas/" + nombreArchivo;
+            
+            new File("ordenes_medicas").mkdirs(); // Crear directorio si no existe
+            
+            GeneradorOrdenMedicaPDF.generarPDF(guardarOrden, rutaPDF);
+            
+            JOptionPane.showMessageDialog(this, 
+                "Orden guardada y PDF generado exitosamente!\n" +
+                "Archivo: " + rutaPDF);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Orden guardada pero error al generar PDF: " + e.getMessage(), 
+                "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
         
         this.dispose();
     } catch(Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar la orden: " + e.getMessage(), 
+        JOptionPane.showMessageDialog(this, 
+            "Error al guardar la orden: " + e.getMessage(), 
             "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace(); 
-    }
-          
+    }       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarMedicamentoActionPerformed
