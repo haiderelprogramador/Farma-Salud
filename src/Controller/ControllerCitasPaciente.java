@@ -119,6 +119,10 @@ public class ControllerCitasPaciente {
         this.ordenMedicaDAO = new OrdenMedicaDAOImpl();
 
     }
+  public OrdenMedica obtenerOrdenMedicaPorCita(String idCita) {
+    return ordenMedicaDAO.obtenerPorIdCita(idCita);
+}
+
     
 
     public static synchronized ControllerCitasPaciente getInstance() {
@@ -1058,10 +1062,6 @@ public boolean cancelarCitaPorId(String idCita) {
         e.printStackTrace();
     }
     return false;
-}
-public OrdenMedica obtenerOrdenMedicaPorCita(String idCita) {
-    OrdenMedicaDAO ordenDAO = new OrdenMedicaDAOImpl();
-    return ordenDAO.obtenerPorIdCita(idCita);
 }
 
 
