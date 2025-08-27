@@ -1,3 +1,5 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
@@ -226,11 +228,6 @@ String idCita = tableCitas.getValueAt(fila, 0).toString();
     public void citaActualizada(Cita cita) {
         controller.cargarCitasPorPaciente(documentoPaciente);
     }
-  
-     
-
-    
-
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
