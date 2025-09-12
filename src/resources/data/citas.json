@@ -455,12 +455,28 @@
   },
   {
     "IdCita": "Med.005",
-    "fechaCita": "2025-05-27",
-    "hora": "08:30am",
+    "fechaCita": "2025-09-06",
+    "hora": "07:00",
     "tipoCita": "Prioritaria",
     "motivo": "Enfermedad Cronica",
     "estado": "PROGRAMADA",
     "documentoPaciente": "1234567890",
+    "documentoMedico": "63525192",
+    "sala": {
+      "nombreSala": "quirofano",
+      "codigoSala": "SAL.002",
+      "tipoSala": "Sala de Urgencias",
+      "capacidadSala": "8"
+    }
+  },
+  {
+    "IdCita": "Med.006",
+    "fechaCita": "2025-09-06",
+    "hora": "09:30am",
+    "tipoCita": "Regular",
+    "motivo": "Enfermedad Cronica",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "2871528484",
     "medico": {
       "especialidad": "Cardilogo",
       "fechaContratacion": "2025-05-08",
@@ -482,10 +498,10 @@
       "capacidadSala": "8"
     },
     "sede": {
-      "idSede": "SEDE002",
-      "nombreSede": "Sede Norte",
-      "direccion": "Avenida 5 #23-45, Barrio Norte",
-      "horarioFuncionamiento": "Lunes-Sabado 9:00-17:00"
+      "idSede": "SEDE001",
+      "nombreSede": "Sede Principal",
+      "direccion": "Calle 128 #48-67, Borotá",
+      "horarioFuncionamiento": "Lunes-Viernes 8:00-18:00"
     }
   }
 ]

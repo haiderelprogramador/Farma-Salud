@@ -597,7 +597,7 @@ public void seleccionarMedico() {
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         String documentoPaciente = tablaCitas.getValueAt(filaSeleccionada, 0).toString();
 
         Cita citaActualizada = new Cita(
@@ -777,6 +777,8 @@ public void buscarCitaPorDocumento(String documentoPaciente) {
     }
     return false;
   }
+ 
+ 
 public void configurarColoresTablaCitas() {
     DefaultTableCellRenderer rendererEstado = new DefaultTableCellRenderer() {
         @Override
@@ -998,7 +1000,6 @@ public boolean medicoTieneCupoEnFecha(String documentoMedico, LocalDate fecha) {
     tableConsultarMedico.setModel(tableModelConsultarMedico); 
     }
   
-
 public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccionada) {
     if (tableConsultarMedico == null || tableModelConsultarMedico == null) {
         JOptionPane.showMessageDialog(null,
@@ -1026,7 +1027,10 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
 
     tableModelConsultarMedico.setRowCount(0); // Limpiar tabla
 
-    LocalDate fechaLocal = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate fechaLocal = fechaSeleccionada.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
     List<Cita> todasCitas = ControllerCitas.getInstance().obtenerTodasLasCitas();
 
     boolean encontroCita = false;
@@ -1035,7 +1039,6 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
         Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
 
         if (medico != null) {
-            // Comparación flexible de nombre o apellido
             String nombreCompleto = (medico.getNombres() + " " + medico.getApellidos()).toLowerCase();
             String[] partes = nombreApellido.trim().toLowerCase().split("\\s+");
 
@@ -1047,7 +1050,9 @@ public void cargarCitasPorMedicoYFecha(String nombreApellido, Date fechaSeleccio
                 }
             }
 
-LocalDate fechaCita = cita.getFechaCita();
+ 
+            LocalDate fechaCita = cita.getFechaCita(); 
+
             boolean coincideFecha = fechaCita.equals(fechaLocal);
 
             if (coincideNombre && coincideFecha) {
@@ -1085,6 +1090,7 @@ LocalDate fechaCita = cita.getFechaCita();
             JOptionPane.INFORMATION_MESSAGE);
     }
 }
+
  public String generarCodigoUnico() {
     List<Cita> citas = citasDAO.cargarTodos();
     int maxNumero = 0;
